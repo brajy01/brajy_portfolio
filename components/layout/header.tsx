@@ -15,9 +15,15 @@ export default function Header() {
         </Link>
 
         <nav className="mt-4 flex space-x-6 font-text text-background md:mt-0">
-          <div className="font-text">Bonjour on teste</div>
-          <div className="font-title">Bonjour on teste</div>
-          <div className="font-caption">Bonjour on teste</div>
+          <Link href="/about" className="hover:underline">
+            About
+          </Link>
+          <Link href="/project" className="hover:underline">
+            Projects
+          </Link>
+          <Link href="/contact" className="hover:underline">
+            Contact
+          </Link>
         </nav>
       </header>
     </>
