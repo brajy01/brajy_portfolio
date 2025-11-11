@@ -1,8 +1,75 @@
+import Link from "next/link";
+import Image from "next/image";
+import { projects } from "@/data/projects";
+
 export default function LatestProjects() {
+  // Get the 3 latest projects (last 3 from the array)
+  const latestProjects = projects.slice(-3);
+
   return (
-    <>
-      <h1 className="font-title text-4xl text-primary">Lastest Projects_</h1>
-      <p className="font-caption text-primary">_2025</p>
-    </>
+    <section className="py-16 px-6 md:px-8 lg:px-12">
+      <div className="flex justify-between items-end mb-8 pb-8 border-b border-gray-200 text-primary">
+        <h1 className="font-title text-4xl md:text-5xl">Latest Projects_</h1>
+        <p className="font-caption text-xs md:text-sm">
+          _{new Date().getFullYear()}
+        </p>
+      </div>
+
+      {/* Projects Grid */}
+      <div className="space-y-24 pt-8">
+        {latestProjects.map((project) => (
+          <article
+            key={project.id}
+            className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-start pb-12 border-b border-gray-200"
+          >
+            {/* Image - Left side */}
+            <div className="md:col-span-2 relative w-full aspect-square md:aspect-auto md:h-96">
+              <Image
+                src={project.image}
+                alt={project.title}
+                fill
+                className="object-cover"
+              />
+            </div>
+
+            {/* Right side content */}
+            <div className="flex flex-col justify-between h-full">
+              {/* Top labels - Right aligned */}
+              <div className="text-right space-y-1">
+                <p className="font-caption text-xs md:text-sm ">
+                  _project of the month
+                </p>
+                <p className="font-caption text-xs md:text-sm ">
+                  _{project.month} {project.year}
+                </p>
+                <p className="font-caption text-xs md:text-sm ">
+                  _{project.category.toLowerCase()}
+                </p>
+              </div>
+
+              {/* Bottom tags - Right aligned */}
+              <div className="text-right space-y-1">
+                {project.tags.map((tag) => (
+                  <p key={tag} className="font-caption text-xs md:text-sm ">
+                    {tag}
+                  </p>
+                ))}
+              </div>
+            </div>
+
+            {/* Project Title - Full width below image */}
+            <div className="md:col-span-2 mt-2 md:mt-3">
+              <Link
+                href={`/project/${project.slug}`}
+                className="font-text text-lg md:text-xl underline hover:opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded px-1 transition-opacity inline-block"
+                aria-label={project.title}
+              >
+                {project.title}
+              </Link>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }

@@ -14,7 +14,7 @@ export default function Header() {
           />
         </Link>
 
-        <nav className="mt-4 flex space-x-6 font-text text-background md:mt-0">
+        <nav className="mt-4 flex space-x-6 font-title text-background md:mt-0">
           <Link href="/about" className="hover:underline">
             About
           </Link>

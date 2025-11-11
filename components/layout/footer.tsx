@@ -60,17 +60,15 @@ export default function Footer() {
           className="font-caption text-sm md:text-base space-y-2"
           role="contentinfo"
         >
-          <p>
-            <strong>Jeremy Brajon</strong>
-          </p>
+          <p>Jeremy Brajon</p>
           <p>Full-stack developer</p>
           <p>
-            <a
+            <Link
               href="mailto:contact@brajy.com"
               className="underline hover:opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded px-1 transition-opacity"
             >
               contact@brajy.com
-            </a>
+            </Link>
           </p>
         </div>
 
