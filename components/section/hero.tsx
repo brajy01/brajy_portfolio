@@ -24,9 +24,20 @@ export default function Hero() {
         </p>
       </div>
       <div className="flex flex-col justify-end mt-4 md:mt-0">
+        <div className="space-y-1 text-right">
+          <p className="font-caption text-xs md:text-sm text-transparent">
+            _project of the month
+          </p>
+          <p className="font-caption text-xs md:text-sm text-transparent">
+            _january 2025
+          </p>
+          <p className="font-caption text-xs md:text-sm text-transparent">
+            _branding
+          </p>
+        </div>
         <Link
           href="/about"
-          className="font-caption text-sm md:text-base underline hover:opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded px-1 transition-opacity"
+          className="font-caption text-sm md:text-base underline hover:opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded px-1 transition-opacity text-right block"
           aria-label="Learn more about Jeremy Brajon"
         >
           _learn more about me

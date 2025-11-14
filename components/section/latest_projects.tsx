@@ -20,10 +20,10 @@ export default function LatestProjects() {
         {latestProjects.map((project) => (
           <article
             key={project.id}
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-start pb-12 border-b border-gray-200"
+            className="grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-8 items-start pb-12 border-b border-gray-200"
           >
             {/* Image - Left side */}
-            <div className="md:col-span-2 relative w-full aspect-square md:aspect-auto md:h-96">
+            <div className="md:col-span-4 relative w-full aspect-square md:aspect-auto md:h-[600px]">
               <Image
                 src={project.image}
                 alt={project.title}
@@ -35,22 +35,18 @@ export default function LatestProjects() {
             {/* Right side content */}
             <div className="flex flex-col justify-between h-full">
               {/* Top labels - Right aligned */}
-              <div className="text-right space-y-1">
-                <p className="font-caption text-xs md:text-sm ">
-                  _project of the month
-                </p>
-                <p className="font-caption text-xs md:text-sm ">
+              <div className="text-right space-y-1 text-foreground font-caption">
+                <p>_project of the month</p>
+                <p>
                   _{project.month} {project.year}
                 </p>
-                <p className="font-caption text-xs md:text-sm ">
-                  _{project.category.toLowerCase()}
-                </p>
+                <p>_{project.category.toLowerCase()}</p>
               </div>
 
               {/* Bottom tags - Right aligned */}
               <div className="text-right space-y-1">
                 {project.tags.map((tag) => (
-                  <p key={tag} className="font-caption text-xs md:text-sm ">
+                  <p key={tag} className="font-caption text-primary">
                     {tag}
                   </p>
                 ))}
@@ -60,8 +56,8 @@ export default function LatestProjects() {
             {/* Project Title - Full width below image */}
             <div className="md:col-span-2 mt-2 md:mt-3">
               <Link
-                href={`/project/${project.slug}`}
-                className="font-text text-lg md:text-xl underline hover:opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded px-1 transition-opacity inline-block"
+                href={`/projects/${project.slug}`}
+                className="font-caption text-lg md:text-xl underline hover:opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded px-1 transition-opacity inline-block"
                 aria-label={project.title}
               >
                 {project.title}

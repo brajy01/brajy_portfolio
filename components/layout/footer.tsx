@@ -26,10 +26,10 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-white text-foreground py-8 md:py-16 px-6 md:px-8 lg:px-12">
+    <footer className="bg-background text-foreground py-8 md:py-16 px-6 md:px-8 lg:px-12 mt-12">
       <h2
         id="footer-title"
-        className="font-title text-2xl md:text-3xl text-black mb-8 md:mb-12"
+        className="font-title text-2xl md:text-3xl text-foreground mb-8 md:mb-12"
       >
         Get in touch_
       </h2>
