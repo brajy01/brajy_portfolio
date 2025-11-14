@@ -36,7 +36,7 @@ export default function ProjectDetail() {
         aria-labelledby="project-title"
       >
         <div className="max-w-7xl mx-auto w-full">
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4 sm:gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-4 sm:gap-6 md:gap-8">
             <div className="md:col-span-4">
               <h1
                 id="project-title"
@@ -61,12 +61,13 @@ export default function ProjectDetail() {
                 {project.heroDescription}
               </p>
             </div>
-            <div className="flex flex-col justify-end mt-6 sm:mt-0">
+            <div className="hidden md:block md:col-span-1" />
+            <div className="md:col-span-1 flex flex-col justify-end mt-6 md:mt-0">
               <p
                 className="font-caption text-xs sm:text-sm md:text-base text-right text-primary"
                 aria-hidden="true"
               >
-                » scroll to see more
+                » scroll to see details
               </p>
             </div>
           </div>
@@ -102,7 +103,7 @@ export default function ProjectDetail() {
                 <h3 className="font-title text-lg sm:text-xl md:text-2xl mb-3 sm:mb-4 text-foreground">
                   Overview
                 </h3>
-                <p className="font-text text-sm sm:text-base md:text-lg leading-relaxed text-gray-700">
+                <p className="font-text text-sm sm:text-base md:text-lg leading-relaxed text-foreground">
                   {project.overview}
                 </p>
               </div>
@@ -116,7 +117,7 @@ export default function ProjectDetail() {
                   {project.problemApproach.map((item, index) => (
                     <li
                       key={index}
-                      className="font-text text-sm sm:text-base md:text-lg leading-relaxed text-gray-700 flex gap-3"
+                      className="font-text text-sm sm:text-base md:text-lg leading-relaxed text-foreground flex gap-3"
                     >
                       <span className="text-primary flex-shrink-0">•</span>
                       <span>{item}</span>
@@ -134,7 +135,7 @@ export default function ProjectDetail() {
                   {project.impact.map((item, index) => (
                     <li
                       key={index}
-                      className="font-text text-sm sm:text-base md:text-lg leading-relaxed text-gray-700 flex gap-3"
+                      className="font-text text-sm sm:text-base md:text-lg leading-relaxed text-foreground flex gap-3"
                     >
                       <span className="text-primary flex-shrink-0">•</span>
                       <span>{item}</span>
@@ -144,7 +145,7 @@ export default function ProjectDetail() {
               </div>
 
               {/* Lessons Learned Section */}
-              <div>
+              <div className="mb-8 sm:mb-10 md:mb-12">
                 <h3 className="font-title text-lg sm:text-xl md:text-2xl mb-3 sm:mb-4 text-foreground">
                   Lessons Learned
                 </h3>
@@ -152,6 +153,24 @@ export default function ProjectDetail() {
                   {project.lessonsLearned}
                 </p>
               </div>
+
+              {/* GitHub Section */}
+              {project.projectDetails.githubUrl && (
+                <div>
+                  <p className="font-caption text-xs sm:text-sm text-primary mb-2">
+                    _github
+                  </p>
+                  <Link
+                    href={project.projectDetails.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-caption text-sm sm:text-base hover:text-foreground underline transition-colors inline-flex items-center gap-1"
+                  >
+                    See project
+                    <ArrowUpRight className="w-3 h-3 sm:w-4 sm:h-4" />
+                  </Link>
+                </div>
+              )}
             </div>
 
             {/* Project Details - Right side (2 cols) */}
@@ -177,36 +196,8 @@ export default function ProjectDetail() {
                   </p>
                 </div>
 
-                {/* Date */}
-                <div className="md:text-right md:order-3">
-                  <p className="font-caption text-xs sm:text-sm text-primary mb-1">
-                    _date
-                  </p>
-                  <p className="font-caption text-sm sm:text-base text-foreground">
-                    {project.projectDetails.date}
-                  </p>
-                </div>
-
-                {/* GitHub */}
-                {project.projectDetails.githubUrl && (
-                  <div className="md:text-right md:order-4">
-                    <p className="font-caption text-xs sm:text-sm text-primary mb-1">
-                      _github
-                    </p>
-                    <Link
-                      href={project.projectDetails.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-caption text-sm sm:text-base hover:text-foreground underline transition-colors inline-flex items-center gap-1"
-                    >
-                      See project
-                      <ArrowUpRight className="w-3 h-3 sm:w-4 sm:h-4" />
-                    </Link>
-                  </div>
-                )}
-
                 {/* Work */}
-                <div className="md:text-right md:order-5">
+                <div className="md:text-right">
                   <p className="font-caption text-xs sm:text-sm text-primary mb-2">
                     _work
                   </p>
@@ -220,6 +211,16 @@ export default function ProjectDetail() {
                       </p>
                     ))}
                   </div>
+                </div>
+
+                {/* Date */}
+                <div className="md:text-right">
+                  <p className="font-caption text-xs sm:text-sm text-primary mb-1">
+                    _date
+                  </p>
+                  <p className="font-caption text-sm sm:text-base text-foreground">
+                    {project.projectDetails.date}
+                  </p>
                 </div>
               </div>
             </div>
