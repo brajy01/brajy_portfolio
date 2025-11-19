@@ -23,7 +23,7 @@ export default function LatestProjects() {
             className="grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-8 items-start pb-12 border-b border-gray-200"
           >
             {/* Image - Left side */}
-            <div className="md:col-span-4 relative w-full aspect-square md:aspect-auto md:h-[600px]">
+            <div className="md:col-span-4 relative w-full h-64 sm:h-80 md:h-[500px] lg:h-[600px]">
               <Image
                 src={project.image}
                 alt={project.title}
@@ -35,7 +35,7 @@ export default function LatestProjects() {
             {/* Right side content */}
             <div className="flex flex-col justify-between h-full">
               {/* Top labels - Right aligned */}
-              <div className="text-right space-y-1 text-foreground font-caption">
+              <div className="text-left md:text-right space-y-1 text-foreground font-caption">
                 <p>_project of the month</p>
                 <p>
                   _{project.month} {project.year}
@@ -57,7 +57,7 @@ export default function LatestProjects() {
             <div className="md:col-span-2 mt-2 md:mt-3">
               <Link
                 href={`/projects/${project.slug}`}
-                className="font-caption text-lg md:text-xl underline hover:opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded px-1 transition-opacity inline-block"
+                className="font-text text-lg md:text-xl underline hover:opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded px-1 transition-opacity inline-block"
                 aria-label={project.title}
               >
                 {project.title}

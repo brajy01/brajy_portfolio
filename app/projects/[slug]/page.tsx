@@ -19,7 +19,7 @@ export default function ProjectDetail() {
           <h1 className="font-title text-2xl sm:text-3xl md:text-4xl text-foreground">
             Project not found
           </h1>
-          <p className="font-text text-base sm:text-lg mt-4 text-gray-600">
+          <p className="font-text text-base sm:text-lg mt-4 text-foreground">
             Sorry, the project you&apos;re looking for doesn&apos;t exist.
           </p>
         </div>
@@ -31,23 +31,26 @@ export default function ProjectDetail() {
     <>
       {/* Hero Section - Title and Description */}
       <section
-        className="min-h-auto sm:min-h-[calc(100vh-80px)] flex items-start sm:items-center px-4 sm:px-6 md:px-8 lg:px-12 py-12 sm:py-16 md:py-20"
+        className="min-h-auto sm:min-h-[calc(100vh-80px)] flex flex-col items-start sm:items-start justify-start sm:justify-center px-4 sm:px-6 md:px-8 lg:px-12 py-12 sm:py-16 md:py-20"
         role="region"
         aria-labelledby="project-title"
       >
         <div className="max-w-7xl mx-auto w-full">
+          {/* Title - Full width */}
+          <h1
+            id="project-title"
+            className="font-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight w-full"
+          >
+            {project.projectName}
+          </h1>
+
+          {/* Content grid */}
           <div className="grid grid-cols-1 md:grid-cols-6 gap-4 sm:gap-6 md:gap-8">
             <div className="md:col-span-4">
-              <h1
-                id="project-title"
-                className="font-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl mb-2 sm:mb-3 md:mb-4 leading-tight"
-              >
-                {project.projectName}
-              </h1>
-              <p className="font-caption text-xs sm:text-sm md:text-base text-primary mb-3 sm:mb-4 md:mb-5">
+              <p className="font-caption text-xs sm:text-sm md:text-2xl text-primary">
                 {project.role}
               </p>
-              <div className="flex flex-wrap gap-2 sm:gap-3 mb-6 sm:mb-8 md:mb-10">
+              <div className="flex flex-wrap gap-2 sm:gap-3 mt-6 sm:mt-8 md:mt-10 mb-6 sm:mb-8 md:mb-10">
                 {project.technologies.map((tech, index) => (
                   <span
                     key={index}
@@ -119,7 +122,7 @@ export default function ProjectDetail() {
                       key={index}
                       className="font-text text-sm sm:text-base md:text-lg leading-relaxed text-foreground flex gap-3"
                     >
-                      <span className="text-primary flex-shrink-0">•</span>
+                      <span className="text-primary shrink-0">•</span>
                       <span>{item}</span>
                     </li>
                   ))}
@@ -137,7 +140,7 @@ export default function ProjectDetail() {
                       key={index}
                       className="font-text text-sm sm:text-base md:text-lg leading-relaxed text-foreground flex gap-3"
                     >
-                      <span className="text-primary flex-shrink-0">•</span>
+                      <span className="text-primary shrink-0">•</span>
                       <span>{item}</span>
                     </li>
                   ))}
@@ -149,7 +152,7 @@ export default function ProjectDetail() {
                 <h3 className="font-title text-lg sm:text-xl md:text-2xl mb-3 sm:mb-4 text-foreground">
                   Lessons Learned
                 </h3>
-                <p className="font-text text-sm sm:text-base md:text-lg leading-relaxed text-gray-700">
+                <p className="font-text text-sm sm:text-base md:text-lg leading-relaxed text-foreground">
                   {project.lessonsLearned}
                 </p>
               </div>
@@ -166,7 +169,7 @@ export default function ProjectDetail() {
                     rel="noopener noreferrer"
                     className="font-caption text-sm sm:text-base hover:text-foreground underline transition-colors inline-flex items-center gap-1"
                   >
-                    See project
+                    See project&apos;s repository
                     <ArrowUpRight className="w-3 h-3 sm:w-4 sm:h-4" />
                   </Link>
                 </div>

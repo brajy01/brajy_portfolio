@@ -38,7 +38,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
       </head>
-      <body className="antialiased">
+      <body className="antialiased pt-[88px]">
         <Header />
         {children}
         <Footer />

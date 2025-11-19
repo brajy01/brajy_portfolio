@@ -1,82 +1,100 @@
 import Link from "next/link";
-import { CornerDownRight } from "lucide-react";
+import { Share2, Briefcase, Code2, Mail } from "lucide-react";
 
 const socialLinks = [
   {
     name: "instagram",
     href: "https://instagram.com/username",
     label: "Visit Instagram profile",
+    icon: Share2,
   },
   {
     name: "linkedin",
     href: "https://linkedin.com/in/username",
     label: "Visit LinkedIn profile",
+    icon: Briefcase,
   },
   {
-    name: "dribbble",
-    href: "https://dribbble.com/username",
-    label: "Visit Dribbble portfolio",
+    name: "github",
+    href: "https://github.com/username",
+    label: "Visit GitHub profile",
+    icon: Code2,
   },
   {
     name: "contact",
     href: "mailto:contact@brajy.com",
     label: "Send an email",
+    icon: Mail,
   },
 ];
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer className="bg-background text-foreground py-8 md:py-16 px-6 md:px-8 lg:px-12 mt-12">
-      <h2
-        id="footer-title"
-        className="font-title text-2xl md:text-3xl text-foreground mb-8 md:mb-12"
-      >
-        Get in touch_
-      </h2>
+    <footer
+      className="bg-background text-foreground py-12 md:py-20 px-4 sm:px-6 md:px-8 lg:px-12"
+      role="contentinfo"
+    >
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="mb-12 md:mb-16">
+          <h2
+            id="footer-title"
+            className="font-title text-2xl sm:text-3xl md:text-4xl text-foreground mb-3"
+          >
+            Get in touch_
+          </h2>
+        </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-        {/* Left Column - Social Links */}
-        <nav aria-labelledby="footer-title">
-          <ul className="space-y-3">
-            {socialLinks.map((link) => (
-              <li key={link.name}>
-                <Link
-                  href={link.href}
-                  className="font-caption text-sm md:text-base underline hover:opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded px-1 transition-opacity flex items-center gap-2"
-                  aria-label={link.label}
-                >
-                  <span aria-hidden="true">
-                    <CornerDownRight height={15} width={15} />
-                  </span>
-                  <span>{link.name}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mb-12 md:mb-16">
+          {/* Social Links */}
+          <nav aria-labelledby="footer-title">
+            <ul className="space-y-2">
+              {socialLinks.map((link) => {
+                const Icon = link.icon;
+                return (
+                  <li key={link.name}>
+                    <Link
+                      href={link.href}
+                      aria-label={link.label}
+                      className="font-caption text-sm md:text-base text-foreground hover:opacity-70 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary rounded px-1 flex items-center gap-2"
+                    >
+                      <Icon className="h-4 w-4" />
+                      <span>{link.name}</span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
 
-        {/* Center Column - Contact Info */}
-        <div
-          className="font-caption text-sm md:text-base space-y-2"
-          role="contentinfo"
-        >
-          <p>Jeremy Brajon</p>
-          <p>Full-stack developer</p>
-          <p>
+          {/* Contact Info */}
+          <div role="contentinfo" className="space-y-2">
+            <p className="font-title text-sm md:text-base text-foreground">
+              Jeremy Brajon
+            </p>
+            <p className="font-caption text-xs md:text-sm text-foreground/70">
+              Full-stack developer
+            </p>
             <Link
               href="mailto:contact@brajy.com"
-              className="underline hover:opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded px-1 transition-opacity"
+              className="font-caption text-sm md:text-base underline hover:opacity-70 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary rounded px-1 block text-foreground"
             >
               contact@brajy.com
             </Link>
-          </p>
-        </div>
+          </div>
 
-        {/* Right Column - Copyright */}
-        <div className="font-caption text-sm md:text-base space-y-2 md:text-right">
-          <p className="underline">all rights reserved</p>
-          <p className="underline">2025 ©</p>
-          <p className="underline">Jeremy Brajon</p>
+          {/* Copyright */}
+          <div className="space-y-2">
+            <p className="font-caption text-xs md:text-sm text-foreground/70">
+              © {currentYear} Jeremy Brajon
+            </p>
+            <p className="font-caption text-xs md:text-sm text-foreground/70">
+              all rights reserved
+            </p>
+          </div>
         </div>
       </div>
     </footer>
