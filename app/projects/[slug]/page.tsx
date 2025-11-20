@@ -60,7 +60,7 @@ export default function ProjectDetail() {
                   </span>
                 ))}
               </div>
-              <p className="font-text text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed text-foreground">
+              <p className="font-text text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed text-foreground text-justify">
                 {project.heroDescription}
               </p>
             </div>
@@ -106,7 +106,7 @@ export default function ProjectDetail() {
                 <h3 className="font-title text-lg sm:text-xl md:text-2xl mb-3 sm:mb-4 text-foreground">
                   Overview
                 </h3>
-                <p className="font-text text-sm sm:text-base md:text-lg leading-relaxed text-foreground">
+                <p className="font-text text-sm sm:text-base md:text-lg leading-relaxed text-foreground text-justify">
                   {project.overview}
                 </p>
               </div>
@@ -120,7 +120,7 @@ export default function ProjectDetail() {
                   {project.problemApproach.map((item, index) => (
                     <li
                       key={index}
-                      className="font-text text-sm sm:text-base md:text-lg leading-relaxed text-foreground flex gap-3"
+                      className="font-text text-sm sm:text-base md:text-lg leading-relaxed text-foreground flex gap-3 text-justify"
                     >
                       <span className="text-primary shrink-0">•</span>
                       <span>{item}</span>
@@ -138,7 +138,7 @@ export default function ProjectDetail() {
                   {project.impact.map((item, index) => (
                     <li
                       key={index}
-                      className="font-text text-sm sm:text-base md:text-lg leading-relaxed text-foreground flex gap-3"
+                      className="font-text text-sm sm:text-base md:text-lg leading-relaxed text-foreground flex gap-3 text-justify"
                     >
                       <span className="text-primary shrink-0">•</span>
                       <span>{item}</span>
@@ -152,7 +152,7 @@ export default function ProjectDetail() {
                 <h3 className="font-title text-lg sm:text-xl md:text-2xl mb-3 sm:mb-4 text-foreground">
                   Lessons Learned
                 </h3>
-                <p className="font-text text-sm sm:text-base md:text-lg leading-relaxed text-foreground">
+                <p className="font-text text-sm sm:text-base md:text-lg leading-relaxed text-foreground text-justify">
                   {project.lessonsLearned}
                 </p>
               </div>
@@ -160,7 +160,7 @@ export default function ProjectDetail() {
               {/* GitHub Section */}
               {project.projectDetails.githubUrl && (
                 <div>
-                  <p className="font-caption text-xs sm:text-sm text-primary mb-2">
+                  <p className="font-caption text-xs sm:text-sm text-primary mb-1">
                     _github
                   </p>
                   <Link

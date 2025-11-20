@@ -153,7 +153,7 @@ export default function About() {
           <p className="font-caption text-xs md:text-sm">_hello world</p>
         </div>
 
-        <p className="font-text text-base sm:text-lg md:text-xl leading-relaxed text-foreground max-w-3xl">
+        <p className="font-text text-base sm:text-lg md:text-xl leading-relaxed text-foreground max-w-3xl text-justify">
           I transform operational data into actionable business insights. With
           4+ years managing €2M operations and 50+ person teams, I discovered
           that data systems solve what processes alone cannot. Now combining
@@ -165,11 +165,11 @@ export default function About() {
 
       {/* Experience Section */}
       <section
-        className="py-12 sm:py-16 md:py-24 px-4 sm:px-6 md:px-8 lg:px-12"
+        className="py-4 sm:py-6 md:py-8 px-4 sm:px-6 md:px-8 lg:px-12"
         role="region"
         aria-labelledby="experience-title"
       >
-        <div className="space-y-16 sm:space-y-20 md:space-y-24">
+        <div className="space-y-8 sm:space-y-12 md:space-y-16">
           {experiences.map((exp) => (
             <div key={exp.id} className="max-w-7xl mx-auto w-full">
               {/* Title - Full width */}
@@ -187,7 +187,7 @@ export default function About() {
                     {exp.highlights.map((highlight, idx) => (
                       <li
                         key={idx}
-                        className="font-text text-sm sm:text-base md:text-lg leading-relaxed text-foreground flex gap-3"
+                        className="font-text text-sm sm:text-base md:text-lg leading-relaxed text-foreground flex gap-3 text-justify"
                       >
                         <span className="text-primary shrink-0">•</span>
                         <span>{highlight}</span>
@@ -195,13 +195,13 @@ export default function About() {
                     ))}
                   </ul>
 
-                  {/* Skills - Mobile */}
-                  <div className="md:hidden mt-6 sm:mt-8">
+                  {/* Skills */}
+                  <div className="mt-6 sm:mt-8">
                     {exp.skills &&
                       exp.skills.map((skillGroup, groupIdx) => (
                         <div key={groupIdx} className="mb-6 sm:mb-6">
-                          <p className="font-title text-sm mb-2 sm:mb-3">
-                            _{skillGroup.category}
+                          <p className="font-title text-lg sm:text-xl md:text-2xl mb-3 sm:mb-4 text-foreground">
+                            {skillGroup.category}
                           </p>
                           <div className="flex flex-wrap gap-2 sm:gap-3">
                             {skillGroup.items.map((skill, idx) => (
@@ -218,28 +218,7 @@ export default function About() {
                   </div>
                 </div>
                 <div className="hidden md:block md:col-span-1" />
-
-                {/* Skills - Desktop */}
-                <div className="hidden md:flex md:col-span-1 flex-col justify-end">
-                  {exp.skills &&
-                    exp.skills.map((skillGroup, groupIdx) => (
-                      <div key={groupIdx} className="mb-4 last:mb-0">
-                        <p className="font-caption text-xs md:text-sm mb-2 md:mb-3 text-right">
-                          _{skillGroup.category}
-                        </p>
-                        <div className="flex flex-wrap gap-1.5 md:gap-2 items-end justify-end">
-                          {skillGroup.items.map((skill, idx) => (
-                            <span
-                              key={idx}
-                              className="font-caption text-xs px-2 sm:px-3 py-1 border border-primary text-primary rounded-full text-center"
-                            >
-                              {skill}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                </div>
+                <div className="md:col-span-1" />
               </div>
             </div>
           ))}

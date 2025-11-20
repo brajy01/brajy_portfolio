@@ -77,7 +77,7 @@ export default function Contact() {
           </p>
         </div>
 
-        <p className="font-text text-base sm:text-lg md:text-xl leading-relaxed text-foreground max-w-3xl">
+        <p className="font-text text-base sm:text-lg md:text-xl leading-relaxed text-foreground max-w-3xl text-justify">
           Have a project in mind or want to discuss data analytics, business intelligence, or web development? I'd love to hear from you. Get in touch and let's explore how we can work together.
         </p>
       </section>
