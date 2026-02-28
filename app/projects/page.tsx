@@ -16,7 +16,7 @@ export default function Projects() {
           <h1 className="font-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight text-foreground">
             All Projects_
           </h1>
-          <div className="flex justify-between items-end mt-1 mb-8 pb-8 border-b border-border">
+          <div className="flex justify-between items-end mt-1 mb-4 md:mb-8 pb-4 md:pb-8 border-b border-border">
             <p className="font-caption text-xs sm:text-sm md:text-2xl text-primary">
               A selection of recent work
             </p>
@@ -32,7 +32,7 @@ export default function Projects() {
         </AnimateOnScroll>
 
         {/* Projects Grid */}
-        <div className="space-y-12 md:space-y-16 pt-8">
+        <div className="space-y-6 md:space-y-16 pt-4 md:pt-8">
           {projects.map((project, index) => (
             <AnimateOnScroll key={project.id} delay={index * 100}>
               <ProjectCard project={project} />

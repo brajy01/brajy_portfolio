@@ -4,8 +4,6 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { useHideOnScroll } from "@/hooks/useHideOnScroll";
 import MobileMenu from "./mobile-menu";
 
@@ -48,7 +46,7 @@ export default function Header() {
           isHeaderVisible ? "translate-y-0" : "-translate-y-full"
         }`}
       >
-        <Link href="/">
+        <Link href="/" onClick={() => setIsMenuOpen(false)} className="z-[60]">
           <Image
             src="/logomark/white.svg"
             alt="Brajy"
@@ -73,16 +71,34 @@ export default function Header() {
         </nav>
 
         {/* Mobile menu button */}
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => setIsMenuOpen(true)}
-          className="md:hidden text-background hover:text-background/70 hover:bg-transparent"
-          aria-label="Open menu"
+        <button
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="relative md:hidden flex items-center justify-center size-12 text-background hover:text-background/70 z-[60]"
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           aria-expanded={isMenuOpen}
         >
-          <Menu size={28} />
-        </Button>
+          <span className="flex flex-col items-center justify-center gap-[6px]">
+            <span
+              className={`block h-[2.5px] w-7 rounded-full bg-current transition-all duration-300 ease-in-out origin-center ${
+                isMenuOpen
+                  ? "translate-y-[8.5px] rotate-45"
+                  : ""
+              }`}
+            />
+            <span
+              className={`block h-[2.5px] w-7 rounded-full bg-current transition-all duration-300 ease-in-out origin-center ${
+                isMenuOpen ? "opacity-0 scale-x-0" : "opacity-100 scale-x-100"
+              }`}
+            />
+            <span
+              className={`block h-[2.5px] w-7 rounded-full bg-current transition-all duration-300 ease-in-out origin-center ${
+                isMenuOpen
+                  ? "-translate-y-[8.5px] -rotate-45"
+                  : ""
+              }`}
+            />
+          </span>
+        </button>
       </header>
 
       {/* Mobile menu */}

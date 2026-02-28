@@ -2,8 +2,6 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { X } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 
 interface MobileMenuProps {
@@ -28,7 +26,7 @@ const MobileNavLink = ({
       onClick={onClose}
       className="group relative inline-block text-4xl font-title text-background"
     >
-      <span>
+      <span className="relative inline-block">
         {label}
         <span
           className={`absolute bottom-0 left-0 right-0 h-0.5 bg-background transition-transform duration-300 origin-center ${
@@ -74,7 +72,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
     <>
       {/* Overlay backdrop */}
       <div
-        className={`fixed inset-0 bg-foreground/30 z-40 transition-opacity duration-300 ${
+        className={`fixed inset-0 bg-foreground/30 z-30 transition-opacity duration-300 ${
           isAnimatingIn ? "opacity-100" : "opacity-0"
         }`}
         onClick={onClose}
@@ -84,21 +82,10 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
       {/* Mobile menu content */}
       <div
-        className={`fixed inset-0 bg-primary z-50 flex flex-col items-center justify-center md:hidden transition-opacity duration-300 ${
+        className={`fixed inset-0 bg-primary z-40 flex flex-col items-center justify-center md:hidden transition-opacity duration-300 ${
           isAnimatingIn ? "opacity-100" : "opacity-0"
         }`}
       >
-        {/* Close button */}
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={onClose}
-          className="absolute top-4 right-6 text-background hover:text-background/70 hover:bg-transparent"
-          aria-label="Close menu"
-        >
-          <X size={28} />
-        </Button>
-
         {/* Navigation links */}
         <nav className="flex flex-col space-y-8 text-center">
           <MobileNavLink

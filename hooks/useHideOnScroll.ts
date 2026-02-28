@@ -1,56 +1,45 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+
+const SCROLL_DOWN_THRESHOLD = 40; // px of cumulative scroll-down before hiding
+const TOP_ZONE = 200; // always show header when within this distance from top
 
 export const useHideOnScroll = () => {
   const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const [scrollUpTimeout, setScrollUpTimeout] = useState<NodeJS.Timeout | null>(
-    null
-  );
+  const lastScrollY = useRef(0);
+  const cumulativeDelta = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      // Si on est au très haut de la page, toujours montrer le header
-      if (currentScrollY < 10) {
+      // Always show header near the top of the page
+      if (currentScrollY < TOP_ZONE) {
         setIsVisible(true);
-        setLastScrollY(currentScrollY);
+        lastScrollY.current = currentScrollY;
+        cumulativeDelta.current = 0;
         return;
       }
 
-      // Si on scroll vers le bas, cacher le header immédiatement
-      if (currentScrollY > lastScrollY) {
-        // Effacer le timeout précédent si on scroll vers le bas
-        if (scrollUpTimeout) {
-          clearTimeout(scrollUpTimeout);
-          setScrollUpTimeout(null);
+      const delta = currentScrollY - lastScrollY.current;
+
+      if (delta > 0) {
+        // Scrolling down — accumulate distance
+        cumulativeDelta.current += delta;
+        if (cumulativeDelta.current > SCROLL_DOWN_THRESHOLD) {
+          setIsVisible(false);
         }
-        setIsVisible(false);
-      }
-      // Si on scroll vers le haut, ajouter un délai avant d'afficher le header
-      else {
-        // Effacer le timeout précédent
-        if (scrollUpTimeout) {
-          clearTimeout(scrollUpTimeout);
-        }
-        // Ajouter un délai avant de montrer le header
-        const timeout = setTimeout(() => {
-          setIsVisible(true);
-        }, 5);
-        setScrollUpTimeout(timeout);
+      } else {
+        // Scrolling up — show immediately, reset accumulator
+        cumulativeDelta.current = 0;
+        setIsVisible(true);
       }
 
-      setLastScrollY(currentScrollY);
+      lastScrollY.current = currentScrollY;
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (scrollUpTimeout) {
-        clearTimeout(scrollUpTimeout);
-      }
-    };
-  }, [lastScrollY, scrollUpTimeout]);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return isVisible;
 };

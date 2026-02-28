@@ -11,7 +11,7 @@ export default function LatestProjects() {
     <section className="py-20 md:py-28 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20">
       <div className="max-w-[1400px] mx-auto">
         <AnimateOnScroll>
-          <div className="flex justify-between items-end mb-8 pb-8 border-b border-border text-primary">
+          <div className="flex justify-between items-end mb-4 md:mb-8 pb-4 md:pb-8 border-b border-border text-primary">
             <h2 className="font-title text-4xl md:text-5xl">Latest Projects_</h2>
             <Typewriter
               text={`_${new Date().getFullYear()}`}
@@ -25,7 +25,7 @@ export default function LatestProjects() {
         </AnimateOnScroll>
 
         {/* Projects Grid */}
-        <div className="space-y-12 md:space-y-16 pt-8">
+        <div className="space-y-6 md:space-y-16 pt-4 md:pt-8">
           {latestProjects.map((project, index) => (
             <AnimateOnScroll key={project.id} delay={index * 100}>
               <ProjectCard project={project} />
