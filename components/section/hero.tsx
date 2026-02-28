@@ -144,7 +144,7 @@ export default function Hero() {
                 ? "bg-primary-foreground"
                 : "bg-transparent hover:bg-primary-foreground"
             }`}
-            aria-label="Learn more about Jeremy Brajon"
+            aria-label="Learn more about Brajy"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
