@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import { projects } from "@/data/projects";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import AnimateOnScroll from "@/components/ui/animate-on-scroll";
+import ProjectImage from "@/components/ui/project-image";
 
 interface ProjectDetailProps {
   slug: string;
@@ -96,11 +96,10 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
       {/* Project Image - Full width */}
       <section className="relative w-full">
         <div className="relative w-full h-64 sm:h-80 md:h-[500px] lg:h-[600px]">
-          <Image
+          <ProjectImage
             src={project.heroImage}
+            overlayImage={project.heroOverlayImage}
             alt={`${project.projectName} - Main project image`}
-            fill
-            className="object-cover"
             priority
             sizes="100vw"
           />
@@ -201,6 +200,26 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
                   </div>
                 </AnimateOnScroll>
               )}
+
+              {/* Live Site Section */}
+              {project.projectDetails.liveUrl && (
+                <AnimateOnScroll>
+                  <div className="mt-4">
+                    <p className="font-caption text-xs sm:text-sm text-primary mb-1">
+                      _live site
+                    </p>
+                    <Link
+                      href={project.projectDetails.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-caption text-sm sm:text-base animated-underline transition-colors inline-flex items-center gap-1"
+                    >
+                      Visit the website
+                      <ArrowUpRight className="w-3 h-3 sm:w-4 sm:h-4" />
+                    </Link>
+                  </div>
+                </AnimateOnScroll>
+              )}
             </div>
 
             {/* Project Details - Right side (sticky on desktop) */}
@@ -274,11 +293,10 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
           {project.projectImages.map((image, index) => (
             <figure key={index} className="relative w-full">
               <div className="relative w-full h-64 sm:h-80 md:h-[500px] lg:h-[600px]">
-                <Image
+                <ProjectImage
                   src={image}
+                  overlayImage={project.projectOverlayImages?.[index]}
                   alt={`${project.projectName} - Gallery image ${index + 1}`}
-                  fill
-                  className="object-cover"
                   loading={index === 0 ? "eager" : "lazy"}
                   sizes="100vw"
                 />

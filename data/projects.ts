@@ -4,6 +4,7 @@ export interface Project {
   slug: string;
   description: string;
   image: string;
+  overlayImage?: string;
   tags: string[];
   category: string;
   month: string;
@@ -13,18 +14,21 @@ export interface Project {
   role: string;
   heroDescription: string;
   heroImage: string;
+  heroOverlayImage?: string;
   overview: string;
   technologies: string[];
   problemApproach: string[];
   impact: string[];
   lessonsLearned: string;
   projectImages: string[];
+  projectOverlayImages?: string[];
   projectDetails: {
     client: string;
     industry: string;
     work: string[];
     date: string;
     githubUrl?: string;
+    liveUrl?: string;
   };
 }
 
@@ -199,44 +203,51 @@ export const projects: Project[] = [
   },
   {
     id: "5",
-    title: "Marks Uhren - Reimagining and Relaunching a Luxury Watch Boutique",
-    slug: "marks-uhren",
-    description: "Complete rebranding and digital transformation of a luxury watch retailer",
-    image: "/mesh/GRADIENT_FULL_2.png",
-    tags: ["Branding", "Brand Strategy", "Frontend Development", "UI / UX Design"],
-    category: "Luxury",
+    title: "Barbara Freitas - A Modern Dental Practice Website",
+    slug: "barbara-freitas",
+    description: "Professional dental practice website for Dr. Barbara Freitas, a dental therapist in Brighton, UK",
+    image: "/projects/barbara-freitas/card.jpg",
+    overlayImage: "/mesh/GRADIENT_FULL_2.png",
+    tags: ["Frontend Development", "UI / UX Design", "Web Design", "Astro"],
+    category: "Development",
     month: "february",
     year: 2025,
-    projectName: "Marks Uhren",
-    role: "Full-Stack Designer & Developer",
-    heroDescription: "Marks Uhren is more than just a watch retailer. It's a gateway to horological excellence, curated for connoisseurs who understand the craft. With rare timepieces and expert guidance, it seamlessly connects collectors with their next prized possession, delivering exceptional experiences in the world of haute horlogerie.",
-    heroImage: "/mesh/GRADIENT_FULL_2.png",
-    overview: "Marks Uhren is a prestigious luxury watch boutique that underwent complete digital transformation to establish itself as a leader in fine timepiece retail. The challenge was to reimagine the brand identity and create a digital experience that reflects the sophistication, expertise, and exclusivity of luxury horology.",
-    technologies: ["Next.js", "React", "TypeScript", "Stripe", "Shopify", "Adobe Creative Suite"],
+    projectName: "Barbara Freitas",
+    role: "Designer & Frontend Developer",
+    heroDescription: "Barbara Freitas is not just a dental practice website. It's a digital experience designed to build trust and connect patients with exceptional care. With a modern purple palette and clean layouts, it seamlessly guides visitors from first impression to booking, delivering confidence and clarity at every step.",
+    heroImage: "/projects/barbara-freitas/hero.jpg",
+    heroOverlayImage: "/mesh/GRADIENT_FULL_2.png",
+    overview: "barbarafreitas.com is a professional website for Dr. Barbara Freitas, a dental therapist based in Brighton, UK. The challenge was to create an elegant, trustworthy digital presence that reflects her clinical expertise and warm patient approach, while driving appointment bookings through intuitive navigation and compelling visual storytelling.",
+    technologies: ["Astro", "TypeScript", "Tailwind CSS", "Responsive Design", "SEO"],
     problemApproach: [
-      "Legacy brand needed complete repositioning in competitive luxury watch market",
-      "Redesigned brand identity to communicate expertise, exclusivity, and craftsmanship",
-      "Built luxury e-commerce platform with expert consultation booking system",
-      "Integrated inventory management with real-time product availability and pricing"
+      "The practice needed a modern web presence that conveys professionalism and approachability in equal measure",
+      "Designed a clean, contemporary interface with a refined purple color palette that reinforces the brand identity",
+      "Built with Astro for exceptional page speed and SEO performance, critical for local healthcare discovery",
+      "Implemented key patient-facing features including a clinical cases gallery, testimonials, and integrated contact options with WhatsApp"
     ],
     impact: [
-      "Increased online sales by 320% within first 6 months post-launch",
-      "Attracted collectors from 45+ countries through new digital presence",
-      "Average order value increased by 180% through improved product presentation",
-      "Ranked #1 in luxury watch retail SEO within competitive market"
+      "Delivered a fully responsive site with Lighthouse scores above 95 across all metrics",
+      "Streamlined patient acquisition through prominent CTAs and WhatsApp integration",
+      "Showcased clinical expertise through a curated before-and-after gallery",
+      "Improved local search visibility through semantic HTML and structured data"
     ],
-    lessonsLearned: "Gained deep expertise in luxury brand positioning and high-end e-commerce. Learned how to balance aesthetics with functionality and the importance of understanding niche markets. Discovered how strategic branding combined with technical excellence can completely transform a business.",
+    lessonsLearned: "Gained valuable experience in designing for the healthcare sector, where trust and accessibility are paramount. Learned how Astro's island architecture delivers outstanding performance for content-driven sites, and how thoughtful color choices and typography can shape the emotional tone of a professional practice.",
     projectImages: [
+      "/projects/barbara-freitas/gallery-1.jpg",
+      "/projects/barbara-freitas/gallery-2.jpg",
+      "/projects/barbara-freitas/gallery-3.jpg",
+    ],
+    projectOverlayImages: [
       "/mesh/GRADIENT_FULL_3.png",
       "/mesh/GRADIENT_ORANGE-WHITE_1.png",
       "/mesh/GRADIENT_N&B_2.png",
     ],
     projectDetails: {
-      client: "Marks Uhren",
-      industry: "Luxury Watches",
-      work: ["Branding", "Brand Strategy", "Frontend Development", "UI / UX Design"],
+      client: "Dr. Barbara Freitas",
+      industry: "Healthcare / Dentistry",
+      work: ["Web Design", "Frontend Development", "UI / UX Design"],
       date: "february 2025",
-      githubUrl: "https://github.com/yourusername/marks-uhren-ecommerce",
+      liveUrl: "https://barbarafreitas.com",
     },
   },
 ];

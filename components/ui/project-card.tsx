@@ -1,6 +1,6 @@
 import Link from "next/link";
-import Image from "next/image";
 import type { Project } from "@/data/projects";
+import ProjectImage from "@/components/ui/project-image";
 
 interface ProjectCardProps {
   project: Project;
@@ -32,13 +32,15 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       {/* Image - Left side */}
       {/* Nested border-radius rule: inner = outer - padding → 12px - 16px ≈ clamp to ~4px for visual harmony */}
       <div className="md:col-span-4 relative w-full h-64 sm:h-80 md:h-[500px] lg:h-[600px] overflow-hidden rounded-[4px]">
-        <Image
-          src={project.image}
-          alt={project.title}
-          fill
-          className="object-cover transition-transform duration-500 ease-out group-hover/card:scale-105"
-        />
-        <div className="absolute inset-0 bg-foreground/0 group-hover/card:bg-foreground/10 transition-colors duration-500" />
+        <div className="relative w-full h-full transition-transform duration-500 ease-out group-hover/card:scale-105">
+          <ProjectImage
+            src={project.image}
+            overlayImage={project.overlayImage}
+            alt={project.title}
+            sizes="(max-width: 768px) 100vw, 80vw"
+          />
+        </div>
+        <div className="absolute inset-0 bg-foreground/0 group-hover/card:bg-foreground/10 transition-colors duration-500 pointer-events-none" />
       </div>
 
       {/* Right side content */}
