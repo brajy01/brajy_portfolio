@@ -1,7 +1,12 @@
+import type { Metadata } from "next";
 import { projects } from "@/data/projects";
 import AnimateOnScroll from "@/components/ui/animate-on-scroll";
 import ProjectCard from "@/components/ui/project-card";
 import Typewriter from "@/components/ui/typewriter";
+
+export const metadata: Metadata = {
+  title: "Projects",
+};
 
 export default function Projects() {
   return (

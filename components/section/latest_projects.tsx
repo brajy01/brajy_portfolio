@@ -12,7 +12,7 @@ export default function LatestProjects() {
       <div className="max-w-[1400px] mx-auto">
         <AnimateOnScroll>
           <div className="flex justify-between items-end mb-8 pb-8 border-b border-border text-primary">
-            <h1 className="font-title text-4xl md:text-5xl">Latest Projects_</h1>
+            <h2 className="font-title text-4xl md:text-5xl">Latest Projects_</h2>
             <Typewriter
               text={`_${new Date().getFullYear()}`}
               speed={60}

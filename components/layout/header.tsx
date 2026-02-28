@@ -51,7 +51,7 @@ export default function Header() {
         <Link href="/">
           <Image
             src="/logomark/white.svg"
-            alt="logomark white"
+            alt="Brajy"
             width={56}
             height={56}
           />
