@@ -203,4 +203,101 @@ body {
     font-family: var(--font-caption);
     font-weight: 400;
   }
+
+  /* Scroll-reveal animation */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Animated underline (left-to-right sweep) */
+  .animated-underline {
+    position: relative;
+    text-decoration: none;
+  }
+
+  .animated-underline::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    background: currentColor;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .animated-underline:hover::after {
+    clip-path: inset(0 0 0 0);
+  }
+
+  [class*="group/card"]:hover .animated-underline::after {
+    clip-path: inset(0 0 0 0);
+  }
+
+  /* Animated underline — orange variant */
+  .animated-underline-orange {
+    position: relative;
+    text-decoration: none;
+  }
+
+  .animated-underline-orange::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    background: var(--primary);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .animated-underline-orange:hover::after {
+    clip-path: inset(0 0 0 0);
+  }
+
+  /* Page entrance fade */
+  .page-enter {
+    animation: page-enter 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Accessibility: respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .page-enter {
+    animation: none;
+    opacity: 1;
+  }
+
+  .animated-underline::after,
+  .animated-underline-orange::after {
+    transition: none;
+  }
 }

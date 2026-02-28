@@ -1,7 +1,9 @@
 "use client";
 
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 
 interface MobileMenuProps {
@@ -40,32 +42,62 @@ const MobileNavLink = ({
 
 export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const pathname = usePathname();
+  const [isMounted, setIsMounted] = useState(false);
+  const [isAnimatingIn, setIsAnimatingIn] = useState(false);
 
   const isActive = (href: string) => {
     return pathname === href || pathname.startsWith(href + "/");
   };
 
-  if (!isOpen) return null;
+  useEffect(() => {
+    if (isOpen) {
+      setIsMounted(true);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setIsAnimatingIn(true);
+        });
+      });
+    } else if (isMounted) {
+      setIsAnimatingIn(false);
+    }
+  }, [isOpen, isMounted]);
+
+  const handleTransitionEnd = useCallback(() => {
+    if (!isOpen && !isAnimatingIn) {
+      setIsMounted(false);
+    }
+  }, [isOpen, isAnimatingIn]);
+
+  if (!isMounted) return null;
 
   return (
     <>
       {/* Overlay backdrop */}
       <div
-        className="fixed inset-0 bg-black/30 z-40 animate-in fade-in duration-300"
+        className={`fixed inset-0 bg-foreground/30 z-40 transition-opacity duration-300 ${
+          isAnimatingIn ? "opacity-100" : "opacity-0"
+        }`}
         onClick={onClose}
+        onTransitionEnd={handleTransitionEnd}
         aria-label="Close menu"
       />
 
       {/* Mobile menu content */}
-      <div className="fixed inset-0 bg-primary z-50 flex flex-col items-center justify-center animate-in fade-in duration-300 md:hidden">
+      <div
+        className={`fixed inset-0 bg-primary z-50 flex flex-col items-center justify-center md:hidden transition-opacity duration-300 ${
+          isAnimatingIn ? "opacity-100" : "opacity-0"
+        }`}
+      >
         {/* Close button */}
-        <button
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 text-background hover:opacity-70 transition-opacity"
+          className="absolute top-4 right-6 text-background hover:text-background/70 hover:bg-transparent"
           aria-label="Close menu"
         >
-          <X size={32} />
-        </button>
+          <X size={28} />
+        </Button>
 
         {/* Navigation links */}
         <nav className="flex flex-col space-y-8 text-center">

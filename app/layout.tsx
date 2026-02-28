@@ -40,7 +40,9 @@ export default function RootLayout({
       </head>
       <body className="antialiased pt-[88px]">
         <Header />
-        {children}
+        <main className="page-enter">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>

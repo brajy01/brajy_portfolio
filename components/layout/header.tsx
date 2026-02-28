@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { useHideOnScroll } from "@/hooks/useHideOnScroll";
 import MobileMenu from "./mobile-menu";
 
@@ -43,7 +44,7 @@ export default function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 bg-primary flex items-center justify-between p-4 z-50 transition-transform duration-300 ${
+        className={`fixed top-0 left-0 right-0 bg-primary flex items-center justify-between px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 py-4 z-50 transition-transform duration-300 ${
           isHeaderVisible ? "translate-y-0" : "-translate-y-full"
         }`}
       >
@@ -51,13 +52,13 @@ export default function Header() {
           <Image
             src="/logomark/white.svg"
             alt="logomark white"
-            width={70}
-            height={70}
+            width={56}
+            height={56}
           />
         </Link>
 
         {/* Desktop navigation */}
-        <nav className="hidden md:flex space-x-6 font-title text-background">
+        <nav className="hidden md:flex items-center space-x-6 font-title text-background">
           <NavLink href="/about" label="About" isActive={isActive("/about")} />
           <NavLink
             href="/projects"
@@ -72,14 +73,16 @@ export default function Header() {
         </nav>
 
         {/* Mobile menu button */}
-        <button
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={() => setIsMenuOpen(true)}
-          className="md:hidden p-2 text-background hover:opacity-70 transition-opacity"
+          className="md:hidden text-background hover:text-background/70 hover:bg-transparent"
           aria-label="Open menu"
           aria-expanded={isMenuOpen}
         >
-          <Menu size={32} />
-        </button>
+          <Menu size={28} />
+        </Button>
       </header>
 
       {/* Mobile menu */}
