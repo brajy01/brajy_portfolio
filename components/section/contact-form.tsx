@@ -90,7 +90,7 @@ export default function ContactForm() {
       </section>
 
       {/* Contact Form Section */}
-      <section className="py-12 sm:py-16 md:py-24 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20">
+      <section className="pt-0 pb-16 sm:pb-20 md:pt-12 md:pb-24 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20">
         <AnimateOnScroll className="max-w-2xl mx-auto w-full">
           <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
             {/* Name Field */}
@@ -174,7 +174,7 @@ export default function ContactForm() {
             </div>
 
             {/* Submit Button */}
-            <div>
+            <div className="flex justify-center pt-2">
               <Button
                 variant="outline"
                 type="submit"
