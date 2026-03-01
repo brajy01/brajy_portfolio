@@ -4,8 +4,8 @@ import ProjectCard from "@/components/ui/project-card";
 import Typewriter from "@/components/ui/typewriter";
 
 export default function LatestProjects() {
-  // Get the 3 latest projects (last 3 from the array)
-  const latestProjects = projects.slice(-3);
+  // Get the 3 latest projects (first 3 from the array)
+  const latestProjects = projects.slice(0, 3);
 
   return (
     <section className="py-20 md:py-28 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20">
