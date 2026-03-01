@@ -13,8 +13,8 @@ export default function AboutContent() {
       period: "In progress",
       highlights: [
         "Progressing through Python & Pandas for data manipulation, cleaning, and analysis",
-        "Mastering SQL from basic queries to advanced optimization techniques",
-        "Developing data visualization skills for effective storytelling with charts and plots",
+        "Mastering SQL from basic queries to advanced optimisation techniques",
+        "Developing data visualisation skills for effective storytelling with charts and plots",
         "Learning machine learning fundamentals: supervised models, feature engineering, handling missing data",
         "Applying time series forecasting and statistical analysis to real-world agricultural data",
       ],
@@ -23,8 +23,8 @@ export default function AboutContent() {
           category: "Data & Analytics",
           items: [
             "Python (Pandas, NumPy)",
-            "SQL (Queries, Optimization)",
-            "Data Visualization",
+            "SQL (Queries, Optimisation)",
+            "Data Visualisation",
             "Statistical Analysis",
             "Time Series Forecasting",
           ],
@@ -40,15 +40,15 @@ export default function AboutContent() {
         "Managed data-driven operations for 50+ international seasonal employees during peak production (400+ tons strawberries/year)",
         "Developed comprehensive tracking systems using Google Sheets and Notion for real-time inventory management and KPI dashboards",
         "Implemented automation tools reducing manual administrative work by 60%",
-        "Conducted yield analysis, cost modeling, and pricing strategies with major retailers (Système U, Grand Frais)",
-        "Realized that operational problems require better data systems—sparked the transition to Business Intelligence",
+        "Conducted yield analysis, cost modelling, and pricing strategies with major retailers (Système U, Grand Frais)",
+        "Realised that operational problems require better data systems—sparked the transition to Business Intelligence",
       ],
       skills: [
         {
           category: "Data & Analytics",
           items: [
             "Excel (Advanced)",
-            "Data Visualization",
+            "Data Visualisation",
             "KPI Development",
             "Exploratory Data Analysis",
           ],
@@ -74,7 +74,7 @@ export default function AboutContent() {
         "Mastered full-stack JavaScript development with focus on Frontend (React, Tailwind CSS) and Backend (Node.js, Express, PostgreSQL)",
         "Learned Git, Agile methodology, CI/CD basics, and unit testing through real project work",
         "Completed multiple full-stack applications with team collaboration and code reviews",
-        "Realized true passion lies at intersection of operations and data rather than pure engineering",
+        "Realised true passion lies at intersection of operations and data rather than pure engineering",
       ],
       skills: [
         {
@@ -129,7 +129,7 @@ export default function AboutContent() {
       company: "Uptime - Language School",
       period: "Apr. 2019 - Nov. 2019",
       highlights: [
-        "Delivered customized training programs using data-driven teaching methodology and performance tracking",
+        "Delivered customised training programmes using data-driven teaching methodology and performance tracking",
         "Applied cross-cultural communication strategies in international immersion environment (Brazil)",
         "Developed Portuguese language proficiency and deep understanding of Brazilian business culture",
         "Built foundation for multilingual professional positioning (FR/EN/PT/ES)",
@@ -231,20 +231,20 @@ export default function AboutContent() {
                   <div className="border-t border-border mb-8 sm:mb-10 md:mb-12" />
                 )}
 
-                {/* Index + Title */}
+                {/* Index + Title + Caption */}
                 <div className="flex items-baseline gap-2 sm:gap-3">
                   <span className="font-caption text-sm sm:text-base md:text-lg text-primary shrink-0">
                     {String(index + 1).padStart(2, "0")} &raquo;
                   </span>
-                  <h3 className="font-title text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight">
-                    {exp.position}
-                  </h3>
+                  <div>
+                    <h3 className="font-title text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight">
+                      {exp.position}
+                    </h3>
+                    <p className="font-caption text-xs sm:text-sm md:text-lg text-primary mt-1 mb-6 sm:mb-8">
+                      {exp.company} | {exp.period}
+                    </p>
+                  </div>
                 </div>
-
-                {/* Company/period - tight under title */}
-                <p className="font-caption text-xs sm:text-sm md:text-lg text-primary mt-1 mb-6 sm:mb-8 md:pl-12 lg:pl-16">
-                  {exp.company} | {exp.period}
-                </p>
 
                 {/* Content grid: highlights left, skills right */}
                 <div className="flex flex-col md:flex-row md:justify-between gap-6 sm:gap-8">
