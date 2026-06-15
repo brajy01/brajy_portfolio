@@ -1,17 +1,35 @@
 "use client";
 
 import { useState, useCallback, useEffect, useRef } from "react";
-import { AnimatePresence } from "@/components/ui/motion";
 import Link from "next/link";
-import { motion, easings } from "@/components/ui/motion";
+import { motion, easings, AnimatePresence } from "@/components/ui/motion";
+import { cn } from "@/lib/utils";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import Typewriter from "@/components/ui/typewriter";
+import HeroBackground from "@/components/ui/hero-background";
 
 const paragraphs = [
   "+4 years in operations taught me where processes break and where better decisions start",
   "I learned to build the tools to fix what I used to solve by hand",
   "Fluent in 4 languages, thanks to years working internationally",
 ];
+
+// Counter-clockwise rounded-rect path from the bottom-right corner — drives the
+// button's animated border draw.
+function roundedRectPath(w: number, h: number, r = 4) {
+  if (w <= 0 || h <= 0) return "";
+  return [
+    `M ${w - r} ${h}`,
+    `L ${r} ${h}`,
+    `Q 0 ${h} 0 ${h - r}`,
+    `L 0 ${r}`,
+    `Q 0 0 ${r} 0`,
+    `L ${w - r} 0`,
+    `Q ${w} 0 ${w} ${r}`,
+    `L ${w} ${h - r}`,
+    `Q ${w} ${h} ${w - r} ${h}`,
+  ].join(" ");
+}
 
 export default function Hero() {
   const prefersReducedMotion = useReducedMotion();
@@ -21,15 +39,17 @@ export default function Hero() {
   const [isHovered, setIsHovered] = useState(false);
   const buttonRef = useRef<HTMLAnchorElement>(null);
   const [buttonSize, setButtonSize] = useState({ w: 0, h: 0 });
-  const [skipTypewriter] = useState(() => {
-    if (typeof window === "undefined") return false;
+  // Decide whether to skip the typewriter only after mount, so SSR and the
+  // first client render produce identical HTML (no hydration mismatch).
+  const [skipTypewriter, setSkipTypewriter] = useState(false);
+  useEffect(() => {
     const isMobile = window.innerWidth < 640;
     const hasVisited = sessionStorage.getItem("hero-animated");
     if (!hasVisited) {
       sessionStorage.setItem("hero-animated", "true");
     }
-    return isMobile || !!hasVisited;
-  });
+    if (isMobile || hasVisited) setSkipTypewriter(true);
+  }, []);
 
   const handleTitleComplete = useCallback(() => {
     setTitleDone(true);
@@ -53,34 +73,18 @@ export default function Hero() {
     return () => window.removeEventListener("resize", measure);
   }, [allParagraphsDone]);
 
-  // Build the counter-clockwise path starting from bottom-right
-  const r = 4;
   const w = buttonSize.w;
   const h = buttonSize.h;
-  // Start at bottom-right (before the corner radius), go left along bottom,
-  // up along left, right along top, down along right, back to start
-  const borderPath =
-    w > 0 && h > 0
-      ? [
-          `M ${w - r} ${h}`,
-          `L ${r} ${h}`,
-          `Q 0 ${h} 0 ${h - r}`,
-          `L 0 ${r}`,
-          `Q 0 0 ${r} 0`,
-          `L ${w - r} 0`,
-          `Q ${w} 0 ${w} ${r}`,
-          `L ${w} ${h - r}`,
-          `Q ${w} ${h} ${w - r} ${h}`,
-        ].join(" ")
-      : "";
+  const borderPath = roundedRectPath(w, h);
 
   return (
     <section
-      className="min-h-auto sm:min-h-[calc(100vh-88px)] flex items-start sm:items-center px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 py-12 sm:py-16 md:py-20 bg-primary"
+      className="relative overflow-hidden min-h-auto sm:min-h-[calc(100vh-88px)] flex items-start sm:items-center section-x py-12 sm:py-16 md:py-20 bg-primary"
       role="region"
       aria-labelledby="hero-title"
     >
-      <div className="max-w-7xl mx-auto w-full">
+      <HeroBackground />
+      <div className="relative z-10 section-container">
         <div className="max-w-4xl">
           <Typewriter
             text="Welcome_"
@@ -139,11 +143,12 @@ export default function Hero() {
           <Link
             ref={buttonRef}
             href="/about"
-            className={`relative font-caption text-sm sm:text-base md:text-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-foreground rounded inline-block group transition-colors duration-500 ${
+            className={cn(
+              "relative font-caption text-sm sm:text-base md:text-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-foreground rounded inline-block group transition-colors duration-500",
               borderDone
                 ? "bg-primary-foreground"
-                : "bg-transparent hover:bg-primary-foreground"
-            }`}
+                : "bg-transparent hover:bg-primary-foreground",
+            )}
             aria-label="Learn more about Brajy"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
@@ -160,11 +165,12 @@ export default function Hero() {
                 ease: easings.smooth,
                 delay: allParagraphsDone && !prefersReducedMotion ? 0.3 : 0,
               }}
-              className={`relative z-10 flex items-center gap-1.5 px-4 py-2 sm:px-5 sm:py-2.5 transition-colors duration-500 ${
+              className={cn(
+                "relative z-10 flex items-center gap-1.5 px-4 py-2 sm:px-5 sm:py-2.5 transition-colors duration-500",
                 borderDone
                   ? "text-primary"
-                  : "text-primary-foreground group-hover:text-primary"
-              }`}
+                  : "text-primary-foreground group-hover:text-primary",
+              )}
             >
               <AnimatePresence>
                 {isHovered && (

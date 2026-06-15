@@ -30,15 +30,36 @@ const socialLinks = [
   },
 ];
 
+const quickLinks = [
+  { href: "/", label: "home" },
+  { href: "/about", label: "about" },
+  { href: "/projects", label: "projects" },
+  { href: "/contact", label: "contact" },
+];
+
+function FooterLink({ href, label }: { href: string; label: string }) {
+  return (
+    <li>
+      <Link
+        href={href}
+        className="font-caption text-sm md:text-base text-background animated-underline-orange focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary rounded inline-flex items-center gap-1.5 h-6"
+      >
+        <span className="text-primary">&raquo;</span>
+        {label}
+      </Link>
+    </li>
+  );
+}
+
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
     <footer
-      className="bg-foreground text-background py-12 md:py-20 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20"
+      className="bg-foreground text-background py-12 md:py-20 section-x"
       role="contentinfo"
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="section-container">
         <AnimateOnScroll>
           {/* Header */}
           <div className="mb-12 md:mb-16">
@@ -90,42 +111,9 @@ export default function Footer() {
                   Quick links
                 </h3>
                 <ul className="space-y-2 inline-block text-left">
-                  <li>
-                    <Link
-                      href="/"
-                      className="font-caption text-sm md:text-base text-background animated-underline-orange focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary rounded inline-flex items-center gap-1.5 h-6"
-                    >
-                      <span className="text-primary">&raquo;</span>
-                      home
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/about"
-                      className="font-caption text-sm md:text-base text-background animated-underline-orange focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary rounded inline-flex items-center gap-1.5 h-6"
-                    >
-                      <span className="text-primary">&raquo;</span>
-                      about
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/projects"
-                      className="font-caption text-sm md:text-base text-background animated-underline-orange focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary rounded inline-flex items-center gap-1.5 h-6"
-                    >
-                      <span className="text-primary">&raquo;</span>
-                      projects
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/contact"
-                      className="font-caption text-sm md:text-base text-background animated-underline-orange focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary rounded inline-flex items-center gap-1.5 h-6"
-                    >
-                      <span className="text-primary">&raquo;</span>
-                      contact
-                    </Link>
-                  </li>
+                  {quickLinks.map((link) => (
+                    <FooterLink key={link.href} {...link} />
+                  ))}
                 </ul>
               </nav>
 

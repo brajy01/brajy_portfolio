@@ -23,13 +23,13 @@ export const useHideOnScroll = () => {
       const delta = currentScrollY - lastScrollY.current;
 
       if (delta > 0) {
-        // Scrolling down — accumulate distance
+        // Scrolling down: accumulate distance
         cumulativeDelta.current += delta;
         if (cumulativeDelta.current > SCROLL_DOWN_THRESHOLD) {
           setIsVisible(false);
         }
       } else {
-        // Scrolling up — show immediately, reset accumulator
+        // Scrolling up: show immediately, reset accumulator
         cumulativeDelta.current = 0;
         setIsVisible(true);
       }

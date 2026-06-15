@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     default: "Brajy",
     template: "%s | Brajy",
   },
-  description: "Operations, Data & Code — Portfolio of Jeremy Brajon.",
+  description: "Operations, Data & Code. Portfolio of Jeremy Brajon.",
 };
 
 export default function RootLayout({

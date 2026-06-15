@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import AnimateOnScroll from "@/components/ui/animate-on-scroll";
-import Typewriter from "@/components/ui/typewriter";
+import SectionHeading from "@/components/ui/section-heading";
 
 export default function AboutContent() {
   const experiences = [
@@ -41,7 +41,7 @@ export default function AboutContent() {
         "Developed comprehensive tracking systems using Google Sheets and Notion for real-time inventory management and KPI dashboards",
         "Implemented automation tools reducing manual administrative work by 60%",
         "Conducted yield analysis, cost modelling, and pricing strategies with major retailers (Système U, Grand Frais)",
-        "Realised that operational problems require better data systems—sparked the transition to Business Intelligence",
+        "Realised that operational problems require better data systems, which sparked the transition to Business Intelligence",
       ],
       skills: [
         {
@@ -151,29 +151,18 @@ export default function AboutContent() {
   return (
     <>
       {/* Hero Section */}
-      <section className="py-20 md:py-28 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20">
-        <div className="max-w-[1400px] mx-auto">
+      <section className="py-20 md:py-28 section-x">
+        <div className="section-container">
           <AnimateOnScroll>
-            <h1 className="font-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight text-foreground">
-              About Me_
-            </h1>
-            <div className="flex justify-between items-end mt-1 mb-8 pb-8 border-b border-border">
-              <p className="font-caption text-xs sm:text-sm md:text-2xl text-primary">
-                From operations to building what matters
-              </p>
-              <Typewriter
-                text="_hello world"
-                speed={60}
-                delay={300}
-                as="p"
-                className="font-caption text-xs md:text-sm text-primary"
-                showCursorAfter={false}
-              />
-            </div>
+            <SectionHeading
+              title="About Me"
+              subtitle="From operations to building what matters"
+              rightText="_hello world"
+            />
           </AnimateOnScroll>
 
           <AnimateOnScroll delay={100}>
-            <p className="font-text text-base sm:text-lg md:text-xl leading-relaxed text-foreground max-w-4xl text-justify">
+            <p className="font-text text-base sm:text-lg md:text-xl leading-relaxed text-foreground max-w-4xl text-pretty">
               I transform operational data into actionable business insights.
               With 4+ years managing &euro;2M operations and 50+ person teams, I
               discovered that data systems solve what processes alone cannot.
@@ -200,28 +189,19 @@ export default function AboutContent() {
 
       {/* Experience Section */}
       <section
-        className="py-12 sm:py-16 md:py-20 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20"
+        className="py-12 sm:py-16 md:py-20 section-x"
         role="region"
         aria-labelledby="experience-title"
       >
-        <div className="max-w-[1400px] mx-auto">
+        <div className="section-container">
           <AnimateOnScroll>
-            <div className="flex justify-between items-end mb-8 sm:mb-10 md:mb-12 pb-8 border-b border-border text-primary">
-              <h2
-                id="experience-title"
-                className="font-title text-3xl md:text-4xl"
-              >
-                Experience_
-              </h2>
-              <Typewriter
-                text="_path"
-                speed={60}
-                delay={300}
-                as="p"
-                className="font-caption text-xs md:text-sm"
-                showCursorAfter={false}
-              />
-            </div>
+            <SectionHeading
+              title="Experience"
+              rightText="_path"
+              headingId="experience-title"
+              className="mb-8 sm:mb-10 md:mb-12"
+              headingClassName="text-3xl md:text-4xl"
+            />
           </AnimateOnScroll>
 
           <div className="space-y-10 sm:space-y-12 md:space-y-16">
@@ -251,10 +231,7 @@ export default function AboutContent() {
                   <div className="md:max-w-[65%] md:pl-12 lg:pl-16">
                     <ul className="space-y-2 sm:space-y-3">
                       {exp.highlights.map((highlight, idx) => (
-                        <li
-                          key={idx}
-                          className="font-text text-sm sm:text-base md:text-lg leading-relaxed text-foreground flex gap-3 text-justify"
-                        >
+                        <li key={idx} className="detail-list-item">
                           <span className="text-primary shrink-0">&bull;</span>
                           <span>{highlight}</span>
                         </li>
@@ -270,10 +247,7 @@ export default function AboutContent() {
                         </p>
                         <div className="flex flex-wrap gap-2 md:justify-end">
                           {skillGroup.items.map((skill, idx) => (
-                            <span
-                              key={idx}
-                              className="font-caption text-xs px-2 sm:px-3 py-1 border border-primary text-primary rounded-full text-center transition-colors duration-200 hover:bg-primary hover:text-primary-foreground cursor-default"
-                            >
+                            <span key={idx} className="tag-pill text-center">
                               {skill}
                             </span>
                           ))}

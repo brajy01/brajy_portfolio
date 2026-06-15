@@ -17,7 +17,11 @@ export interface Project {
   heroOverlayImage?: string;
   overview: string;
   technologies: string[];
-  problemApproach: string[];
+  // Portfolio narrative. Answers: What was the problem? How did you solve it?
+  // What did you deliver? What impact? (So what?)
+  problem: string;
+  approach: string[];
+  deliverables: string[];
   impact: string[];
   lessonsLearned: string;
   projectImages: string[];
@@ -35,45 +39,46 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: "5",
-    title: "Barbara Freitas - A Modern Dental Practice Website",
+    title: "Dental Practice Website - Barbara Freitas",
     slug: "barbara-freitas",
     description:
-      "Professional dental practice website for Dr. Barbara Freitas, a dental therapist in Brighton, UK",
+      "Professional dental practice website for Dr. Barbara Freitas, a dental therapist on the Isle of Man",
     image: "/projects/barbara-freitas/card.jpg",
     overlayImage: "/mesh/GRADIENT_FULL_2.png",
-    tags: ["Frontend Development", "UI / UX Design", "Web Design", "Astro"],
+    tags: ["UI / UX Design", "Frontend Development", "SEO", "Web Design"],
     category: "Development",
     month: "february",
     year: 2025,
-    projectName: "Barbara Freitas - A Modern Dental Practice Website",
-    role: "Designer & Frontend Developer",
+    projectName: "Dental Practice Website - Barbara Freitas",
+    role: "Designer, Developer & SEO",
     heroDescription:
-      "Barbara Freitas is not just a dental practice website. It's a digital experience designed to build trust and connect patients with exceptional care. With a modern purple palette and clean layouts, it seamlessly guides visitors from first impression to booking, delivering confidence and clarity at every step.",
+      "Barbara Freitas is a dental therapist on the Isle of Man who had no website at all. The goal was to give her a clean, trustworthy presence that lets prospective patients understand her work and reach out in a single tap.",
     heroImage: "/projects/barbara-freitas/hero.jpg",
     heroOverlayImage: "/mesh/GRADIENT_FULL_2.png",
     overview:
-      "barbarafreitas.com is a professional website for Dr. Barbara Freitas, a dental therapist based in Brighton, UK. The challenge was to create an elegant, trustworthy digital presence that reflects her clinical expertise and warm patient approach, while driving appointment bookings through intuitive navigation and compelling visual storytelling.",
-    technologies: [
-      "Astro",
-      "TypeScript",
-      "Tailwind CSS",
-      "Responsive Design",
-      "SEO",
+      "I designed and built the whole site, from the look and feel down to the code and the SEO. The focus was trust and clarity: a calm layout, a before-and-after gallery to show her work, and a one-tap WhatsApp contact. I shipped the first version on Hostinger's site builder to go live quickly, then rebuilt it in Next.js to cut the steep renewal costs and own the codebase.",
+    technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS", "SEO"],
+    problem:
+      "With no website, patients on the Isle of Man had no way to find Barbara, see her work, or get in touch. And without a professional presence, the practice didn't have the credibility people look for when they pick a dentist.",
+    approach: [
+      "I kept the design calm and clean, so the practice feels professional and easy to trust at a glance",
+      "I added a one-tap WhatsApp button: it opens a message that's already written, so the patient just hits send",
+      "I built a before-and-after gallery of real treatments to let her work speak for itself",
+      "I tuned the SEO and the loading speed so people on the island actually find her on Google",
     ],
-    problemApproach: [
-      "The practice needed a modern web presence that conveys professionalism and approachability in equal measure",
-      "Designed a clean, contemporary interface with a refined purple colour palette that reinforces the brand identity",
-      "Built with Astro for exceptional page speed and SEO performance, critical for local healthcare discovery",
-      "Implemented key patient-facing features including a clinical cases gallery, testimonials, and integrated contact options with WhatsApp",
+    deliverables: [
+      "A responsive site with the pages she needed: home, services, about and contact",
+      "A before-and-after gallery of real dental treatments",
+      "A one-tap WhatsApp contact with a ready-to-send message",
+      "Local SEO so the practice shows up in Isle of Man searches",
     ],
     impact: [
-      "Delivered a fully responsive site with Lighthouse scores above 95 across all metrics",
-      "Streamlined patient acquisition through prominent CTAs and WhatsApp integration",
-      "Showcased clinical expertise through a curated before-and-after gallery",
-      "Improved local search visibility through semantic HTML and structured data",
+      "She went from no website at all to a real, findable online presence",
+      "Patients now reach her straight from the site, in a single tap",
+      "The practice finally looks as professional online as Barbara is in person",
     ],
     lessonsLearned:
-      "Gained valuable experience in designing for the healthcare sector, where trust and accessibility are paramount. Learned how Astro's island architecture delivers outstanding performance for content-driven sites, and how thoughtful colour choices and typography can shape the emotional tone of a professional practice.",
+      "Shipping on Hostinger first got Barbara online fast, but the renewal pricing made the trade-off obvious: owning the code matters. Rebuilding it in Next.js cut the recurring cost and gave me full control over speed and SEO. It also reminded me how much trust drives every choice in healthcare. If a detail doesn't make a patient feel safe, it doesn't belong.",
     projectImages: [
       "/projects/barbara-freitas/gallery-1.jpg",
       "/projects/barbara-freitas/gallery-2.jpg",
@@ -87,7 +92,7 @@ export const projects: Project[] = [
     projectDetails: {
       client: "Dr. Barbara Freitas",
       industry: "Healthcare / Dentistry",
-      work: ["Web Design", "Frontend Development", "UI / UX Design"],
+      work: ["UI / UX Design", "Frontend Development", "SEO"],
       date: "february 2025",
       liveUrl: "https://barbarafreitas.com",
     },
@@ -111,11 +116,17 @@ export const projects: Project[] = [
     overview:
       "ShopHub Platform is a next-generation e-commerce solution designed to transform retail experiences. The challenge was to create a platform that combines powerful merchant tools with an exceptional customer journey, seamlessly blending modern technology, intuitive UX, and conversion-focused design.",
     technologies: ["Next.js", "Node.js", "React", "PostgreSQL", "Stripe API"],
-    problemApproach: [
-      "Retailers struggled with fragmented systems and poor user experiences",
-      "Built a unified platform integrating merchant tools with customer-facing experience",
+    problem:
+      "Retailers struggled with fragmented systems and poor user experiences that hurt conversion.",
+    approach: [
+      "Built a unified platform integrating merchant tools with the customer-facing experience",
       "Implemented real-time payment processing and inventory management",
       "Designed responsive layouts with dark/light mode support",
+    ],
+    deliverables: [
+      "A unified e-commerce platform with merchant dashboard",
+      "Real-time payment and inventory modules",
+      "Responsive storefront with dark/light mode",
     ],
     impact: [
       "Deployed to 150+ merchants with 10M+ monthly users",
@@ -164,11 +175,17 @@ export const projects: Project[] = [
       "PostgreSQL",
       "Redis",
     ],
-    problemApproach: [
-      "Enterprise clients needed to understand complex datasets but struggled with data overload",
+    problem:
+      "Enterprise clients needed to understand complex datasets but struggled with data overload.",
+    approach: [
       "Created an intuitive interface that transforms millions of data points into visual insights",
       "Implemented real-time data processing with sub-second query response times",
       "Built customisable widgets and drag-and-drop dashboard builders for flexibility",
+    ],
+    deliverables: [
+      "A business intelligence dashboard with customisable widgets",
+      "Real-time data processing pipeline",
+      "Drag-and-drop dashboard builder",
     ],
     impact: [
       "Adopted by 200+ enterprise clients across multiple industries",
@@ -219,11 +236,17 @@ export const projects: Project[] = [
       "Brand Guidelines",
       "Packaging Design",
     ],
-    problemApproach: [
-      "Luxury fashion market required a distinctive identity that stands out among competitors",
-      "Created custom typography and refined colour palette inspired by haute couture aesthetics",
-      "Developed comprehensive visual language spanning digital and physical experiences",
+    problem:
+      "A luxury fashion brand needed a distinctive identity to stand out in a crowded premium market.",
+    approach: [
+      "Created custom typography and a refined colour palette inspired by haute couture aesthetics",
+      "Developed a comprehensive visual language spanning digital and physical experiences",
       "Designed detailed brand guidelines ensuring consistency across all touchpoints",
+    ],
+    deliverables: [
+      "A complete visual identity system and logo suite",
+      "Custom typography and colour palette",
+      "Brand guidelines documentation",
     ],
     impact: [
       "Brand recognition increased by 250% within first year",
@@ -272,11 +295,17 @@ export const projects: Project[] = [
       "TensorFlow",
       "Wearables API",
     ],
-    problemApproach: [
-      "Athletes needed comprehensive fitness tracking that works across devices",
-      "Built React Native solution for iOS and Android with seamless experience",
+    problem:
+      "Athletes needed comprehensive fitness tracking that works seamlessly across devices.",
+    approach: [
+      "Built a React Native solution for iOS and Android with a seamless experience",
       "Integrated with popular wearables for automatic data synchronisation",
       "Implemented AI algorithms for personalised training recommendations",
+    ],
+    deliverables: [
+      "Native iOS and Android apps",
+      "Wearables integration for automatic sync",
+      "AI-powered training recommendation engine",
     ],
     impact: [
       "500K+ downloads with 4.8-star average rating across app stores",

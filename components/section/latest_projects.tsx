@@ -1,27 +1,22 @@
 import { projects } from "@/data/projects";
 import AnimateOnScroll from "@/components/ui/animate-on-scroll";
 import ProjectCard from "@/components/ui/project-card";
-import Typewriter from "@/components/ui/typewriter";
+import SectionHeading from "@/components/ui/section-heading";
 
 export default function LatestProjects() {
   // Get the 3 latest projects (first 3 from the array)
   const latestProjects = projects.slice(0, 3);
 
   return (
-    <section className="py-20 md:py-28 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20">
-      <div className="max-w-[1400px] mx-auto">
+    <section className="py-20 md:py-28 section-x">
+      <div className="section-container">
         <AnimateOnScroll>
-          <div className="flex justify-between items-end mb-4 md:mb-8 pb-4 md:pb-8 border-b border-border text-primary">
-            <h2 className="font-title text-4xl md:text-5xl">Latest Projects_</h2>
-            <Typewriter
-              text={`_${new Date().getFullYear()}`}
-              speed={60}
-              delay={300}
-              as="p"
-              className="font-caption text-xs md:text-sm"
-              showCursorAfter={false}
-            />
-          </div>
+          <SectionHeading
+            title="Latest Projects"
+            rightText={`_${new Date().getFullYear()}`}
+            className="mb-4 md:mb-8 pb-4 md:pb-8"
+            headingClassName="text-4xl md:text-5xl"
+          />
         </AnimateOnScroll>
 
         {/* Projects Grid */}

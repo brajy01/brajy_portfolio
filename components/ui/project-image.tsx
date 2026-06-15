@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 interface ProjectImageProps {
   src: string;
@@ -30,7 +31,7 @@ export default function ProjectImage({
         priority={priority}
         loading={loading}
         sizes={sizes}
-        className={`object-cover ${className}`}
+        className={cn("object-cover", className)}
       />
       {overlayImage && (
         <Image

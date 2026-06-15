@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -26,10 +25,6 @@
 :root {
   --background: rgb(249 249 249);
   --foreground: rgb(20 20 20);
-  --card: rgb(249 249 249);
-  --card-foreground: rgb(20 20 20);
-  --popover: rgb(249 249 249);
-  --popover-foreground: rgb(20 20 20);
   --primary: rgb(237 83 21);
   --primary-foreground: rgb(249 249 249);
   --secondary: rgb(226 224 211);
@@ -42,19 +37,6 @@
   --border: rgb(226 224 211);
   --input: rgb(226 224 211);
   --ring: rgb(237 83 21);
-  --chart-1: rgb(237 83 21);
-  --chart-2: rgb(255 64 19);
-  --chart-3: rgb(227 36 0);
-  --chart-4: rgb(131 17 0);
-  --chart-5: rgb(92 7 0);
-  --sidebar: rgb(226 224 211);
-  --sidebar-foreground: rgb(20 20 20);
-  --sidebar-primary: rgb(237 83 21);
-  --sidebar-primary-foreground: rgb(252 252 252);
-  --sidebar-accent: rgb(226 224 211);
-  --sidebar-accent-foreground: rgb(20 20 20);
-  --sidebar-border: rgb(235 235 235);
-  --sidebar-ring: rgb(180 180 180);
 
   --font-text: "PP Mori", system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
@@ -80,10 +62,6 @@
 .dark {
   --background: rgb(20 20 20);
   --foreground: rgb(249 249 249);
-  --card: rgb(38 38 38);
-  --card-foreground: rgb(249 249 249);
-  --popover: rgb(48 48 48);
-  --popover-foreground: rgb(249 249 249);
   --primary: rgb(237 83 21);
   --primary-foreground: rgb(249 249 249);
   --secondary: rgb(226 224 211);
@@ -96,37 +74,12 @@
   --border: rgb(62 62 56);
   --input: rgb(81 80 74);
   --ring: rgb(237 83 21);
-  --chart-1: rgb(237 83 21);
-  --chart-2: rgb(217 80 0);
-  --chart-3: rgb(173 62 0);
-  --chart-4: rgb(124 42 0);
-  --chart-5: rgb(90 28 0);
-  --sidebar: rgb(31 31 31);
-  --sidebar-foreground: rgb(195 193 186);
-  --sidebar-primary: rgb(53 53 53);
-  --sidebar-primary-foreground: rgb(252 252 252);
-  --sidebar-accent: rgb(15 15 15);
-  --sidebar-accent-foreground: rgb(195 193 186);
-  --sidebar-border: rgb(235 235 235);
-  --sidebar-ring: rgb(180 180 180);
-
-  --shadow-2xs: 0 1px 3px 0px rgb(0 0 0 / 0.05);
-  --shadow-xs: 0 1px 3px 0px rgb(0 0 0 / 0.05);
-  --shadow-sm: 0 1px 3px 0px rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  --shadow: 0 1px 3px 0px rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  --shadow-md: 0 1px 3px 0px rgb(0 0 0 / 0.1), 0 2px 4px -1px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 1px 3px 0px rgb(0 0 0 / 0.1), 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 1px 3px 0px rgb(0 0 0 / 0.1), 0 8px 10px -1px rgb(0 0 0 / 0.1);
-  --shadow-2xl: 0 1px 3px 0px rgb(0 0 0 / 0.25);
+  /* Shadows are mode-independent — defined once in :root. */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
@@ -139,19 +92,6 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -167,12 +107,7 @@
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
 
-  --tracking-tighter: calc(var(--tracking-normal) - 0.05em);
-  --tracking-tight: calc(var(--tracking-normal) - 0.025em);
   --tracking-normal: var(--tracking-normal);
-  --tracking-wide: calc(var(--tracking-normal) + 0.025em);
-  --tracking-wider: calc(var(--tracking-normal) + 0.05em);
-  --tracking-widest: calc(var(--tracking-normal) + 0.1em);
 }
 
 body {
@@ -188,20 +123,40 @@ body {
   }
 }
 
+/* Brand fonts — defined as @utility so they work as classes and via @apply. */
+@utility font-text {
+  font-family: var(--font-text);
+  font-weight: 400;
+}
+
+@utility font-title {
+  font-family: var(--font-title);
+  font-weight: 600;
+}
+
+@utility font-caption {
+  font-family: var(--font-caption);
+  font-weight: 400;
+}
+
 @layer utilities {
-  .font-text {
-    font-family: var(--font-text);
-    font-weight: 400;
+  /* Shared section layout — repeated across every page section */
+  .section-x {
+    @apply px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20;
   }
 
-  .font-title {
-    font-family: var(--font-title);
-    font-weight: 600;
+  .section-container {
+    @apply max-w-[1400px] mx-auto w-full;
   }
 
-  .font-caption {
-    font-family: var(--font-caption);
-    font-weight: 400;
+  /* Bulleted detail item — used in project detail + about experience lists */
+  .detail-list-item {
+    @apply font-text text-sm sm:text-base md:text-lg leading-relaxed text-foreground flex gap-3 text-pretty;
+  }
+
+  /* Outlined tag/skill pill */
+  .tag-pill {
+    @apply font-caption text-xs px-2 sm:px-3 py-1 border border-primary text-primary rounded-full transition-colors duration-200 hover:bg-primary hover:text-primary-foreground cursor-default;
   }
 
   /* Scroll-reveal animation */
@@ -229,7 +184,7 @@ body {
   .animated-underline::after {
     content: "";
     position: absolute;
-    bottom: -2px;
+    bottom: -3px;
     left: 0;
     width: 100%;
     height: 1.5px;
@@ -246,7 +201,7 @@ body {
     clip-path: inset(0 0 0 0);
   }
 
-  /* Animated underline — orange variant */
+  /* Animated underline (orange variant) */
   .animated-underline-orange {
     position: relative;
     text-decoration: none;
@@ -272,6 +227,90 @@ body {
   .page-enter {
     animation: page-enter 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
+
+  /* Hero background fade — masks the gradient + grain to transparent at the
+     very top so the hero meets the orange header with no colour seam. The
+     gradient stays at full strength below the fade. */
+  .hero-bg-fade {
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      black 120px
+    );
+    mask-image: linear-gradient(to bottom, transparent 0, black 120px);
+  }
+
+  /* Hero mesh — a CSS-only mesh gradient from the Brajy palette. Several
+     coloured radial blobs are layered over a base orange and slowly drift,
+     giving rich, multi-colour movement with no image asset. */
+  .hero-mesh {
+    /* Blob positions default to their base spots (used during SSR and when
+       reduced motion is on); JS overrides these vars each frame to animate. */
+    --b0x: 16%;
+    --b0y: 20%;
+    --b1x: 84%;
+    --b1y: 14%;
+    --b2x: 80%;
+    --b2y: 82%;
+    --b3x: 20%;
+    --b3y: 86%;
+    --b4x: 52%;
+    --b4y: 50%;
+    background-color: var(--primary);
+    background-image:
+      radial-gradient(
+        circle at var(--b0x) var(--b0y),
+        rgb(255 170 120 / 1) 0%,
+        rgb(255 170 120 / 0) 38%
+      ),
+      radial-gradient(
+        circle at var(--b1x) var(--b1y),
+        rgb(255 64 19 / 1) 0%,
+        rgb(255 64 19 / 0) 40%
+      ),
+      radial-gradient(
+        circle at var(--b2x) var(--b2y),
+        rgb(110 14 0 / 1) 0%,
+        rgb(110 14 0 / 0) 42%
+      ),
+      radial-gradient(
+        circle at var(--b3x) var(--b3y),
+        rgb(227 36 0 / 1) 0%,
+        rgb(227 36 0 / 0) 40%
+      ),
+      radial-gradient(
+        circle at var(--b4x) var(--b4y),
+        rgb(226 224 211 / 0.75) 0%,
+        rgb(226 224 211 / 0) 32%
+      );
+    will-change: background-image;
+  }
+
+  /* Hero grain — subtle animated film grain over the gradient.
+     The noise texture is an inline SVG feTurbulence; the layer is oversized
+     and slowly drifted so the grain shimmers without revealing tiled edges. */
+  .hero-grain {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.4' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 260px 260px;
+    opacity: 0.32;
+    mix-blend-mode: overlay;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    animation: hero-grain-shift 6s steps(6) infinite;
+    will-change: transform;
+  }
+}
+
+@keyframes hero-grain-shift {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-4%, 3%); }
+  40% { transform: translate(3%, -4%); }
+  60% { transform: translate(-3%, -2%); }
+  80% { transform: translate(2%, 4%); }
+  100% { transform: translate(0, 0); }
 }
 
 @keyframes page-enter {
@@ -301,5 +340,9 @@ body {
   .animated-underline::after,
   .animated-underline-orange::after {
     transition: none;
+  }
+
+  .hero-grain {
+    animation: none;
   }
 }

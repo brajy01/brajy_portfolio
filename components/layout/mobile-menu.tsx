@@ -1,42 +1,13 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
+import NavLink from "./nav-link";
 
 interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
 }
-
-const MobileNavLink = ({
-  href,
-  label,
-  isActive,
-  onClose,
-}: {
-  href: string;
-  label: string;
-  isActive: boolean;
-  onClose: () => void;
-}) => {
-  return (
-    <Link
-      href={href}
-      onClick={onClose}
-      className="group relative inline-block text-4xl font-title text-background"
-    >
-      <span className="relative inline-block">
-        {label}
-        <span
-          className={`absolute bottom-0 left-0 right-0 h-0.5 bg-background transition-transform duration-300 origin-center ${
-            isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
-          }`}
-        />
-      </span>
-    </Link>
-  );
-};
 
 export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const pathname = usePathname();
@@ -88,24 +59,20 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       >
         {/* Navigation links */}
         <nav className="flex flex-col space-y-8 text-center">
-          <MobileNavLink
-            href="/about"
-            label="About"
-            isActive={isActive("/about")}
-            onClose={onClose}
-          />
-          <MobileNavLink
-            href="/projects"
-            label="Projects"
-            isActive={isActive("/projects")}
-            onClose={onClose}
-          />
-          <MobileNavLink
-            href="/contact"
-            label="Contact"
-            isActive={isActive("/contact")}
-            onClose={onClose}
-          />
+          {[
+            { href: "/about", label: "About" },
+            { href: "/projects", label: "Projects" },
+            { href: "/contact", label: "Contact" },
+          ].map((link) => (
+            <NavLink
+              key={link.href}
+              href={link.href}
+              label={link.label}
+              isActive={isActive(link.href)}
+              onClose={onClose}
+              className="relative inline-block text-4xl font-title text-background"
+            />
+          ))}
         </nav>
       </div>
     </>

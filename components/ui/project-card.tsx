@@ -24,7 +24,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
     >
       {/* Project Title - Mobile only, shown at top */}
       <div className="md:hidden">
-        <span className="font-text text-lg underline underline-offset-4 decoration-1 inline-block">
+        <span className="font-text text-lg animated-underline inline-block">
           {project.title}
         </span>
       </div>
