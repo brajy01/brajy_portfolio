@@ -173,7 +173,30 @@ body {
     transform: translateY(0);
   }
 
+  /* Curtain reveal — clip-path wipe from top, for images entering view */
+  .curtain {
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
 
+  .curtain.revealed {
+    clip-path: inset(0 0 0 0);
+  }
+
+  /* Scroll hint — gentle opacity wave on the project hero chevrons */
+  .scroll-hint {
+    animation: scroll-hint-wave 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  }
+
+  /* Directional arrow that lifts up-and-right when its link/button is hovered (A4) */
+  .arrow-lift {
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  a:hover .arrow-lift,
+  button:hover .arrow-lift {
+    transform: translate(2px, -2px);
+  }
 
   /* Animated underline (left-to-right sweep) */
   .animated-underline {
@@ -324,12 +347,42 @@ body {
   }
 }
 
+@keyframes scroll-hint-wave {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(3px);
+  }
+}
+
 /* Accessibility: respect reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
   .reveal {
     opacity: 1;
     transform: none;
     transition: none;
+  }
+
+  .curtain {
+    clip-path: none;
+    transition: none;
+  }
+
+  .scroll-hint {
+    animation: none;
+  }
+
+  .arrow-lift {
+    transition: none;
+  }
+
+  a:hover .arrow-lift,
+  button:hover .arrow-lift {
+    transform: none;
   }
 
   .page-enter {

@@ -229,14 +229,18 @@ export default function AboutContent() {
                 {/* Content grid: highlights left, skills right */}
                 <div className="flex flex-col md:flex-row md:justify-between gap-6 sm:gap-8">
                   <div className="md:max-w-[65%] md:pl-12 lg:pl-16">
-                    <ul className="space-y-2 sm:space-y-3">
+                    <AnimateOnScroll
+                      as="ul"
+                      stagger={60}
+                      className="space-y-2 sm:space-y-3"
+                    >
                       {exp.highlights.map((highlight, idx) => (
                         <li key={idx} className="detail-list-item">
                           <span className="text-primary shrink-0">&bull;</span>
                           <span>{highlight}</span>
                         </li>
                       ))}
-                    </ul>
+                    </AnimateOnScroll>
                   </div>
 
                   <div className="md:w-[320px] lg:w-[380px] shrink-0">

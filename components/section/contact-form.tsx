@@ -177,7 +177,10 @@ export default function ContactForm() {
                 {submitStatus === "idle" && (
                   <>
                     Send Message
-                    <ArrowUpRight className="w-3 h-3 sm:w-4 sm:h-4" />
+                    <ArrowUpRight
+                      aria-hidden="true"
+                      className="arrow-lift w-3 h-3 sm:w-4 sm:h-4"
+                    />
                   </>
                 )}
                 {submitStatus === "success" && "Sent!"}

@@ -40,14 +40,14 @@ function BodyText({ children }: { children: ReactNode }) {
 
 function BulletList({ items }: { items: string[] }) {
   return (
-    <ul className="space-y-2 sm:space-y-3">
+    <AnimateOnScroll as="ul" stagger={60} className="space-y-2 sm:space-y-3">
       {items.map((item, index) => (
         <li key={index} className="detail-list-item">
           <span className="text-primary shrink-0">&bull;</span>
           <span>{item}</span>
         </li>
       ))}
-    </ul>
+    </AnimateOnScroll>
   );
 }
 
@@ -117,8 +117,7 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
                   strokeWidth="1.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="shrink-0 animate-[bounce_2s_ease-in-out_infinite]"
-                  style={{ animationDuration: "1s" }}
+                  className="shrink-0 scroll-hint"
                   aria-hidden="true"
                 >
                   <path d="m6 7 6 6 6-6" />
@@ -133,7 +132,10 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
 
       {/* Project Image - Full width */}
       <section className="relative w-full">
-        <div className="relative w-full h-64 sm:h-80 md:h-[500px] lg:h-[600px]">
+        <AnimateOnScroll
+          variant="curtain"
+          className="relative w-full h-64 sm:h-80 md:h-[500px] lg:h-[600px]"
+        >
           <ProjectImage
             src={project.heroImage}
             overlayImage={project.heroOverlayImage}
@@ -141,7 +143,7 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
             priority
             sizes="100vw"
           />
-        </div>
+        </AnimateOnScroll>
       </section>
 
       {/* Detail Content with Project Details */}
@@ -193,7 +195,10 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
                       className="font-caption text-sm sm:text-base animated-underline transition-colors inline-flex items-center gap-1"
                     >
                       See project&apos;s repository
-                      <ArrowUpRight className="w-3 h-3 sm:w-4 sm:h-4" />
+                      <ArrowUpRight
+                        aria-hidden="true"
+                        className="arrow-lift w-3 h-3 sm:w-4 sm:h-4"
+                      />
                     </Link>
                   </div>
                 </AnimateOnScroll>
@@ -213,7 +218,10 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
                       className="font-caption text-sm sm:text-base animated-underline transition-colors inline-flex items-center gap-1"
                     >
                       Visit the website
-                      <ArrowUpRight className="w-3 h-3 sm:w-4 sm:h-4" />
+                      <ArrowUpRight
+                        aria-hidden="true"
+                        className="arrow-lift w-3 h-3 sm:w-4 sm:h-4"
+                      />
                     </Link>
                   </div>
                 </AnimateOnScroll>
@@ -290,7 +298,10 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
           </h2>
           {project.projectImages.map((image, index) => (
             <figure key={index} className="relative w-full">
-              <div className="relative w-full h-64 sm:h-80 md:h-[500px] lg:h-[600px]">
+              <AnimateOnScroll
+                variant="curtain"
+                className="relative w-full h-64 sm:h-80 md:h-[500px] lg:h-[600px]"
+              >
                 <ProjectImage
                   src={image}
                   overlayImage={project.projectOverlayImages?.[index]}
@@ -298,7 +309,7 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
                   loading={index === 0 ? "eager" : "lazy"}
                   sizes="100vw"
                 />
-              </div>
+              </AnimateOnScroll>
               <figcaption className="sr-only">
                 Gallery image {index + 1} of {project.projectImages.length}
               </figcaption>

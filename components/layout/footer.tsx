@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Share2, Briefcase, Code2, Mail } from "lucide-react";
+import { Share2, Briefcase, Code2, Mail, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AnimateOnScroll from "@/components/ui/animate-on-scroll";
 
@@ -95,6 +95,12 @@ export default function Footer() {
                         >
                           <Icon className="h-4 w-4 text-primary" />
                           <span>{link.name}</span>
+                          {link.href.startsWith("http") && (
+                            <ArrowUpRight
+                              aria-hidden="true"
+                              className="arrow-lift h-3.5 w-3.5 text-primary"
+                            />
+                          )}
                         </Link>
                       </li>
                     );

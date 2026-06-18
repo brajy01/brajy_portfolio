@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Project } from "@/data/projects";
 import ProjectImage from "@/components/ui/project-image";
+import AnimateOnScroll from "@/components/ui/animate-on-scroll";
 
 interface ProjectCardProps {
   project: Project;
@@ -31,8 +32,12 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
       {/* Image - Left side */}
       {/* Nested border-radius rule: inner = outer - padding → 12px - 16px ≈ clamp to ~4px for visual harmony */}
-      <div className="md:col-span-4 relative w-full h-64 sm:h-80 md:h-[500px] lg:h-[600px] overflow-hidden rounded-[4px]">
-        <div className="relative w-full h-full transition-transform duration-500 ease-out group-hover/card:scale-105">
+      {/* Curtain reveal (A3) wipes the image in on scroll; subtle zoom on hover. */}
+      <AnimateOnScroll
+        variant="curtain"
+        className="md:col-span-4 relative w-full h-64 sm:h-80 md:h-[500px] lg:h-[600px] overflow-hidden rounded-[4px]"
+      >
+        <div className="relative w-full h-full ease-out motion-safe:transition-transform motion-safe:duration-700 motion-safe:group-hover/card:scale-[1.02]">
           <ProjectImage
             src={project.image}
             overlayImage={project.overlayImage}
@@ -40,20 +45,19 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             sizes="(max-width: 768px) 100vw, 80vw"
           />
         </div>
-        <div className="absolute inset-0 bg-foreground/0 group-hover/card:bg-foreground/10 transition-colors duration-500 pointer-events-none" />
-      </div>
+      </AnimateOnScroll>
 
       {/* Right side content */}
       <div className="flex flex-col justify-between h-full">
         {/* Top labels - Right aligned, sorted longest→shortest */}
-        <div className="text-left md:text-right space-y-1 text-foreground font-caption transition-transform duration-500 group-hover/card:md:-translate-x-1">
+        <div className="text-left md:text-right space-y-1 text-foreground font-caption">
           {labels.map((label) => (
             <p key={label}>{label}</p>
           ))}
         </div>
 
         {/* Bottom tags - Right aligned, sorted shortest→longest */}
-        <div className="text-right space-y-1 transition-transform duration-500 group-hover/card:md:-translate-x-1">
+        <div className="text-right space-y-1">
           {sortedTags.map((tag) => (
             <p key={tag} className="font-caption text-primary">
               {tag}
@@ -64,7 +68,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
       {/* Project Title - Desktop only, shown below image */}
       <div className="hidden md:block md:col-span-2 mt-2 md:mt-3">
-        <span className="font-text text-lg md:text-xl animated-underline inline-block transition-transform duration-500 group-hover/card:translate-x-1">
+        <span className="font-text text-lg md:text-xl animated-underline inline-block">
           {project.title}
         </span>
       </div>
