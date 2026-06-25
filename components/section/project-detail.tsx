@@ -73,7 +73,7 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
     <>
       {/* Hero Section - Title and Description */}
       <section
-        className="min-h-auto sm:min-h-[calc(100vh-88px)] flex flex-col items-start sm:items-start justify-start sm:justify-center section-x py-12 sm:py-16 md:py-20"
+        className="min-h-auto sm:min-h-[calc(100dvh-88px)] flex flex-col items-start sm:items-start justify-start sm:justify-center section-x py-12 sm:py-16 md:py-20"
         role="region"
         aria-labelledby="project-title"
       >
@@ -150,7 +150,7 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
       <section
         className="py-12 sm:py-16 md:py-24 section-x"
         role="region"
-        aria-labelledby="project-details-heading"
+        aria-label="Project details"
       >
         <div className="section-container">
           {/* Content left, metadata right */}
@@ -291,7 +291,6 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
           className="space-y-0"
           role="region"
           aria-labelledby="gallery-heading"
-          aria-label="Project image gallery"
         >
           <h2 id="gallery-heading" className="sr-only">
             Project Gallery

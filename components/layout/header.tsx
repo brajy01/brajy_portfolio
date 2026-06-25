@@ -26,7 +26,11 @@ export default function Header() {
           isHeaderVisible ? "translate-y-0" : "-translate-y-full",
         )}
       >
-        <Link href="/" onClick={() => setIsMenuOpen(false)} className="z-[60]">
+        <Link
+          href="/"
+          onClick={() => setIsMenuOpen(false)}
+          className="z-[60] rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-background focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
+        >
           <Image src="/logomark/white.svg" alt="Brajy" width={56} height={56} />
         </Link>
 
@@ -48,7 +52,7 @@ export default function Header() {
         {/* Mobile menu button */}
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="relative md:hidden flex items-center justify-center size-12 text-background hover:text-background/70 z-[60]"
+          className="relative md:hidden flex items-center justify-center size-12 text-background hover:text-background/70 z-[60] rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-background focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           aria-expanded={isMenuOpen}
         >

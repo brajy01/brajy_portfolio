@@ -1,32 +1,20 @@
 import Link from "next/link";
-import { Share2, Briefcase, Code2, Mail, ArrowUpRight } from "lucide-react";
+import { Briefcase, Code2, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AnimateOnScroll from "@/components/ui/animate-on-scroll";
 
 const socialLinks = [
   {
-    name: "instagram",
-    href: "https://instagram.com/username",
-    label: "Visit Instagram profile",
-    icon: Share2,
-  },
-  {
     name: "linkedin",
-    href: "https://linkedin.com/in/username",
+    href: "https://www.linkedin.com/in/jbrajon/",
     label: "Visit LinkedIn profile",
     icon: Briefcase,
   },
   {
     name: "github",
-    href: "https://github.com/username",
+    href: "https://github.com/brajy01",
     label: "Visit GitHub profile",
     icon: Code2,
-  },
-  {
-    name: "contact",
-    href: "mailto:contact@brajy.com",
-    label: "Send an email",
-    icon: Mail,
   },
 ];
 
@@ -76,10 +64,7 @@ export default function Footer() {
             {/* Mobile: Side by side Connect & Quick Links, Desktop: 3 columns */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-12 mb-8">
               {/* Social Links */}
-              <nav
-                aria-labelledby="footer-title"
-                className="text-center md:text-left"
-              >
+              <nav aria-label="Social links" className="text-center md:text-left">
                 <h3 className="font-title text-sm md:text-base text-secondary mb-4">
                   Connect
                 </h3>
@@ -124,7 +109,7 @@ export default function Footer() {
               </nav>
 
               {/* Contact Info - Hidden on mobile, shown in 3rd column on desktop */}
-              <div role="contentinfo" className="hidden md:block space-y-2">
+              <div className="hidden md:block space-y-2">
                 <p className="font-title text-sm md:text-base text-background">
                   Brajy
                 </p>

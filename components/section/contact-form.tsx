@@ -122,7 +122,11 @@ export default function ContactForm() {
       {/* Contact Form Section */}
       <section className="pt-0 pb-16 sm:pb-20 md:pt-12 md:pb-24 section-x">
         <AnimateOnScroll className="max-w-2xl mx-auto w-full">
-          <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
+          <form
+            onSubmit={handleSubmit}
+            aria-busy={submitStatus === "loading"}
+            className="space-y-6 sm:space-y-8"
+          >
             <FormField
               label="name"
               name="name"
@@ -188,17 +192,20 @@ export default function ContactForm() {
               </Button>
             </div>
 
-            {/* Status Messages */}
-            {submitStatus === "success" && (
-              <p className="font-caption text-sm text-primary">
-                Thanks for reaching out! I&apos;ll get back to you soon.
-              </p>
-            )}
-            {submitStatus === "error" && (
-              <p className="font-caption text-sm text-primary">
-                Something went wrong. Please try again.
-              </p>
-            )}
+            {/* Status Messages — always-present live region so screen readers
+                announce success/error when it appears. */}
+            <div aria-live="polite" role="status" className="min-h-5">
+              {submitStatus === "success" && (
+                <p className="font-caption text-sm text-primary">
+                  Thanks for reaching out! I&apos;ll get back to you soon.
+                </p>
+              )}
+              {submitStatus === "error" && (
+                <p className="font-caption text-sm text-primary">
+                  Something went wrong. Please try again.
+                </p>
+              )}
+            </div>
           </form>
         </AnimateOnScroll>
       </section>

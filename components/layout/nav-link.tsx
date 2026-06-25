@@ -20,13 +20,22 @@ export default function NavLink({
   className,
 }: NavLinkProps) {
   return (
-    <Link href={href} onClick={onClose} className={cn("group", className)}>
+    <Link
+      href={href}
+      onClick={onClose}
+      className={cn(
+        "group rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-background focus-visible:ring-offset-2 focus-visible:ring-offset-primary",
+        className,
+      )}
+    >
       <span className="relative inline-block">
         {label}
         <span
           className={cn(
             "absolute bottom-0 left-0 right-0 h-0.5 bg-background transition-transform duration-300 origin-center",
-            isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100",
+            isActive
+              ? "scale-x-100"
+              : "scale-x-0 group-hover:scale-x-100 group-focus-visible:scale-x-100",
           )}
         />
       </span>

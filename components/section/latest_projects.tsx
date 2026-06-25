@@ -8,19 +8,19 @@ export default function LatestProjects() {
   const latestProjects = projects.slice(0, 3);
 
   return (
-    <section className="py-20 md:py-28 section-x">
+    <section className="py-16 md:py-24 section-x">
       <div className="section-container">
         <AnimateOnScroll>
           <SectionHeading
             title="Latest Projects"
             rightText={`_${new Date().getFullYear()}`}
-            className="mb-4 md:mb-8 pb-4 md:pb-8"
+            className="mb-0 pb-4 md:pb-6"
             headingClassName="text-4xl md:text-5xl"
           />
         </AnimateOnScroll>
 
         {/* Projects Grid */}
-        <div className="space-y-6 md:space-y-16 pt-4 md:pt-8">
+        <div className="space-y-8 md:space-y-12 pt-4 md:pt-8">
           {latestProjects.map((project, index) => (
             <AnimateOnScroll key={project.id} delay={index * 100}>
               <ProjectCard project={project} />

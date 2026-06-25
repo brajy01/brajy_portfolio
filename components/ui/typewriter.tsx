@@ -32,7 +32,6 @@ export default function Typewriter({
   const prefersReducedMotion = useReducedMotion();
   const shouldSkip = prefersReducedMotion || skipAnimation;
   const [displayedCount, setDisplayedCount] = useState(0);
-  const [isComplete, setIsComplete] = useState(false);
   const [started, setStarted] = useState(false);
 
   const baseText = text.endsWith(cursorChar)
@@ -40,13 +39,8 @@ export default function Typewriter({
     : text;
   const hasTrailingCursor = text.endsWith(cursorChar);
 
-  useEffect(() => {
-    if (shouldSkip) {
-      setDisplayedCount(baseText.length);
-      setIsComplete(true);
-      onComplete?.();
-    }
-  }, [shouldSkip, baseText.length, onComplete]);
+  // Completion is derived, not stored: either we skipped, or typing reached the end.
+  const isComplete = shouldSkip || (started && displayedCount >= baseText.length);
 
   useEffect(() => {
     if (shouldSkip) return;
@@ -54,22 +48,23 @@ export default function Typewriter({
     return () => clearTimeout(timer);
   }, [delay, shouldSkip]);
 
+  // Advance one character at a time. The state update lives inside the timeout
+  // (async), so it never runs synchronously in the effect body.
   useEffect(() => {
     if (!started || shouldSkip) return;
-    if (displayedCount >= baseText.length) {
-      if (!isComplete) {
-        setIsComplete(true);
-        onComplete?.();
-      }
-      return;
-    }
+    if (displayedCount >= baseText.length) return;
 
     const timer = setTimeout(() => {
       setDisplayedCount((prev) => prev + 1);
     }, speed);
 
     return () => clearTimeout(timer);
-  }, [started, displayedCount, baseText.length, speed, onComplete, shouldSkip, isComplete]);
+  }, [started, displayedCount, baseText.length, speed, shouldSkip]);
+
+  // Fire onComplete once, when the title finishes (or immediately when skipped).
+  useEffect(() => {
+    if (isComplete) onComplete?.();
+  }, [isComplete, onComplete]);
 
   const displayedBase = baseText.slice(0, displayedCount);
   const showCursor =

@@ -21,11 +21,11 @@ export default function ProjectCard({ project }: ProjectCardProps) {
     <Link
       href={`/projects/${project.slug}`}
       aria-label={project.title}
-      className="group/card relative grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-8 items-start border border-border hover:border-foreground/30 rounded-[12px] p-4 md:p-5 transition-colors duration-500 cursor-pointer"
+      className="group/card relative grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-8 items-start border border-border hover:border-foreground/30 rounded-[12px] p-4 md:p-5 cursor-pointer transition-[border-color,transform,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] motion-safe:hover:-translate-y-1 motion-safe:hover:shadow-lg motion-safe:focus-visible:-translate-y-1 motion-safe:focus-visible:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
     >
       {/* Project Title - Mobile only, shown at top */}
       <div className="md:hidden">
-        <span className="font-text text-lg animated-underline inline-block">
+        <span className="font-text text-lg animated-underline inline-block transition-colors duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/card:text-primary group-focus-visible/card:text-primary">
           {project.title}
         </span>
       </div>
@@ -35,13 +35,13 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       {/* Curtain reveal (A3) wipes the image in on scroll; subtle zoom on hover. */}
       <AnimateOnScroll
         variant="curtain"
-        className="md:col-span-4 relative w-full h-64 sm:h-80 md:h-[500px] lg:h-[600px] overflow-hidden rounded-[4px]"
+        className="md:col-span-4 relative w-full h-64 sm:h-80 md:h-[440px] lg:h-[520px] overflow-hidden rounded-[8px]"
       >
-        <div className="relative w-full h-full ease-out motion-safe:transition-transform motion-safe:duration-700 motion-safe:group-hover/card:scale-[1.02]">
+        <div className="relative w-full h-full ease-[cubic-bezier(0.16,1,0.3,1)] motion-safe:transition-transform motion-safe:duration-700 motion-safe:group-hover/card:scale-[1.04] motion-safe:group-focus-visible/card:scale-[1.04]">
           <ProjectImage
             src={project.image}
             overlayImage={project.overlayImage}
-            alt={project.title}
+            alt=""
             sizes="(max-width: 768px) 100vw, 80vw"
           />
         </div>
@@ -67,8 +67,8 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       </div>
 
       {/* Project Title - Desktop only, shown below image */}
-      <div className="hidden md:block md:col-span-2 mt-2 md:mt-3">
-        <span className="font-text text-lg md:text-xl animated-underline inline-block">
+      <div className="hidden md:block md:col-span-2 mt-3 md:mt-4 self-end">
+        <span className="font-text text-lg md:text-xl animated-underline inline-block transition-colors duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/card:text-primary group-focus-visible/card:text-primary">
           {project.title}
         </span>
       </div>

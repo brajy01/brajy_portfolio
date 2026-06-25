@@ -74,7 +74,7 @@
   --border: rgb(62 62 56);
   --input: rgb(81 80 74);
   --ring: rgb(237 83 21);
-  /* Shadows are mode-independent — defined once in :root. */
+  /* Shadows are mode-independent: defined once in :root. */
 }
 
 @theme inline {
@@ -119,11 +119,19 @@ body {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground overflow-x-clip;
+  }
+  /* Visible keyboard focus everywhere. Tailwind's preflight zeroes the outline
+     and the rule above only sets its colour, so without this no ring renders
+     for controls that don't define their own focus-visible style.
+     overflow-x-clip (not hidden) keeps sticky descendants working. */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
   }
 }
 
-/* Brand fonts — defined as @utility so they work as classes and via @apply. */
+/* Brand fonts: defined as @utility so they work as classes and via @apply. */
 @utility font-text {
   font-family: var(--font-text);
   font-weight: 400;
@@ -140,7 +148,7 @@ body {
 }
 
 @layer utilities {
-  /* Shared section layout — repeated across every page section */
+  /* Shared section layout: repeated across every page section */
   .section-x {
     @apply px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20;
   }
@@ -149,7 +157,7 @@ body {
     @apply max-w-[1400px] mx-auto w-full;
   }
 
-  /* Bulleted detail item — used in project detail + about experience lists */
+  /* Bulleted detail item: used in project detail + about experience lists */
   .detail-list-item {
     @apply font-text text-sm sm:text-base md:text-lg leading-relaxed text-foreground flex gap-3 text-pretty;
   }
@@ -173,7 +181,7 @@ body {
     transform: translateY(0);
   }
 
-  /* Curtain reveal — clip-path wipe from top, for images entering view */
+  /* Curtain reveal: clip-path wipe from top, for images entering view */
   .curtain {
     clip-path: inset(0 0 100% 0);
     transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1);
@@ -183,7 +191,7 @@ body {
     clip-path: inset(0 0 0 0);
   }
 
-  /* Scroll hint — gentle opacity wave on the project hero chevrons */
+  /* Scroll hint: gentle opacity wave on the project hero chevrons */
   .scroll-hint {
     animation: scroll-hint-wave 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
   }
@@ -220,7 +228,8 @@ body {
     clip-path: inset(0 0 0 0);
   }
 
-  [class*="group/card"]:hover .animated-underline::after {
+  [class*="group/card"]:hover .animated-underline::after,
+  [class*="group/card"]:focus-visible .animated-underline::after {
     clip-path: inset(0 0 0 0);
   }
 
@@ -251,7 +260,7 @@ body {
     animation: page-enter 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
-  /* Hero background fade — masks the gradient + grain to transparent at the
+  /* Hero background fade: masks the gradient + grain to transparent at the
      very top so the hero meets the orange header with no colour seam. The
      gradient stays at full strength below the fade. */
   .hero-bg-fade {
@@ -263,7 +272,7 @@ body {
     mask-image: linear-gradient(to bottom, transparent 0, black 120px);
   }
 
-  /* Hero mesh — a CSS-only mesh gradient from the Brajy palette. Several
+  /* Hero mesh: a CSS-only mesh gradient from the Brajy palette. Several
      coloured radial blobs are layered over a base orange and slowly drift,
      giving rich, multi-colour movement with no image asset. */
   .hero-mesh {
@@ -279,8 +288,16 @@ body {
     --b3y: 86%;
     --b4x: 52%;
     --b4y: 50%;
+    /* Pointer-following highlight (b5): trails the cursor with a long lag. */
+    --b5x: 50%;
+    --b5y: 50%;
     background-color: var(--primary);
     background-image:
+      radial-gradient(
+        circle at var(--b5x) var(--b5y),
+        rgb(255 198 146 / 0.85) 0%,
+        rgb(255 198 146 / 0) 30%
+      ),
       radial-gradient(
         circle at var(--b0x) var(--b0y),
         rgb(255 170 120 / 1) 0%,
@@ -309,7 +326,7 @@ body {
     will-change: background-image;
   }
 
-  /* Hero grain — subtle animated film grain over the gradient.
+  /* Hero grain: subtle animated film grain over the gradient.
      The noise texture is an inline SVG feTurbulence; the layer is oversized
      and slowly drifted so the grain shimmers without revealing tiled edges. */
   .hero-grain {
@@ -397,5 +414,11 @@ body {
 
   .hero-grain {
     animation: none;
+  }
+
+  /* Drop the compositing hints when nothing animates. */
+  .hero-mesh,
+  .hero-grain {
+    will-change: auto;
   }
 }

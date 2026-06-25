@@ -5,11 +5,12 @@ import { useEffect, useRef } from "react";
 /**
  * Living hero background: a CSS mesh gradient from the Brajy palette (no image
  * asset). Each coloured blob drifts continuously on its own slow orbit
- * (lava-lamp feel) and is gently nudged by the pointer, so the colours
- * reorganise organically rather than sliding as one block. Decorative only.
+ * (lava-lamp feel), and a soft warm highlight (b5) trails the pointer with a
+ * long lag so the surface feels alive and organic rather than sliding as one
+ * block. Decorative only.
  *
- * Gated by `prefers-reduced-motion`: when reduced motion is on, the blobs sit
- * at their base positions and nothing animates.
+ * Gated by `prefers-reduced-motion`: when reduced motion is on, the blobs and
+ * the follower sit at their base positions and nothing animates.
  */
 
 // Each blob: base position (%), orbit radius (%), orbit speed, phase offset,
@@ -30,16 +31,36 @@ export default function HeroBackground() {
     if (!mesh) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    // Pointer offset in -0.5 → 0.5, eased toward each frame.
+    const host = mesh.parentElement; // the hero-bg-fade box (covers the hero)
+    if (!host) return;
+
+    // Pointer offset in -0.5 → 0.5, eased toward each frame (gentle blob pull).
     let pointerX = 0;
     let pointerY = 0;
     let curPX = 0;
     let curPY = 0;
     const PULL_RANGE = 7; // max % a blob is nudged by the pointer
 
+    // Follower highlight (b5): trails the actual pointer position (in mesh %)
+    // with a long lag. Starts centred so there's no jump before the first move.
+    let targetX = 50;
+    let targetY = 50;
+    let followX = 50;
+    let followY = 50;
+    const FOLLOW_EASE = 0.018; // small = long, organic delay
+
+    // Cache the host rect so mapping the pointer into the hero box costs no
+    // layout read per mousemove; refresh it on scroll/resize.
+    let rect = host.getBoundingClientRect();
+    const updateRect = () => {
+      rect = host.getBoundingClientRect();
+    };
+
     const onMove = (e: MouseEvent) => {
       pointerX = e.clientX / window.innerWidth - 0.5;
       pointerY = e.clientY / window.innerHeight - 0.5;
+      targetX = ((e.clientX - rect.left) / rect.width) * 100;
+      targetY = ((e.clientY - rect.top) / rect.height) * 100;
     };
 
     let raf = 0;
@@ -63,13 +84,25 @@ export default function HeroBackground() {
         mesh.style.setProperty(`--b${i}x`, `${x}%`);
         mesh.style.setProperty(`--b${i}y`, `${y}%`);
       }
+
+      // Long-lagged follower + a slow wobble so it stays alive when the pointer
+      // is still (or absent, e.g. touch devices).
+      followX += (targetX - followX) * FOLLOW_EASE;
+      followY += (targetY - followY) * FOLLOW_EASE;
+      mesh.style.setProperty("--b5x", `${followX + Math.cos(t * 0.6) * 2.5}%`);
+      mesh.style.setProperty("--b5y", `${followY + Math.sin(t * 0.5) * 2.5}%`);
+
       raf = requestAnimationFrame(loop);
     };
 
     window.addEventListener("mousemove", onMove, { passive: true });
+    window.addEventListener("scroll", updateRect, { passive: true });
+    window.addEventListener("resize", updateRect);
     raf = requestAnimationFrame(loop);
     return () => {
       window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("scroll", updateRect);
+      window.removeEventListener("resize", updateRect);
       cancelAnimationFrame(raf);
     };
   }, []);
@@ -79,10 +112,10 @@ export default function HeroBackground() {
       className="hero-bg-fade absolute inset-0 overflow-hidden pointer-events-none"
       aria-hidden="true"
     >
-      {/* Mesh gradient — blob positions driven by CSS vars set in JS above. */}
+      {/* Mesh gradient: blob positions driven by CSS vars set in JS above. */}
       <div ref={meshRef} className="hero-mesh absolute -inset-24" />
 
-      {/* Animated grain — shimmers over the mesh */}
+      {/* Animated grain: shimmers over the mesh */}
       <div className="hero-grain absolute inset-0" />
     </div>
   );

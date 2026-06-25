@@ -14,7 +14,7 @@ const paragraphs = [
   "Fluent in 4 languages, thanks to years working internationally",
 ];
 
-// Counter-clockwise rounded-rect path from the bottom-right corner — drives the
+// Counter-clockwise rounded-rect path from the bottom-right corner, drives the
 // button's animated border draw.
 function roundedRectPath(w: number, h: number, r = 4) {
   if (w <= 0 || h <= 0) return "";
@@ -48,6 +48,9 @@ export default function Hero() {
     if (!hasVisited) {
       sessionStorage.setItem("hero-animated", "true");
     }
+    // window/sessionStorage are client-only, so the decision can only be made
+    // after mount. Setting state here is the intended hydration-safe pattern.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (isMobile || hasVisited) setSkipTypewriter(true);
   }, []);
 
@@ -79,7 +82,7 @@ export default function Hero() {
 
   return (
     <section
-      className="relative overflow-hidden min-h-auto sm:min-h-[calc(100vh-88px)] flex items-start sm:items-center section-x py-12 sm:py-16 md:py-20 bg-primary"
+      className="relative overflow-hidden min-h-auto sm:min-h-[calc(100dvh-88px)] flex items-start sm:items-center section-x py-12 sm:py-16 md:py-20 bg-primary"
       role="region"
       aria-labelledby="hero-title"
     >
@@ -176,10 +179,19 @@ export default function Hero() {
                 {isHovered && (
                   <motion.span
                     key="chevron"
-                    initial={{ opacity: 0, width: 0 }}
+                    initial={
+                      prefersReducedMotion ? false : { opacity: 0, width: 0 }
+                    }
                     animate={{ opacity: 0.6, width: "auto" }}
-                    exit={{ opacity: 0, width: 0 }}
-                    transition={{ duration: 0.25, ease: easings.smooth }}
+                    exit={
+                      prefersReducedMotion
+                        ? { opacity: 0 }
+                        : { opacity: 0, width: 0 }
+                    }
+                    transition={{
+                      duration: prefersReducedMotion ? 0 : 0.25,
+                      ease: easings.smooth,
+                    }}
                     className="font-caption shrink-0 overflow-hidden"
                   >
                     &raquo;

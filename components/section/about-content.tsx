@@ -179,7 +179,7 @@ export default function AboutContent() {
         <div className="relative w-full h-48 sm:h-64 md:h-[400px] lg:h-[500px]">
           <Image
             src="/mesh/GRADIENT_N&B_1.png"
-            alt="Abstract gradient visual break"
+            alt=""
             fill
             className="object-cover"
             sizes="100vw"
