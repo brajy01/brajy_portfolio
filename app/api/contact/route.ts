@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-// Where contact-form submissions are delivered.
-const TO_EMAIL = "contact@brajy.com";
+// Where contact-form submissions are delivered. Until a domain is verified in
+// Resend, this MUST be the Resend account's own email — test mode only allows
+// delivery to that address. Switch to contact@brajy.com once brajy.com is verified.
+const TO_EMAIL = "brajon.jeremy@gmail.com";
 // Must be an address on a domain verified in Resend. While the domain is not
 // yet verified, Resend's onboarding sender works for testing.
 const FROM_EMAIL = "Brajy Portfolio <onboarding@resend.dev>";
