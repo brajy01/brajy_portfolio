@@ -63,6 +63,21 @@ export default function Footer() {
           <div className="mb-12 md:mb-16">
             {/* Mobile: Side by side Connect & Quick Links, Desktop: 3 columns */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-12 mb-8">
+              {/* Quick Links */}
+              <nav
+                aria-label="Footer navigation"
+                className="text-center md:text-left"
+              >
+                <h3 className="font-title text-sm md:text-base text-secondary mb-4">
+                  Quick links
+                </h3>
+                <ul className="space-y-2 inline-block text-left">
+                  {quickLinks.map((link) => (
+                    <FooterLink key={link.href} {...link} />
+                  ))}
+                </ul>
+              </nav>
+
               {/* Social Links */}
               <nav aria-label="Social links" className="text-center md:text-left">
                 <h3 className="font-title text-sm md:text-base text-secondary mb-4">
@@ -90,21 +105,6 @@ export default function Footer() {
                       </li>
                     );
                   })}
-                </ul>
-              </nav>
-
-              {/* Quick Links */}
-              <nav
-                aria-label="Footer navigation"
-                className="text-center md:text-left"
-              >
-                <h3 className="font-title text-sm md:text-base text-secondary mb-4">
-                  Quick links
-                </h3>
-                <ul className="space-y-2 inline-block text-left">
-                  {quickLinks.map((link) => (
-                    <FooterLink key={link.href} {...link} />
-                  ))}
                 </ul>
               </nav>
 

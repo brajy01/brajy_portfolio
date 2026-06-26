@@ -9,9 +9,9 @@ import Typewriter from "@/components/ui/typewriter";
 import HeroBackground from "@/components/ui/hero-background";
 
 const paragraphs = [
-  "+4 years in operations taught me where processes break and where better decisions start",
-  "I learned to build the tools to fix what I used to solve by hand",
-  "Fluent in 4 languages, thanks to years working internationally",
+  "+4 years running operations showed me where processes break, and where better decisions start",
+  "So I learned to build the tools to fix what I used to solve by hand",
+  "Across four languages, from years working internationally",
 ];
 
 // Counter-clockwise rounded-rect path from the bottom-right corner, drives the
