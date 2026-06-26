@@ -2,7 +2,9 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { usePathname } from "next/navigation";
+import { isActivePath } from "@/lib/utils";
 import NavLink from "./nav-link";
+import { NAV_ITEMS } from "./nav-items";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -14,10 +16,6 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const [isMounted, setIsMounted] = useState(false);
   const [isAnimatingIn, setIsAnimatingIn] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-
-  const isActive = (href: string) => {
-    return pathname === href || pathname.startsWith(href + "/");
-  };
 
   useEffect(() => {
     if (isOpen) {
@@ -112,16 +110,12 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       >
         {/* Navigation links */}
         <nav className="flex flex-col space-y-8 text-center">
-          {[
-            { href: "/about", label: "About" },
-            { href: "/projects", label: "Projects" },
-            { href: "/contact", label: "Contact" },
-          ].map((link) => (
+          {NAV_ITEMS.map((link) => (
             <NavLink
               key={link.href}
               href={link.href}
               label={link.label}
-              isActive={isActive(link.href)}
+              isActive={isActivePath(pathname, link.href)}
               onClose={onClose}
               className="relative inline-block text-4xl font-title text-background"
             />

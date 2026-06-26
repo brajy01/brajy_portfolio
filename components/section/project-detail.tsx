@@ -5,6 +5,7 @@ import { projects } from "@/data/projects";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import AnimateOnScroll from "@/components/ui/animate-on-scroll";
+import BulletList from "@/components/ui/bullet-list";
 import ProjectImage from "@/components/ui/project-image";
 
 interface ProjectDetailProps {
@@ -38,15 +39,36 @@ function BodyText({ children }: { children: ReactNode }) {
   );
 }
 
-function BulletList({ items }: { items: string[] }) {
+function ExternalLinkBlock({
+  label,
+  href,
+  text,
+  className,
+}: {
+  label: string;
+  href: string;
+  text: string;
+  className?: string;
+}) {
   return (
-    <AnimateOnScroll as="ul" stagger={60} className="space-y-2 sm:space-y-3">
-      {items.map((item, index) => (
-        <li key={index} className="detail-list-item">
-          <span className="text-primary shrink-0">&bull;</span>
-          <span>{item}</span>
-        </li>
-      ))}
+    <AnimateOnScroll>
+      <div className={className}>
+        <p className="font-caption text-xs sm:text-sm text-primary mb-1">
+          {label}
+        </p>
+        <Link
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-caption text-sm sm:text-base animated-underline transition-colors inline-flex items-center gap-1"
+        >
+          {text}
+          <ArrowUpRight
+            aria-hidden="true"
+            className="arrow-lift w-3 h-3 sm:w-4 sm:h-4"
+          />
+        </Link>
+      </div>
     </AnimateOnScroll>
   );
 }
@@ -73,7 +95,7 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
     <>
       {/* Hero Section - Title and Description */}
       <section
-        className="min-h-auto sm:min-h-[calc(100dvh-88px)] flex flex-col items-start sm:items-start justify-start sm:justify-center section-x py-12 sm:py-16 md:py-20"
+        className="min-h-auto sm:min-h-[calc(100dvh-var(--header-height))] flex flex-col items-start sm:items-start justify-start sm:justify-center section-x py-12 sm:py-16 md:py-20"
         role="region"
         aria-labelledby="project-title"
       >
@@ -183,48 +205,21 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
 
               {/* GitHub Section */}
               {project.projectDetails.githubUrl && (
-                <AnimateOnScroll>
-                  <div>
-                    <p className="font-caption text-xs sm:text-sm text-primary mb-1">
-                      _github
-                    </p>
-                    <Link
-                      href={project.projectDetails.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-caption text-sm sm:text-base animated-underline transition-colors inline-flex items-center gap-1"
-                    >
-                      See project&apos;s repository
-                      <ArrowUpRight
-                        aria-hidden="true"
-                        className="arrow-lift w-3 h-3 sm:w-4 sm:h-4"
-                      />
-                    </Link>
-                  </div>
-                </AnimateOnScroll>
+                <ExternalLinkBlock
+                  label="_github"
+                  href={project.projectDetails.githubUrl}
+                  text="See project's repository"
+                />
               )}
 
               {/* Live Site Section */}
               {project.projectDetails.liveUrl && (
-                <AnimateOnScroll>
-                  <div className="mt-4">
-                    <p className="font-caption text-xs sm:text-sm text-primary mb-1">
-                      _live site
-                    </p>
-                    <Link
-                      href={project.projectDetails.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-caption text-sm sm:text-base animated-underline transition-colors inline-flex items-center gap-1"
-                    >
-                      Visit the website
-                      <ArrowUpRight
-                        aria-hidden="true"
-                        className="arrow-lift w-3 h-3 sm:w-4 sm:h-4"
-                      />
-                    </Link>
-                  </div>
-                </AnimateOnScroll>
+                <ExternalLinkBlock
+                  label="_live site"
+                  href={project.projectDetails.liveUrl}
+                  text="Visit the website"
+                  className="mt-4"
+                />
               )}
             </div>
 

@@ -7,6 +7,11 @@ interface ProjectCardProps {
   project: Project;
 }
 
+// Card title: animated wrap-aware underline + hover/focus color, driven by the
+// parent `group/card`. Shared by the mobile and desktop title spans.
+const TITLE_CLASS =
+  "font-text text-lg animated-underline-wrap inline transition-colors duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/card:text-primary group-focus-visible/card:text-primary";
+
 export default function ProjectCard({ project }: ProjectCardProps) {
   // Sort captions: black labels longest→shortest, orange tags shortest→longest
   const labels = [
@@ -25,9 +30,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
     >
       {/* Project Title - Mobile only, shown at top */}
       <div className="md:hidden">
-        <span className="font-text text-lg animated-underline-wrap inline transition-colors duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/card:text-primary group-focus-visible/card:text-primary">
-          {project.title}
-        </span>
+        <span className={TITLE_CLASS}>{project.title}</span>
       </div>
 
       {/* Image - Left side */}
@@ -68,9 +71,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
       {/* Project Title - Desktop only, shown below image */}
       <div className="hidden md:block md:col-span-2 mt-3 md:mt-4 self-end">
-        <span className="font-text text-lg md:text-xl animated-underline-wrap inline transition-colors duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/card:text-primary group-focus-visible/card:text-primary">
-          {project.title}
-        </span>
+        <span className={`${TITLE_CLASS} md:text-xl`}>{project.title}</span>
       </div>
     </Link>
   );

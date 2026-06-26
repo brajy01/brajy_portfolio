@@ -4,19 +4,16 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
+import { cn, isActivePath } from "@/lib/utils";
 import { useHideOnScroll } from "@/hooks/useHideOnScroll";
 import NavLink from "./nav-link";
 import MobileMenu from "./mobile-menu";
+import { NAV_ITEMS } from "./nav-items";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
   const isHeaderVisible = useHideOnScroll();
-
-  const isActive = (href: string) => {
-    return pathname === href || pathname.startsWith(href + "/");
-  };
 
   return (
     <>
@@ -36,17 +33,14 @@ export default function Header() {
 
         {/* Desktop navigation */}
         <nav className="hidden md:flex items-center space-x-6 font-title text-background">
-          <NavLink href="/about" label="About" isActive={isActive("/about")} />
-          <NavLink
-            href="/projects"
-            label="Projects"
-            isActive={isActive("/projects")}
-          />
-          <NavLink
-            href="/contact"
-            label="Contact"
-            isActive={isActive("/contact")}
-          />
+          {NAV_ITEMS.map((item) => (
+            <NavLink
+              key={item.href}
+              href={item.href}
+              label={item.label}
+              isActive={isActivePath(pathname, item.href)}
+            />
+          ))}
         </nav>
 
         {/* Mobile menu button */}

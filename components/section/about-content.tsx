@@ -2,10 +2,33 @@
 
 import Image from "next/image";
 import AnimateOnScroll from "@/components/ui/animate-on-scroll";
+import BulletList from "@/components/ui/bullet-list";
 import SectionHeading from "@/components/ui/section-heading";
 
-export default function AboutContent() {
-  const experiences = [
+interface SkillGroup {
+  category: string;
+  items: string[];
+}
+
+interface ExperienceEntry {
+  id: number;
+  position: string;
+  company: string;
+  period: string;
+  highlights: string[];
+  skills: SkillGroup[];
+}
+
+interface EducationEntry {
+  id: number;
+  program: string;
+  institution: string;
+  period: string;
+  highlights: string[];
+  skills: string[];
+}
+
+const experiences: ExperienceEntry[] = [
     {
       id: 1,
       position: "Operations Analytics — Independent Project",
@@ -125,7 +148,7 @@ export default function AboutContent() {
     },
   ];
 
-  const education = [
+const education: EducationEntry[] = [
     {
       id: 1,
       program: "Microsoft Certification - Power BI Data Analyst Associate",
@@ -197,6 +220,64 @@ export default function AboutContent() {
     },
   ];
 
+/** One entry in the experience/education timeline: title, caption, highlights and skill groups. */
+function TimelineEntry({
+  index,
+  title,
+  caption,
+  highlights,
+  skills,
+}: {
+  index: number;
+  title: string;
+  caption: string;
+  highlights: string[];
+  skills: SkillGroup[];
+}) {
+  return (
+    <AnimateOnScroll delay={index * 50}>
+      {index > 0 && (
+        <div className="border-t border-border mb-8 sm:mb-10 md:mb-12" />
+      )}
+
+      {/* Title + Caption */}
+      <div>
+        <h3 className="font-title text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight">
+          {title}
+        </h3>
+        <p className="font-caption text-xs sm:text-sm md:text-lg text-primary mt-1 mb-6 sm:mb-8">
+          {caption}
+        </p>
+      </div>
+
+      {/* Content grid: highlights left, skills right */}
+      <div className="flex flex-col md:flex-row md:justify-between gap-6 sm:gap-8">
+        <div className="md:max-w-[65%] md:pl-12 lg:pl-16">
+          <BulletList items={highlights} />
+        </div>
+
+        <div className="md:w-[320px] lg:w-[380px] shrink-0">
+          {skills.map((skillGroup, groupIdx) => (
+            <div key={groupIdx} className="mb-6">
+              <p className="font-caption text-xs sm:text-sm text-foreground mb-2 sm:mb-3 md:text-right">
+                _{skillGroup.category.toLowerCase()}
+              </p>
+              <div className="flex flex-wrap gap-2 md:justify-end">
+                {skillGroup.items.map((skill, idx) => (
+                  <span key={idx} className="tag-pill text-center">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </AnimateOnScroll>
+  );
+}
+
+export default function AboutContent() {
   return (
     <>
       {/* Hero Section */}
@@ -255,56 +336,14 @@ export default function AboutContent() {
 
           <div className="space-y-10 sm:space-y-12 md:space-y-16">
             {experiences.map((exp, index) => (
-              <AnimateOnScroll key={exp.id} delay={index * 50}>
-                {index > 0 && (
-                  <div className="border-t border-border mb-8 sm:mb-10 md:mb-12" />
-                )}
-
-                {/* Title + Caption */}
-                <div>
-                  <h3 className="font-title text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight">
-                    {exp.position}
-                  </h3>
-                  <p className="font-caption text-xs sm:text-sm md:text-lg text-primary mt-1 mb-6 sm:mb-8">
-                    {exp.company} | {exp.period}
-                  </p>
-                </div>
-
-                {/* Content grid: highlights left, skills right */}
-                <div className="flex flex-col md:flex-row md:justify-between gap-6 sm:gap-8">
-                  <div className="md:max-w-[65%] md:pl-12 lg:pl-16">
-                    <AnimateOnScroll
-                      as="ul"
-                      stagger={60}
-                      className="space-y-2 sm:space-y-3"
-                    >
-                      {exp.highlights.map((highlight, idx) => (
-                        <li key={idx} className="detail-list-item">
-                          <span className="text-primary shrink-0">&bull;</span>
-                          <span>{highlight}</span>
-                        </li>
-                      ))}
-                    </AnimateOnScroll>
-                  </div>
-
-                  <div className="md:w-[320px] lg:w-[380px] shrink-0">
-                    {exp.skills.map((skillGroup, groupIdx) => (
-                      <div key={groupIdx} className="mb-6">
-                        <p className="font-caption text-xs sm:text-sm text-foreground mb-2 sm:mb-3 md:text-right">
-                          _{skillGroup.category.toLowerCase()}
-                        </p>
-                        <div className="flex flex-wrap gap-2 md:justify-end">
-                          {skillGroup.items.map((skill, idx) => (
-                            <span key={idx} className="tag-pill text-center">
-                              {skill}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </AnimateOnScroll>
+              <TimelineEntry
+                key={exp.id}
+                index={index}
+                title={exp.position}
+                caption={`${exp.company} | ${exp.period}`}
+                highlights={exp.highlights}
+                skills={exp.skills}
+              />
             ))}
           </div>
         </div>
@@ -329,54 +368,14 @@ export default function AboutContent() {
 
           <div className="space-y-10 sm:space-y-12 md:space-y-16">
             {education.map((edu, index) => (
-              <AnimateOnScroll key={edu.id} delay={index * 50}>
-                {index > 0 && (
-                  <div className="border-t border-border mb-8 sm:mb-10 md:mb-12" />
-                )}
-
-                {/* Program + Caption */}
-                <div>
-                  <h3 className="font-title text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight">
-                    {edu.program}
-                  </h3>
-                  <p className="font-caption text-xs sm:text-sm md:text-lg text-primary mt-1 mb-6 sm:mb-8">
-                    {edu.institution} | {edu.period}
-                  </p>
-                </div>
-
-                {/* Content grid: highlights left, skills right */}
-                <div className="flex flex-col md:flex-row md:justify-between gap-6 sm:gap-8">
-                  <div className="md:max-w-[65%] md:pl-12 lg:pl-16">
-                    <AnimateOnScroll
-                      as="ul"
-                      stagger={60}
-                      className="space-y-2 sm:space-y-3"
-                    >
-                      {edu.highlights.map((highlight, idx) => (
-                        <li key={idx} className="detail-list-item">
-                          <span className="text-primary shrink-0">&bull;</span>
-                          <span>{highlight}</span>
-                        </li>
-                      ))}
-                    </AnimateOnScroll>
-                  </div>
-
-                  <div className="md:w-[320px] lg:w-[380px] shrink-0">
-                    <div className="mb-6">
-                      <p className="font-caption text-xs sm:text-sm text-foreground mb-2 sm:mb-3 md:text-right">
-                        _skills
-                      </p>
-                      <div className="flex flex-wrap gap-2 md:justify-end">
-                        {edu.skills.map((skill, idx) => (
-                          <span key={idx} className="tag-pill text-center">
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </AnimateOnScroll>
+              <TimelineEntry
+                key={edu.id}
+                index={index}
+                title={edu.program}
+                caption={`${edu.institution} | ${edu.period}`}
+                highlights={edu.highlights}
+                skills={[{ category: "skills", items: edu.skills }]}
+              />
             ))}
           </div>
         </div>

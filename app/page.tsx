@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Hero from "@/components/section/hero";
-import LatestProjects from "@/components/section/latest_projects";
+import LatestProjects from "@/components/section/latest-projects";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },

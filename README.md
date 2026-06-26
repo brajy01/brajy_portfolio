@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Brajy Portfolio
 
-## Getting Started
+Personal portfolio for Jeremy Brajon — _Operations × Data × Code_.
 
-First, run the development server:
+## Stack
+
+- **Next.js 16** (App Router) + **React 19**
+- **TypeScript** (strict)
+- **Tailwind CSS v4**
+- **framer-motion** for animation, **lucide-react** for icons
+- **Resend** for contact-form email delivery
+- Self-hosted fonts (PP Mori, Geist Mono) preloaded in [`app/layout.tsx`](app/layout.tsx)
+
+## Develop
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Command         | Description                |
+| --------------- | -------------------------- |
+| `npm run dev`   | Start the dev server       |
+| `npm run build` | Production build           |
+| `npm run start` | Serve the production build |
+| `npm run lint`  | Run ESLint                 |
 
-## Learn More
+## Environment
 
-To learn more about Next.js, take a look at the following resources:
+The contact form ([`app/api/contact/route.ts`](app/api/contact/route.ts)) sends email via Resend.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+cp .env.example .env.local
+# then set RESEND_API_KEY in .env.local
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+`.env.local` is git-ignored — never commit it.
 
-## Deploy on Vercel
+## Structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+app/         routes (App Router) + SEO/metadata files (sitemap, robots, OG images, manifest)
+components/  layout/ (header, footer, nav), section/ (page sections), ui/ (reusable primitives)
+data/        projects.ts — project content
+hooks/       custom React hooks
+lib/         shared utilities (cn, isActivePath, site constants)
+public/      fonts, images, CV
+```

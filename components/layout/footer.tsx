@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AnimateOnScroll from "@/components/ui/animate-on-scroll";
+import { NAV_ITEMS } from "./nav-items";
 
 const socialLinks = [
   {
@@ -38,9 +39,10 @@ const socialLinks = [
 
 const quickLinks = [
   { href: "/", label: "home" },
-  { href: "/about", label: "about" },
-  { href: "/projects", label: "projects" },
-  { href: "/contact", label: "contact" },
+  ...NAV_ITEMS.map((item) => ({
+    href: item.href,
+    label: item.label.toLowerCase(),
+  })),
 ];
 
 function FooterLink({ href, label }: { href: string; label: string }) {

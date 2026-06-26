@@ -47,6 +47,10 @@
 
   --radius: 1rem;
 
+  /* Fixed header height; offsets the body top padding and the full-viewport
+     hero sections (home + project detail). */
+  --header-height: 88px;
+
   --shadow-2xs: 0 1px 3px 0px rgb(0 0 0 / 0.05);
   --shadow-xs: 0 1px 3px 0px rgb(0 0 0 / 0.05);
   --shadow-sm: 0 1px 3px 0px rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
@@ -225,11 +229,6 @@ body {
   }
 
   .animated-underline:hover::after {
-    clip-path: inset(0 0 0 0);
-  }
-
-  [class*="group/card"]:hover .animated-underline::after,
-  [class*="group/card"]:focus-visible .animated-underline::after {
     clip-path: inset(0 0 0 0);
   }
 

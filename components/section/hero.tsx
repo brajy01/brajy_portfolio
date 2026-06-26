@@ -82,7 +82,7 @@ export default function Hero() {
 
   return (
     <section
-      className="relative overflow-hidden min-h-auto sm:min-h-[calc(100dvh-88px)] flex items-start sm:items-center section-x py-12 sm:py-16 md:py-20 bg-primary"
+      className="relative overflow-hidden min-h-auto sm:min-h-[calc(100dvh-var(--header-height))] flex items-start sm:items-center section-x py-12 sm:py-16 md:py-20 bg-primary"
       role="region"
       aria-labelledby="hero-title"
     >

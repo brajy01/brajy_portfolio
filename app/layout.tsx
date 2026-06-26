@@ -2,8 +2,8 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
+import { SITE_URL } from "@/lib/site";
 
-const SITE_URL = "https://brajy.com";
 const DESCRIPTION =
   "Jeremy Brajon, operations & data analyst. I turn operational data into decisions with Python, SQL and analytics. Multilingual (FR/EN/PT/ES).";
 
@@ -89,7 +89,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
       </head>
-      <body className="antialiased pt-[88px]">
+      <body className="antialiased pt-(--header-height)">
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded focus:bg-foreground focus:px-4 focus:py-2 focus:font-caption focus:text-sm focus:text-background"
