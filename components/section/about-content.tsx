@@ -211,19 +211,14 @@ export default function AboutContent() {
                   <div className="border-t border-border mb-8 sm:mb-10 md:mb-12" />
                 )}
 
-                {/* Index + Title + Caption */}
-                <div className="flex items-baseline gap-2 sm:gap-3">
-                  <span className="font-caption text-sm sm:text-base md:text-lg text-primary shrink-0">
-                    {String(index + 1).padStart(2, "0")} &raquo;
-                  </span>
-                  <div>
-                    <h3 className="font-title text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight">
-                      {exp.position}
-                    </h3>
-                    <p className="font-caption text-xs sm:text-sm md:text-lg text-primary mt-1 mb-6 sm:mb-8">
-                      {exp.company} | {exp.period}
-                    </p>
-                  </div>
+                {/* Title + Caption */}
+                <div>
+                  <h3 className="font-title text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight">
+                    {exp.position}
+                  </h3>
+                  <p className="font-caption text-xs sm:text-sm md:text-lg text-primary mt-1 mb-6 sm:mb-8">
+                    {exp.company} | {exp.period}
+                  </p>
                 </div>
 
                 {/* Content grid: highlights left, skills right */}
