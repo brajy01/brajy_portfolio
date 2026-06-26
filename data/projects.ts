@@ -101,7 +101,7 @@ export const projects: Project[] = [
       "Website and SEO for Dr. Barbara Freitas, a dental therapist on the Isle of Man who had no online presence",
     image: "/projects/barbara-freitas/card.jpg",
     overlayImage: "/mesh/GRADIENT_FULL_2.png",
-    tags: ["Web Design", "SEO"],
+    tags: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
     category: "Design",
     month: "february",
     year: 2025,
@@ -113,7 +113,7 @@ export const projects: Project[] = [
     heroOverlayImage: "/mesh/GRADIENT_FULL_2.png",
     overview:
       "Barbara had no website and relied on word of mouth. The goal was a clean, fast site that presents her practice clearly and, above all, gets found by the right patients in search, including the Portuguese-speaking community she serves. I kept the design calm and trustworthy, added a before-and-after gallery so her work speaks for itself, and a one-tap WhatsApp contact so enquiries land directly with her.",
-    technologies: ["Web Design", "SEO"],
+    technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
     problem:
       "With no website, patients on the Isle of Man had no way to find Barbara, see her work, or get in touch. And without a professional presence, the practice didn't have the credibility people look for when they pick a dentist.",
     approach: [
@@ -135,7 +135,7 @@ export const projects: Project[] = [
       "The practice finally looks as professional online as Barbara is in person",
     ],
     lessonsLearned:
-      "Getting Barbara online fast on a site builder proved the value, but the renewal pricing made the trade-off clear: owning the code matters, and rebuilding it properly is the natural next step. The bigger lesson was how much trust drives every choice in healthcare. If a detail doesn't make a patient feel safe, it doesn't belong.",
+      "Building it in React gives me full control over performance and structure, and the room to extend the site as the practice grows. The bigger lesson, though, was how much trust drives every choice in healthcare: if a detail doesn't make a patient feel safe, it doesn't belong.",
     projectImages: [
       "/projects/barbara-freitas/gallery-1.jpg",
       "/projects/barbara-freitas/gallery-2.jpg",
@@ -149,8 +149,8 @@ export const projects: Project[] = [
     projectDetails: {
       client: "Dr. Barbara Freitas",
       industry: "Healthcare / Dentistry",
-      work: ["Web Design", "SEO"],
-      date: "february 2025",
+      work: ["Web Design", "Local SEO", "Portuguese SEO"],
+      date: "February 2025",
       liveUrl: "https://barbarafreitas.com",
     },
   },

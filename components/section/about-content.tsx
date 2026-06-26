@@ -128,7 +128,7 @@ export default function AboutContent() {
   const education = [
     {
       id: 1,
-      program: "Microsoft Certified: Power BI Data Analyst Associate (PL-300)",
+      program: "Microsoft Certification - Power BI Data Analyst Associate",
       institution: "Microsoft",
       period: "Started June 2026",
       highlights: [
