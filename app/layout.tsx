@@ -1,14 +1,62 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 
+const SITE_URL = "https://brajy.com";
+const DESCRIPTION =
+  "Jeremy Brajon, operations & data analyst. I turn operational data into decisions with Python, SQL and analytics. Multilingual (FR/EN/PT/ES).";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Brajy",
+    default: "Brajy | Operations × Data × Code",
     template: "%s | Brajy",
   },
-  description: "Operations, Data & Code. Portfolio of Jeremy Brajon.",
+  description: DESCRIPTION,
+  applicationName: "Brajy",
+  keywords: [
+    "Jeremy Brajon",
+    "Brajy",
+    "operations analyst",
+    "data analyst",
+    "business intelligence",
+    "Python",
+    "SQL",
+    "data analytics",
+    "portfolio",
+  ],
+  authors: [{ name: "Jeremy Brajon", url: SITE_URL }],
+  creator: "Jeremy Brajon",
+  publisher: "Jeremy Brajon",
+  openGraph: {
+    type: "website",
+    siteName: "Brajy",
+    title: "Brajy | Operations × Data × Code",
+    description: DESCRIPTION,
+    url: SITE_URL,
+    locale: "en",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Brajy | Operations × Data × Code",
+    description: DESCRIPTION,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#ED5315",
+  colorScheme: "light dark",
 };
 
 export default function RootLayout({

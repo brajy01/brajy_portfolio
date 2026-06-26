@@ -4,8 +4,18 @@ import AnimateOnScroll from "@/components/ui/animate-on-scroll";
 import ProjectCard from "@/components/ui/project-card";
 import SectionHeading from "@/components/ui/section-heading";
 
+const DESCRIPTION =
+  "Selected work by Jeremy Brajon: data tools and web projects where operations meets data and code.";
+
 export const metadata: Metadata = {
   title: "Projects",
+  description: DESCRIPTION,
+  alternates: { canonical: "/projects" },
+  openGraph: {
+    title: "Projects | Brajy",
+    description: DESCRIPTION,
+    url: "/projects",
+  },
 };
 
 export default function Projects() {

@@ -9,8 +9,25 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const project = projects.find((p) => p.slug === slug);
+  if (!project) return { title: "Project" };
+
   return {
-    title: project?.projectName ?? "Project",
+    title: project.projectName,
+    description: project.description,
+    alternates: { canonical: `/projects/${project.slug}` },
+    openGraph: {
+      type: "article",
+      title: `${project.projectName} | Brajy`,
+      description: project.description,
+      url: `/projects/${project.slug}`,
+      images: [{ url: project.heroImage, alt: project.projectName }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${project.projectName} | Brajy`,
+      description: project.description,
+      images: [project.heroImage],
+    },
   };
 }
 
