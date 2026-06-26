@@ -233,6 +233,27 @@ body {
     clip-path: inset(0 0 0 0);
   }
 
+  /* Animated underline that follows each wrapped line (card titles).
+     Uses a gradient background painted per inline line-fragment instead of a
+     single absolute bar, so every letter is underlined even when the title
+     wraps on mobile. Requires `display: inline` on the element. */
+  .animated-underline-wrap {
+    text-decoration: none;
+    padding-bottom: 3px;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 1.5px;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    transition: background-size 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  [class*="group/card"]:hover .animated-underline-wrap,
+  [class*="group/card"]:focus-visible .animated-underline-wrap {
+    background-size: 100% 1.5px;
+  }
+
   /* Animated underline (orange variant) */
   .animated-underline-orange {
     position: relative;
@@ -408,7 +429,8 @@ body {
   }
 
   .animated-underline::after,
-  .animated-underline-orange::after {
+  .animated-underline-orange::after,
+  .animated-underline-wrap {
     transition: none;
   }
 

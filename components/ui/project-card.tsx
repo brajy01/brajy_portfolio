@@ -25,7 +25,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
     >
       {/* Project Title - Mobile only, shown at top */}
       <div className="md:hidden">
-        <span className="font-text text-lg animated-underline inline-block transition-colors duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/card:text-primary group-focus-visible/card:text-primary">
+        <span className="font-text text-lg animated-underline-wrap inline transition-colors duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/card:text-primary group-focus-visible/card:text-primary">
           {project.title}
         </span>
       </div>
@@ -68,7 +68,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
       {/* Project Title - Desktop only, shown below image */}
       <div className="hidden md:block md:col-span-2 mt-3 md:mt-4 self-end">
-        <span className="font-text text-lg md:text-xl animated-underline inline-block transition-colors duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/card:text-primary group-focus-visible/card:text-primary">
+        <span className="font-text text-lg md:text-xl animated-underline-wrap inline transition-colors duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/card:text-primary group-focus-visible/card:text-primary">
           {project.title}
         </span>
       </div>
