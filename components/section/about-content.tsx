@@ -8,38 +8,42 @@ export default function AboutContent() {
   const experiences = [
     {
       id: 1,
-      position: "Data Science & Machine Learning Path",
-      company: "Kaggle Learn",
-      period: "In progress",
+      position: "Operations Analytics — Independent Project",
+      company: "Brajy (self-directed)",
+      period: "Feb. 2025 - Present",
       highlights: [
-        "Progressing through Python & Pandas for data manipulation, cleaning, and analysis",
-        "Mastering SQL from basic queries to advanced optimisation techniques",
-        "Developing data visualisation skills for effective storytelling with charts and plots",
-        "Learning machine learning fundamentals: supervised models, feature engineering, handling missing data",
-        "Applying time series forecasting and statistical analysis to real-world agricultural data",
+        "Building an end-to-end analytics and management tool for the 400+ tonne/year fruit production business I previously ran",
+        "Consolidated legacy sources (Excel, Notion, paper) into one structured dataset, cleaning 10 years of inconsistent production records",
+        "Built a daily operational dashboard tracking harvests, sales and projected stock",
+        "Set up KPI tracking for yield, labour productivity and cost/margin by variety",
+        "Developed a harvest forecast model combining theoretical yield curves from plant suppliers with historical field performance",
       ],
       skills: [
         {
           category: "Data & Analytics",
           items: [
             "Python (Pandas, NumPy)",
-            "SQL (Queries, Optimisation)",
-            "Data Visualisation",
-            "Statistical Analysis",
+            "SQL (PostgreSQL)",
             "Time Series Forecasting",
+            "KPI Development",
+            "Power BI (in progress)",
           ],
+        },
+        {
+          category: "Web Development",
+          items: ["React", "Next.js", "TypeScript"],
         },
       ],
     },
     {
       id: 2,
-      position: "Sales Operations Manager",
-      company: "Ets Brajon",
+      position: "Sales & Operations Manager",
+      company: "Etablissement Brajon Frères — Cendrieux, France",
       period: "Jan. 2021 - Jan. 2025",
       highlights: [
-        "Managed data-driven operations for 50+ international seasonal employees during peak production (400+ tons strawberries/year)",
+        "Managed data-driven operations for 50+ international seasonal employees during peak production (400+ tonnes strawberries/year)",
         "Developed comprehensive tracking systems using Google Sheets and Notion for real-time inventory management and KPI dashboards",
-        "Implemented automation tools reducing manual administrative work by 60%",
+        "Reduced manual administrative work through automation tools (AppSheet, Notion) for scheduling, workforce tracking and stock monitoring",
         "Conducted yield analysis, cost modelling, and pricing strategies with major retailers (Système U, Grand Frais)",
         "Realised that operational problems require better data systems, which sparked the transition to Business Intelligence",
       ],
@@ -67,38 +71,11 @@ export default function AboutContent() {
     },
     {
       id: 3,
-      position: "Web Development Bootcamp - Full Stack JavaScript",
-      company: "O'CLOCK School",
-      period: "6 months",
-      highlights: [
-        "Mastered full-stack JavaScript development with focus on Frontend (React, Tailwind CSS) and Backend (Node.js, Express, PostgreSQL)",
-        "Learned Git, Agile methodology, CI/CD basics, and unit testing through real project work",
-        "Completed multiple full-stack applications with team collaboration and code reviews",
-        "Realised true passion lies at intersection of operations and data rather than pure engineering",
-      ],
-      skills: [
-        {
-          category: "Web Development",
-          items: [
-            "React",
-            "Next.js",
-            "Node.js",
-            "Express.js",
-            "PostgreSQL",
-            "REST APIs",
-            "TypeScript",
-            "Git & GitHub",
-          ],
-        },
-      ],
-    },
-    {
-      id: 4,
-      position: "IT Talent Acquisition Consultant",
-      company: "Maltem Consulting Group",
+      position: "Technical Recruiter",
+      company: "Maltem Consulting Group — Brussels, Belgium",
       period: "Dec. 2019 - Dec. 2020",
       highlights: [
-        "Managed full recruitment lifecycle for technical profiles (data, development roles) across tech, banking, and insurance sectors",
+        "Managed full recruitment lifecycle for technical profiles (data, development roles) across banking, insurance and public institutions",
         "Conducted technical screening and competency assessments for IT positions",
         "Coordinated international recruitment interviews in English and Portuguese",
         "Developed deep understanding of tech skills requirements and what companies actually look for in data/dev roles",
@@ -124,10 +101,10 @@ export default function AboutContent() {
       ],
     },
     {
-      id: 5,
+      id: 4,
       position: "English Language Instructor",
-      company: "Uptime - Language School",
-      period: "Apr. 2019 - Nov. 2019",
+      company: "Uptime — Uberlândia, Brazil",
+      period: "Apr. 2019 - Oct. 2019",
       highlights: [
         "Delivered customised training programmes using data-driven teaching methodology and performance tracking",
         "Applied cross-cultural communication strategies in international immersion environment (Brazil)",
@@ -139,11 +116,83 @@ export default function AboutContent() {
           category: "Languages & Communication",
           items: [
             "French (Native)",
-            "Portuguese (C1)",
+            "Spanish (B2)",
             "Cross-Cultural Management",
             "Presentation",
           ],
         },
+      ],
+    },
+  ];
+
+  const education = [
+    {
+      id: 1,
+      program: "Microsoft Certified: Power BI Data Analyst Associate (PL-300)",
+      institution: "Microsoft",
+      period: "Started June 2026",
+      highlights: [
+        "Data preparation and modelling, DAX and Power Query",
+        "Report and dashboard design",
+      ],
+      skills: ["Power BI", "DAX", "Power Query", "Data Modelling"],
+    },
+    {
+      id: 2,
+      program: "Data Science & Machine Learning Path",
+      institution: "Kaggle Learn",
+      period: "2025",
+      highlights: [
+        "Python & Pandas for data manipulation, cleaning and analysis",
+        "SQL from basic queries to advanced optimisation (BigQuery)",
+        "Data visualisation for clear, impactful charts and plots",
+        "Machine learning: supervised models, feature engineering, handling missing data and leakage",
+      ],
+      skills: [
+        "Python (Pandas, NumPy)",
+        "SQL",
+        "Data Visualisation",
+        "Machine Learning",
+      ],
+    },
+    {
+      id: 3,
+      program: "Full-Stack JavaScript — Web Development Bootcamp",
+      institution: "O'CLOCK School",
+      period: "2024",
+      highlights: [
+        "Frontend: JavaScript (ES6+), React, Tailwind CSS",
+        "Backend: Node.js, Express.js, PostgreSQL, REST APIs",
+        "Git, Agile methodology, CI/CD basics and unit testing",
+        "Full-stack applications with team collaboration and code reviews",
+      ],
+      skills: [
+        "JavaScript (ES6+)",
+        "React",
+        "Tailwind CSS",
+        "Node.js",
+        "Express.js",
+        "PostgreSQL",
+        "REST APIs",
+        "Git",
+      ],
+    },
+    {
+      id: 4,
+      program:
+        "Bachelor's Degree — Applied Foreign Languages for International Trade",
+      institution: "Université de Limoges",
+      period: "2012 - 2015",
+      highlights: [
+        "International trade: import/export operations, trade regulations, negotiation",
+        "Business & economics: marketing, management, international economics",
+        "Languages, intercultural communication and professional translation",
+      ],
+      skills: [
+        "International Trade",
+        "Negotiation",
+        "Cross-Cultural Communication",
+        "Translation",
       ],
     },
   ];
@@ -164,11 +213,11 @@ export default function AboutContent() {
           <AnimateOnScroll delay={100}>
             <p className="font-text text-base sm:text-lg md:text-xl leading-relaxed text-foreground max-w-4xl text-pretty">
               I transform operational data into actionable business insights.
-              With 4+ years managing &euro;2M operations and 50+ person teams, I
-              discovered that data systems solve what processes alone cannot.
-              Now combining deep business acumen with Python, SQL, and analytics
-              to drive smarter decisions. Multilingual (FR/EN/PT/ES) with
-              international experience bridging EU and emerging markets.
+              With 4+ years managing large-scale operations and 50+ person
+              teams, I discovered that data systems solve what processes alone
+              cannot. Now combining deep business acumen with Python, SQL, and
+              analytics to drive smarter decisions. Multilingual (FR/EN/PT/ES)
+              with international experience bridging EU and emerging markets.
             </p>
           </AnimateOnScroll>
         </div>
@@ -253,6 +302,78 @@ export default function AboutContent() {
                         </div>
                       </div>
                     ))}
+                  </div>
+                </div>
+              </AnimateOnScroll>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Education Section */}
+      <section
+        className="py-12 sm:py-16 md:py-20 section-x"
+        role="region"
+        aria-labelledby="education-title"
+      >
+        <div className="section-container">
+          <AnimateOnScroll>
+            <SectionHeading
+              title="Education"
+              rightText="_learning"
+              headingId="education-title"
+              className="mb-8 sm:mb-10 md:mb-12"
+              headingClassName="text-3xl md:text-4xl"
+            />
+          </AnimateOnScroll>
+
+          <div className="space-y-10 sm:space-y-12 md:space-y-16">
+            {education.map((edu, index) => (
+              <AnimateOnScroll key={edu.id} delay={index * 50}>
+                {index > 0 && (
+                  <div className="border-t border-border mb-8 sm:mb-10 md:mb-12" />
+                )}
+
+                {/* Program + Caption */}
+                <div>
+                  <h3 className="font-title text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight">
+                    {edu.program}
+                  </h3>
+                  <p className="font-caption text-xs sm:text-sm md:text-lg text-primary mt-1 mb-6 sm:mb-8">
+                    {edu.institution} | {edu.period}
+                  </p>
+                </div>
+
+                {/* Content grid: highlights left, skills right */}
+                <div className="flex flex-col md:flex-row md:justify-between gap-6 sm:gap-8">
+                  <div className="md:max-w-[65%] md:pl-12 lg:pl-16">
+                    <AnimateOnScroll
+                      as="ul"
+                      stagger={60}
+                      className="space-y-2 sm:space-y-3"
+                    >
+                      {edu.highlights.map((highlight, idx) => (
+                        <li key={idx} className="detail-list-item">
+                          <span className="text-primary shrink-0">&bull;</span>
+                          <span>{highlight}</span>
+                        </li>
+                      ))}
+                    </AnimateOnScroll>
+                  </div>
+
+                  <div className="md:w-[320px] lg:w-[380px] shrink-0">
+                    <div className="mb-6">
+                      <p className="font-caption text-xs sm:text-sm text-foreground mb-2 sm:mb-3 md:text-right">
+                        _skills
+                      </p>
+                      <div className="flex flex-wrap gap-2 md:justify-end">
+                        {edu.skills.map((skill, idx) => (
+                          <span key={idx} className="tag-pill text-center">
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </AnimateOnScroll>

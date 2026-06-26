@@ -46,8 +46,8 @@ export const projects: Project[] = [
     image: "/mesh/GRADIENT_ORANGE-WHITE_1.png",
     tags: ["Python", "SQL", "React", "Forecasting"],
     category: "Development",
-    month: "summer",
-    year: 2025,
+    month: "march",
+    year: 2026,
     projectName: "Harvest Operations Dashboard",
     role: "Data Analyst & Full-Stack Developer",
     heroDescription:
@@ -90,7 +90,7 @@ export const projects: Project[] = [
         "Forecasting",
         "Dashboard Development",
       ],
-      date: "2025 to present",
+      date: "March 2026 - Present",
     },
   },
   {

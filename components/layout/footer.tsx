@@ -1,5 +1,11 @@
 import Link from "next/link";
-import { Briefcase, Code2, ArrowUpRight } from "lucide-react";
+import {
+  Briefcase,
+  Code2,
+  ArrowUpRight,
+  MessageCircle,
+  FileText,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AnimateOnScroll from "@/components/ui/animate-on-scroll";
 
@@ -15,6 +21,18 @@ const socialLinks = [
     href: "https://github.com/brajy01",
     label: "Visit GitHub profile",
     icon: Code2,
+  },
+  {
+    name: "whatsapp",
+    href: "https://wa.me/33699148863",
+    label: "Message on WhatsApp",
+    icon: MessageCircle,
+  },
+  {
+    name: "cv",
+    href: "/cv/jeremy-brajon-cv.pdf",
+    label: "Download CV (PDF)",
+    icon: FileText,
   },
 ];
 
@@ -79,7 +97,10 @@ export default function Footer() {
               </nav>
 
               {/* Social Links */}
-              <nav aria-label="Social links" className="text-center md:text-left">
+              <nav
+                aria-label="Social links"
+                className="text-center md:text-left"
+              >
                 <h3 className="font-title text-sm md:text-base text-secondary mb-4">
                   Connect
                 </h3>
@@ -91,6 +112,8 @@ export default function Footer() {
                         <Link
                           href={link.href}
                           aria-label={link.label}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="font-caption text-sm md:text-base text-background animated-underline-orange focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary rounded inline-flex items-center gap-2 h-6"
                         >
                           <Icon className="h-4 w-4 text-primary" />
