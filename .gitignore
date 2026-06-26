@@ -42,3 +42,6 @@ next-env.d.ts
 
 # archives
 *.zip
+
+# local working notes (kept out of the public repo)
+HANDOFF.md
