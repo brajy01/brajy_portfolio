@@ -39,7 +39,7 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: "1",
-    title: "Harvest Operations Dashboard",
+    title: "CROPIA - Harvest Operations Dashboard",
     slug: "harvest-operations-dashboard",
     description:
       "A data tool to run the picking operation of a 400+ tonne strawberry farm, tracking harvest volumes and picker productivity with end-of-season forecasting",
@@ -48,13 +48,13 @@ export const projects: Project[] = [
     category: "Development",
     month: "march",
     year: 2026,
-    projectName: "Harvest Operations Dashboard",
+    projectName: "CROPIA - Harvest Operations Dashboard",
     role: "Data Analyst & Full-Stack Developer",
     heroDescription:
-      "A data tool I built to run the picking operation of a 400+ tonne strawberry farm: tracking harvest volumes and picker productivity across a 50+ person seasonal team, with forecasting to project end-of-season output and feed planting decisions for the following year.",
+      "CROPIA is a data tool I built to run the picking operation of a 400+ tonne strawberry farm: tracking harvest volumes and picker productivity across a 50+ person seasonal team, with forecasting to project end-of-season output and feed planting decisions for the following year.",
     heroImage: "/mesh/GRADIENT_FULL_1.png",
     overview:
-      "I was managing the operation, and the existing tracking (spreadsheets and Notion) could not keep up with the volume of daily harvest and labour data. I built an end-to-end tool to centralise that data, make it queryable, and forecast where the season was heading, so planning stopped relying on manual tallies.",
+      "I was managing the operation, and the existing tracking (spreadsheets and Notion) could not keep up with the volume of daily harvest and labour data. I built CROPIA, an end-to-end tool to centralise that data, make it queryable, and forecast where the season was heading, so planning stopped relying on manual tallies.",
     technologies: ["Python (Pandas, NumPy)", "SQL", "React"],
     problem:
       "Daily picking produced a lot of data (volumes per picker, per plot, per day, plus labour) spread across disconnected spreadsheets. There was no quick way to see who was productive, how each plot was yielding, or where the season would land.",
@@ -91,6 +91,7 @@ export const projects: Project[] = [
         "Dashboard Development",
       ],
       date: "March 2026 - Present",
+      liveUrl: "https://www.cropia.fr",
     },
   },
   {
