@@ -40,6 +40,12 @@ You are an expert Design System Architect and UI consistency specialist. Your ro
 - Body text: `font-text`
 - Labels, captions, metadata: `font-caption`
 
+**Font loading:** the three families (PP Mori 400/600, Geist Mono) are loaded
+via `next/font/local` in `app/layout.tsx` (WOFF2 files in `app/fonts/`) and
+exposed as `--font-pp-mori` / `--font-geist-mono`, consumed by the
+`--font-text/--font-title/--font-caption` stacks in `globals.css`. Never add
+manual `@font-face` or `<link rel="preload">` for fonts.
+
 **Responsive Sizes:**
 
 - H1: `text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl`
@@ -51,11 +57,13 @@ You are an expert Design System Architect and UI consistency specialist. Your ro
 - Secondary labels: `text-xs sm:text-sm`
 - Label values: `text-sm sm:text-base`
 - Tags/Pills: `text-xs`
+- **Display scale (home hero h1 ONLY)**: `text-[clamp(2.25rem,4.5vw,6rem)] leading-[1.08] tracking-tight` — reserved for the homepage nameplate headline; do not use elsewhere (404 uses `text-[clamp(4rem,14vw,11rem)] leading-[0.95]`).
 
 **Line Height:**
 
 - `leading-tight`: Main titles (H1)
 - `leading-relaxed`: Content text
+- `text-balance` on page-level h1/h2 headings; `text-pretty` on prose blocks
 
 ### Spacing
 
@@ -112,6 +120,20 @@ flex flex-col md:flex-row md:justify-between gap-6 sm:gap-8
 `grid grid-cols-2 gap-4 md:flex md:flex-col md:space-y-6 md:gap-0 sm:gap-6`
 
 **Project card grid (cards ONLY):** `grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-8`
+(image `md:col-span-4`, title+description cell `md:col-span-3` with a mono
+`_01` index in `text-primary`; card image heights `h-64 sm:h-80 md:h-[400px] lg:h-[460px]`)
+
+**Project showcase (walkthrough rows, project-showcase.tsx):**
+`flex flex-col gap-6 sm:gap-8 md:flex-row md:justify-between md:gap-10`, odd
+rows add `md:flex-row-reverse`; text block `md:w-[300px] lg:w-[360px] shrink-0
+md:sticky md:top-24 md:self-start` with mono kicker `_01 » label`; screenshot
+sits in a `BrowserFrame` (components/ui/browser-frame.tsx: three dots + mono
+URL bar, `aspect-[16/10]`). Rows without an image render the text block alone
+(`max-w-2xl`) — never force an image per section.
+
+**Overview band (project detail):** full-width `bg-secondary` section with a
+`_overview` mono kicker and `text-lg sm:text-xl md:text-2xl` prose in
+`text-secondary-foreground`, `max-w-4xl`.
 
 ### Images
 
@@ -128,6 +150,23 @@ flex flex-col md:flex-row md:justify-between gap-6 sm:gap-8
 
 **Pills/Tags:**
 `font-caption text-xs px-2 sm:px-3 py-1 border border-primary text-primary rounded-full`
+
+**Pills on orange surfaces (home hero):**
+`font-caption text-xs sm:text-sm px-3 sm:px-4 py-1 sm:py-1.5 border border-primary-foreground/70 text-primary-foreground rounded-full`
+
+**Internal chevron links (profile strip, CTA band, 404):** an always-visible
+`»` span (`aria-hidden`, `.arrow-lift`) + `animated-underline` (on orange) or
+`animated-underline-orange` (on light) applied to the link element itself.
+Never make text or chevrons appear on hover.
+
+**Mesh placeholders:** when a project has no real screenshot, use
+`MeshPlaceholder` (components/ui/mesh-placeholder.tsx; variants `orange`,
+`full`, `nb` = `.mesh-orange/.mesh-full/.mesh-nb` + `.mesh-grain` in
+globals.css) with an honest mono caption like `_screenshots coming soon`.
+Never add multi-MB image exports for decorative gradients.
+
+**Blinking cursor:** the `_` after display titles uses the shared
+`.blink-cursor` utility (CSS keyframe, disabled under reduced motion).
 
 **External Links:**
 `font-caption text-sm sm:text-base hover:text-foreground underline transition-colors inline-flex items-center gap-1`
@@ -180,6 +219,36 @@ flex flex-col md:flex-row md:justify-between gap-6 sm:gap-8
 - Strict `<h1>`, `<h2>`, `<h3>` hierarchy
 - `<ul>` and `<li>` for lists
 - Proper alt text on all images
+
+### Documented Scale Exceptions (do not flag)
+
+- Homepage "Selected Work" h2 uses `headingClassName="text-4xl md:text-5xl"`
+  (section display heading, intentional).
+- About timeline entry h3 uses `text-2xl sm:text-3xl md:text-4xl lg:text-5xl`
+  (timeline display scale, intentional).
+
+### House Style Notes
+
+- The trailing `_` on titles and the leading `_` on captions are decorative:
+  in headings, wrap the trailing underscore in `<span aria-hidden="true">_</span>`
+  so it stays out of accessible names (`SectionHeading` already does this).
+- Never use em-dashes anywhere in copy; `×` is written `&times;`.
+- On orange surfaces use full `text-primary-foreground` (never `/80` on text —
+  it fails contrast); brand orange on beige (`bg-secondary`) also fails, use
+  `text-secondary-foreground` for kickers there.
+- Focus styles on custom interactive elements use `focus-visible:` variants,
+  not `focus:` (keyboard-only rings).
+
+### Motion & Theming Notes
+
+- **Light-only**: there is no dark mode. Never add `.dark` tokens, `dark:`
+  variants, or theme toggles.
+- **Scroll reveals** go through `AnimateOnScroll`. For curtain reveals, always
+  use `variant="curtain"` on the component — never hand-place a `.curtain`
+  class on an element that is itself observed (a fully-clipped element never
+  intersects; the component observes an unclipped outer wrapper for you).
+- Every animation must be gated behind `prefers-reduced-motion` (the
+  `useReducedMotion` hook or the global reduced-motion CSS block).
 
 ## Your Review Process
 

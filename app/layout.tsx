@@ -1,8 +1,26 @@
 import type { Metadata, Viewport } from "next";
+import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import { SITE_URL } from "@/lib/site";
+
+const ppMori = localFont({
+  src: [
+    { path: "./fonts/PPMori-Regular.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/PPMori-SemiBold.woff2", weight: "600", style: "normal" },
+  ],
+  variable: "--font-pp-mori",
+  display: "swap",
+});
+
+const geistMono = localFont({
+  src: "./fonts/GeistMono.woff2",
+  weight: "400",
+  style: "normal",
+  variable: "--font-geist-mono",
+  display: "swap",
+});
 
 const DESCRIPTION =
   "Jeremy Brajon, operations & data analyst. I turn operational data into decisions with Python, SQL and analytics. Multilingual (FR/EN/PT/ES).";
@@ -56,7 +74,7 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: "#ED5315",
-  colorScheme: "light dark",
+  colorScheme: "light",
 };
 
 export default function RootLayout({
@@ -65,30 +83,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <head>
-        <link
-          rel="preload"
-          href="/fonts/PPMori-Regular.ttf"
-          as="font"
-          type="font/ttf"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preload"
-          href="/fonts/PPMori-SemiBold.ttf"
-          as="font"
-          type="font/ttf"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preload"
-          href="/fonts/GeistMono.ttf"
-          as="font"
-          type="font/ttf"
-          crossOrigin="anonymous"
-        />
-      </head>
+    <html lang="en" className={`${ppMori.variable} ${geistMono.variable}`}>
       <body className="antialiased pt-(--header-height)">
         <a
           href="#main"

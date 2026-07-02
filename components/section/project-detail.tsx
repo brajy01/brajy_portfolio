@@ -7,6 +7,7 @@ import Link from "next/link";
 import AnimateOnScroll from "@/components/ui/animate-on-scroll";
 import BulletList from "@/components/ui/bullet-list";
 import ProjectImage from "@/components/ui/project-image";
+import ProjectShowcase from "@/components/section/project-showcase";
 
 interface ProjectDetailProps {
   slug: string;
@@ -76,20 +77,8 @@ function ExternalLinkBlock({
 export default function ProjectDetail({ slug }: ProjectDetailProps) {
   const project = projects.find((p) => p.slug === slug);
 
-  if (!project) {
-    return (
-      <section className="py-12 sm:py-16 section-x">
-        <div className="section-container">
-          <h1 className="font-title text-2xl sm:text-3xl md:text-4xl text-foreground">
-            Project not found
-          </h1>
-          <p className="font-text text-base sm:text-lg mt-4 text-foreground">
-            Sorry, the project you&apos;re looking for doesn&apos;t exist.
-          </p>
-        </div>
-      </section>
-    );
-  }
+  // Unknown slugs 404 at the route level (app/projects/[slug]/page.tsx).
+  if (!project) return null;
 
   return (
     <>
@@ -160,12 +149,36 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
         >
           <ProjectImage
             src={project.heroImage}
-            overlayImage={project.heroOverlayImage}
+            mesh={project.heroMesh}
+            meshCaption={project.heroMesh ? "_screenshots coming soon" : undefined}
+            overlayMesh={project.heroOverlayMesh}
             alt={`${project.projectName} - Main project image`}
             priority
             sizes="100vw"
           />
         </AnimateOnScroll>
+      </section>
+
+      {/* Overview - full-width beige editorial band */}
+      <section
+        className="bg-secondary section-x py-12 sm:py-16 md:py-24"
+        role="region"
+        aria-labelledby="overview-heading"
+      >
+        <div className="section-container">
+          <AnimateOnScroll>
+            {/* Foreground (not primary): orange on the beige band fails contrast */}
+            <p className="font-caption text-xs sm:text-sm text-secondary-foreground mb-3 sm:mb-4">
+              _overview
+            </p>
+            <h2 id="overview-heading" className="sr-only">
+              Overview
+            </h2>
+            <p className="font-text text-lg sm:text-xl md:text-2xl leading-relaxed text-secondary-foreground max-w-4xl text-pretty">
+              {project.overview}
+            </p>
+          </AnimateOnScroll>
+        </div>
       </section>
 
       {/* Detail Content with Project Details */}
@@ -179,10 +192,6 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
           <div className="flex flex-col md:flex-row md:justify-between gap-6 sm:gap-8">
             {/* Content - Left side */}
             <div className="md:max-w-[65%] order-2 md:order-1">
-              <DetailSection title="Overview">
-                <BodyText>{project.overview}</BodyText>
-              </DetailSection>
-
               <DetailSection title="The Problem">
                 <BodyText>{project.problem}</BodyText>
               </DetailSection>
@@ -280,6 +289,14 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
         </div>
       </section>
 
+      {/* Walkthrough: sticky text + framed screenshots, alternating sides */}
+      {project.showcase && project.showcase.length > 0 && (
+        <ProjectShowcase
+          items={project.showcase}
+          projectName={project.projectName}
+        />
+      )}
+
       {/* Project Images Gallery */}
       {project.projectImages.length > 0 && (
         <section
@@ -298,7 +315,7 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
               >
                 <ProjectImage
                   src={image}
-                  overlayImage={project.projectOverlayImages?.[index]}
+                  overlayMesh={project.projectOverlayMeshes?.[index]}
                   alt={`${project.projectName} - Gallery image ${index + 1}`}
                   loading={index === 0 ? "eager" : "lazy"}
                   sizes="100vw"

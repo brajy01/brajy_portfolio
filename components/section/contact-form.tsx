@@ -119,10 +119,42 @@ export default function ContactForm() {
         </div>
       </section>
 
-      {/* Contact Form Section */}
+      {/* Contact Form Section: form left, direct channels right */}
       <section className="pt-0 pb-16 sm:pb-20 md:pt-12 md:pb-24 section-x">
-        <AnimateOnScroll className="max-w-2xl mx-auto w-full">
-          <form
+        <div className="section-container">
+          <div className="flex flex-col md:flex-row md:justify-between gap-10 sm:gap-12">
+            <div className="md:w-[280px] lg:w-[320px] shrink-0 order-1 md:order-2">
+              <AnimateOnScroll delay={100}>
+                <div className="md:text-right">
+                  <p className="font-caption text-xs sm:text-sm text-primary mb-2">
+                    _direct
+                  </p>
+                  <ul className="space-y-1.5">
+                    {[
+                      { label: "contact@brajy.com", href: "mailto:contact@brajy.com" },
+                      { label: "whatsapp", href: "https://wa.me/33699148863" },
+                      { label: "linkedin", href: "https://www.linkedin.com/in/jbrajon/" },
+                    ].map((channel) => (
+                      <li key={channel.label}>
+                        <a
+                          href={channel.href}
+                          {...(channel.href.startsWith("http") && {
+                            target: "_blank",
+                            rel: "noopener noreferrer",
+                          })}
+                          className="animated-underline-orange font-caption text-sm sm:text-base text-foreground"
+                        >
+                          {channel.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </AnimateOnScroll>
+            </div>
+
+            <AnimateOnScroll className="md:max-w-[65%] w-full order-2 md:order-1">
+              <form
             onSubmit={handleSubmit}
             aria-busy={submitStatus === "loading"}
             className="space-y-6 sm:space-y-8"
@@ -197,17 +229,19 @@ export default function ContactForm() {
             <div aria-live="polite" role="status" className="min-h-5">
               {submitStatus === "success" && (
                 <p className="font-caption text-sm text-primary">
-                  Thanks for reaching out! I&apos;ll get back to you soon.
+                  _message sent, I&apos;ll get back to you soon
                 </p>
               )}
               {submitStatus === "error" && (
                 <p className="font-caption text-sm text-primary">
-                  Something went wrong. Please try again.
+                  _error: something went wrong, please try again
                 </p>
               )}
             </div>
-          </form>
-        </AnimateOnScroll>
+              </form>
+            </AnimateOnScroll>
+          </div>
+        </div>
       </section>
     </>
   );

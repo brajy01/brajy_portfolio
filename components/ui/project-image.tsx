@@ -1,9 +1,17 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import MeshPlaceholder, {
+  MESH_VARIANT_CLASS,
+  type MeshVariant,
+} from "@/components/ui/mesh-placeholder";
 
 interface ProjectImageProps {
-  src: string;
-  overlayImage?: string;
+  src?: string;
+  /* Mesh placeholder rendered when there is no real image yet */
+  mesh?: MeshVariant;
+  meshCaption?: string;
+  /* Mesh gradient tinted over a real image (multiply blend) */
+  overlayMesh?: MeshVariant;
   alt: string;
   fill?: boolean;
   priority?: boolean;
@@ -14,7 +22,9 @@ interface ProjectImageProps {
 
 export default function ProjectImage({
   src,
-  overlayImage,
+  mesh,
+  meshCaption,
+  overlayMesh,
   alt,
   fill = true,
   priority = false,
@@ -22,6 +32,9 @@ export default function ProjectImage({
   sizes,
   className = "",
 }: ProjectImageProps) {
+  if (!src) {
+    return <MeshPlaceholder variant={mesh} caption={meshCaption} />;
+  }
   return (
     <>
       <Image
@@ -33,14 +46,13 @@ export default function ProjectImage({
         sizes={sizes}
         className={cn("object-cover", className)}
       />
-      {overlayImage && (
-        <Image
-          src={overlayImage}
-          alt=""
+      {overlayMesh && (
+        <div
           aria-hidden="true"
-          fill={fill}
-          sizes={sizes}
-          className="object-cover opacity-60 mix-blend-multiply pointer-events-none"
+          className={cn(
+            "absolute inset-0 opacity-60 mix-blend-multiply pointer-events-none",
+            MESH_VARIANT_CLASS[overlayMesh],
+          )}
         />
       )}
     </>

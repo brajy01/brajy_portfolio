@@ -1,10 +1,27 @@
+import type { MeshVariant } from "@/components/ui/mesh-placeholder";
+
+// One step of the project walkthrough: alternating sticky text + framed
+// screenshot rows. `image` is optional on purpose — only add one when a
+// screenshot genuinely helps explain the step.
+export interface ShowcaseItem {
+  label: string; // rendered as "_01 » label"
+  title: string;
+  body: string;
+  image?: string;
+  imageAlt?: string;
+  url?: string; // mono URL in the browser-frame bar
+}
+
 export interface Project {
   id: string;
   title: string;
   slug: string;
   description: string;
-  image: string;
-  overlayImage?: string;
+  // Real screenshot when it exists; otherwise imageMesh renders a CSS mesh
+  // placeholder (honest stand-in until real screenshots are shot).
+  image?: string;
+  imageMesh?: MeshVariant;
+  overlayMesh?: MeshVariant;
   tags: string[];
   category: string;
   month: string;
@@ -13,8 +30,9 @@ export interface Project {
   projectName: string;
   role: string;
   heroDescription: string;
-  heroImage: string;
-  heroOverlayImage?: string;
+  heroImage?: string;
+  heroMesh?: MeshVariant;
+  heroOverlayMesh?: MeshVariant;
   overview: string;
   technologies: string[];
   // Portfolio narrative. Answers: What was the problem? How did you solve it?
@@ -24,8 +42,9 @@ export interface Project {
   deliverables: string[];
   impact: string[];
   lessonsLearned: string;
+  showcase?: ShowcaseItem[];
   projectImages: string[];
-  projectOverlayImages?: string[];
+  projectOverlayMeshes?: MeshVariant[];
   projectDetails: {
     client: string;
     industry: string;
@@ -43,7 +62,7 @@ export const projects: Project[] = [
     slug: "harvest-operations-dashboard",
     description:
       "A data tool to run the picking operation of a 400+ tonne strawberry farm, tracking harvest volumes and picker productivity with end-of-season forecasting",
-    image: "/mesh/GRADIENT_ORANGE-WHITE_1.png",
+    imageMesh: "orange",
     tags: ["Python", "SQL", "React", "Forecasting"],
     category: "Development",
     month: "march",
@@ -52,7 +71,7 @@ export const projects: Project[] = [
     role: "Data Analyst & Full-Stack Developer",
     heroDescription:
       "CROPIA is a data tool I built to run the picking operation of a 400+ tonne strawberry farm: tracking harvest volumes and picker productivity across a 50+ person seasonal team, with forecasting to project end-of-season output and feed planting decisions for the following year.",
-    heroImage: "/mesh/GRADIENT_FULL_1.png",
+    heroMesh: "full",
     overview:
       "I was managing the operation, and the existing tracking (spreadsheets and Notion) could not keep up with the volume of daily harvest and labour data. I built CROPIA, an end-to-end tool to centralise that data, make it queryable, and forecast where the season was heading, so planning stopped relying on manual tallies.",
     technologies: ["Python (Pandas, NumPy)", "SQL", "React"],
@@ -76,11 +95,9 @@ export const projects: Project[] = [
     ],
     lessonsLearned:
       "Building this is what convinced me that operational problems are often data problems. It moved me from running operations to wanting to build the systems behind them, which is the direction I am taking now.",
-    projectImages: [
-      "/mesh/GRADIENT_ORANGE-WHITE_2.png",
-      "/mesh/GRADIENT_ORANGE-WHITE_3.png",
-      "/mesh/GRADIENT_FULL_3.png",
-    ],
+    // No real screenshots yet: the detail hero shows an honest mesh
+    // placeholder and the gallery stays empty until they exist.
+    projectImages: [],
     projectDetails: {
       client: "Self-initiated (Ets Brajon)",
       industry: "Agriculture / Food production",
@@ -100,8 +117,8 @@ export const projects: Project[] = [
     slug: "barbara-freitas",
     description:
       "Website and SEO for Dr. Barbara Freitas, a dental therapist on the Isle of Man who had no online presence",
-    image: "/projects/barbara-freitas/card.jpg",
-    overlayImage: "/mesh/GRADIENT_FULL_2.png",
+    image: "/projects/barbara-freitas/homepage.jpg",
+    overlayMesh: "full",
     tags: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
     category: "Design",
     month: "february",
@@ -111,7 +128,7 @@ export const projects: Project[] = [
     heroDescription:
       "Barbara Freitas is a dental therapist on the Isle of Man who had no website at all. I built her a clean, trustworthy presence that puts the practice on the map, with SEO that reaches the right patients in search, including the Portuguese-speaking and Brazilian community she serves.",
     heroImage: "/projects/barbara-freitas/hero.jpg",
-    heroOverlayImage: "/mesh/GRADIENT_FULL_2.png",
+    heroOverlayMesh: "full",
     overview:
       "Barbara had no website and relied on word of mouth. The goal was a clean, fast site that presents her practice clearly and, above all, gets found by the right patients in search, including the Portuguese-speaking community she serves. I kept the design calm and trustworthy, added a before-and-after gallery so her work speaks for itself, and a one-tap WhatsApp contact so enquiries land directly with her.",
     technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
@@ -137,16 +154,38 @@ export const projects: Project[] = [
     ],
     lessonsLearned:
       "Building it in React gives me full control over performance and structure, and the room to extend the site as the practice grows. The bigger lesson, though, was how much trust drives every choice in healthcare: if a detail doesn't make a patient feel safe, it doesn't belong.",
-    projectImages: [
-      "/projects/barbara-freitas/gallery-1.jpg",
-      "/projects/barbara-freitas/gallery-2.jpg",
-      "/projects/barbara-freitas/gallery-3.jpg",
+    showcase: [
+      {
+        label: "homepage",
+        title: "A calm first impression",
+        body: "Healthcare is about trust. The homepage leads with Barbara herself, one message, and a single call to action.",
+        image: "/projects/barbara-freitas/homepage.jpg",
+        imageAlt: "Barbara Freitas homepage: portrait, intro and booking call to action",
+        url: "barbarafreitas.com",
+      },
+      {
+        label: "clinical cases",
+        title: "The work speaks for itself",
+        body: "A before-and-after gallery of real treatments, each case written up in plain language, so new patients can see outcomes before they book.",
+        image: "/projects/barbara-freitas/clinical-cases.jpg",
+        imageAlt: "Clinical cases gallery with before-and-after treatment photos",
+        url: "barbarafreitas.com",
+      },
+      {
+        label: "seo",
+        title: "Found by the right patients",
+        body: "Local SEO plus Portuguese-language optimisation, so the community she serves actually finds her on Google. Enquiries now come in from patients, including Brazilian patients, who found the practice through search.",
+      },
+      {
+        label: "contact",
+        title: "One tap to WhatsApp",
+        body: "The message is pre-written, the patient just hits send. Enquiries land directly with Barbara.",
+        image: "/projects/barbara-freitas/contact.jpg",
+        imageAlt: "Contact page with portrait and enquiry form",
+        url: "barbarafreitas.com",
+      },
     ],
-    projectOverlayImages: [
-      "/mesh/GRADIENT_FULL_3.png",
-      "/mesh/GRADIENT_ORANGE-WHITE_1.png",
-      "/mesh/GRADIENT_N&B_2.png",
-    ],
+    projectImages: [],
     projectDetails: {
       client: "Dr. Barbara Freitas",
       industry: "Healthcare / Dentistry",

@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import AnimateOnScroll from "@/components/ui/animate-on-scroll";
+import MeshPlaceholder from "@/components/ui/mesh-placeholder";
 import BulletList from "@/components/ui/bullet-list";
 import SectionHeading from "@/components/ui/section-heading";
 
@@ -301,19 +301,27 @@ export default function AboutContent() {
               with international experience bridging EU and emerging markets.
             </p>
           </AnimateOnScroll>
+
+          <AnimateOnScroll delay={150}>
+            <a
+              href="/cv/jeremy-brajon-cv.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="animated-underline-orange font-caption text-sm sm:text-base inline-flex items-center gap-1.5 text-foreground mt-6 sm:mt-8"
+            >
+              <span aria-hidden="true" className="text-primary arrow-lift">
+                &raquo;
+              </span>
+              download my cv
+            </a>
+          </AnimateOnScroll>
         </div>
       </section>
 
-      {/* Full-width image break */}
-      <section className="relative w-full">
+      {/* Full-width visual break: static B&W mesh gradient (CSS, no asset) */}
+      <section className="relative w-full" aria-hidden="true">
         <div className="relative w-full h-48 sm:h-64 md:h-[400px] lg:h-[500px]">
-          <Image
-            src="/mesh/GRADIENT_N&B_1.png"
-            alt=""
-            fill
-            className="object-cover"
-            sizes="100vw"
-          />
+          <MeshPlaceholder variant="nb" />
         </div>
       </section>
 

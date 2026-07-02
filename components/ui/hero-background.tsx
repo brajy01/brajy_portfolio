@@ -29,7 +29,6 @@ export default function HeroBackground() {
   useEffect(() => {
     const mesh = meshRef.current;
     if (!mesh) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const host = mesh.parentElement; // the hero-bg-fade box (covers the hero)
     if (!host) return;
@@ -95,11 +94,32 @@ export default function HeroBackground() {
       raf = requestAnimationFrame(loop);
     };
 
+    // Honour prefers-reduced-motion live, not just at mount: stop the loop and
+    // drop the inline vars (CSS base positions take over) when it turns on.
+    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let running = false;
+    const start = () => {
+      if (running) return;
+      running = true;
+      raf = requestAnimationFrame(loop);
+    };
+    const stop = () => {
+      running = false;
+      cancelAnimationFrame(raf);
+      for (let i = 0; i <= 5; i++) {
+        mesh.style.removeProperty(`--b${i}x`);
+        mesh.style.removeProperty(`--b${i}y`);
+      }
+    };
+    const onPrefChange = () => (mql.matches ? stop() : start());
+    mql.addEventListener("change", onPrefChange);
+
     window.addEventListener("mousemove", onMove, { passive: true });
     window.addEventListener("scroll", updateRect, { passive: true });
     window.addEventListener("resize", updateRect);
-    raf = requestAnimationFrame(loop);
+    if (!mql.matches) start();
     return () => {
+      mql.removeEventListener("change", onPrefChange);
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("scroll", updateRect);
       window.removeEventListener("resize", updateRect);

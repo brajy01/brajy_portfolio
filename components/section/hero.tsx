@@ -1,18 +1,18 @@
 "use client";
 
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { motion, easings, AnimatePresence } from "@/components/ui/motion";
+import { motion, easings, useScroll, useTransform } from "@/components/ui/motion";
 import { cn } from "@/lib/utils";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-import Typewriter from "@/components/ui/typewriter";
 import HeroBackground from "@/components/ui/hero-background";
 
-const paragraphs = [
-  "+4 years running operations showed me where processes break, and where better decisions start",
-  "So I learned to build the tools to fix what I used to solve by hand",
-  "Across four languages, from years working internationally",
+const HEADLINE_LINES = [
+  "I ran operations for four years.",
+  "Now I build the tools I used to need",
 ];
+
+const PILLS = ["full-stack dev", "data analyst", "4 languages", "4+ years in ops"];
 
 // Counter-clockwise rounded-rect path from the bottom-right corner, drives the
 // button's animated border draw.
@@ -31,40 +31,54 @@ function roundedRectPath(w: number, h: number, r = 4) {
   ].join(" ");
 }
 
-export default function Hero() {
+/* Slides its content up out of an overflow-hidden mask. The text is real DOM
+   at SSR (only transformed), so the hero copy is in the first HTML payload.
+   Use as="span" inside heading/paragraph elements to stay valid HTML. */
+function MaskedReveal({
+  children,
+  delay = 0,
+  className,
+  as = "div",
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+  as?: "div" | "span";
+}) {
   const prefersReducedMotion = useReducedMotion();
-  const [titleDone, setTitleDone] = useState(false);
-  const [paragraphsDone, setParagraphsDone] = useState(0);
+  const Mask = as === "span" ? "span" : "div";
+  const MotionInner = as === "span" ? motion.span : motion.div;
+  return (
+    <Mask className={cn("block overflow-hidden", className)}>
+      <MotionInner
+        className="block"
+        initial={prefersReducedMotion ? false : { y: "110%" }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.7, ease: easings.smooth, delay }}
+      >
+        {children}
+      </MotionInner>
+    </Mask>
+  );
+}
+
+function HeroCta() {
+  const prefersReducedMotion = useReducedMotion();
   const [borderDone, setBorderDone] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
+  // First client render must match the SSR HTML (which can't know the user's
+  // reduced-motion preference); the filled state may only flip after mount,
+  // otherwise React never patches the mismatched className during hydration.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    // Post-mount flip is the intended hydration-safe pattern (see the old
+    // hero's skipTypewriter): the value can only be known on the client.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+  }, []);
   const buttonRef = useRef<HTMLAnchorElement>(null);
   const [buttonSize, setButtonSize] = useState({ w: 0, h: 0 });
-  // Decide whether to skip the typewriter only after mount, so SSR and the
-  // first client render produce identical HTML (no hydration mismatch).
-  const [skipTypewriter, setSkipTypewriter] = useState(false);
-  useEffect(() => {
-    const isMobile = window.innerWidth < 640;
-    const hasVisited = sessionStorage.getItem("hero-animated");
-    if (!hasVisited) {
-      sessionStorage.setItem("hero-animated", "true");
-    }
-    // window/sessionStorage are client-only, so the decision can only be made
-    // after mount. Setting state here is the intended hydration-safe pattern.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    if (isMobile || hasVisited) setSkipTypewriter(true);
-  }, []);
 
-  const handleTitleComplete = useCallback(() => {
-    setTitleDone(true);
-  }, []);
-
-  const handleParagraphComplete = useCallback(() => {
-    setParagraphsDone((prev) => prev + 1);
-  }, []);
-
-  const allParagraphsDone = paragraphsDone >= paragraphs.length;
-
-  // Measure button size for SVG path
+  // Measure button size for the SVG border path
   useEffect(() => {
     if (!buttonRef.current) return;
     const measure = () => {
@@ -74,173 +88,149 @@ export default function Hero() {
     measure();
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
-  }, [allParagraphsDone]);
+  }, []);
 
-  const w = buttonSize.w;
-  const h = buttonSize.h;
+  const { w, h } = buttonSize;
   const borderPath = roundedRectPath(w, h);
+  const filled = borderDone || (mounted && prefersReducedMotion);
+
+  return (
+    <Link
+      ref={buttonRef}
+      href="/projects"
+      className={cn(
+        "relative font-caption text-sm sm:text-base md:text-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-foreground rounded inline-block group transition-colors duration-500",
+        filled ? "bg-primary-foreground" : "bg-transparent hover:bg-primary-foreground",
+      )}
+      aria-label="See selected work"
+    >
+      <motion.span
+        initial={prefersReducedMotion ? false : { opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, ease: easings.smooth, delay: 0.55 }}
+        className={cn(
+          "relative z-10 flex items-center gap-1.5 px-4 py-2 sm:px-5 sm:py-2.5 transition-colors duration-500",
+          filled ? "text-primary" : "text-primary-foreground group-hover:text-primary",
+        )}
+      >
+        <span aria-hidden="true" className="font-caption opacity-60 arrow-lift shrink-0">
+          &raquo;
+        </span>
+        see selected work
+      </motion.span>
+      {borderPath && (
+        <svg
+          className="absolute inset-0 w-full h-full overflow-visible"
+          aria-hidden="true"
+          viewBox={`0 0 ${w} ${h}`}
+          preserveAspectRatio="none"
+        >
+          <motion.path
+            d={borderPath}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            className="text-primary-foreground"
+            initial={
+              prefersReducedMotion
+                ? { pathLength: 1, opacity: 1 }
+                : { pathLength: 0, opacity: 0 }
+            }
+            animate={{ pathLength: 1, opacity: 1 }}
+            transition={
+              prefersReducedMotion
+                ? { duration: 0 }
+                : {
+                    pathLength: { duration: 0.8, ease: easings.smooth, delay: 0.55 },
+                    opacity: { duration: 0.01, delay: 0.55 },
+                  }
+            }
+            onAnimationComplete={() => setBorderDone(true)}
+          />
+        </svg>
+      )}
+    </Link>
+  );
+}
+
+export default function Hero() {
+  const prefersReducedMotion = useReducedMotion();
+
+  // Content gently fades/slides as the hero scrolls away (no pinning).
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const contentY = useTransform(scrollYProgress, [0, 0.7], [0, -40]);
 
   return (
     <section
-      className="relative overflow-hidden min-h-auto sm:min-h-[calc(100dvh-var(--header-height))] flex items-start sm:items-center section-x py-12 sm:py-16 md:py-20 bg-primary"
+      ref={sectionRef}
+      className="relative overflow-hidden min-h-auto sm:min-h-[calc(100dvh-var(--header-height))] flex section-x py-12 sm:py-16 md:py-20 bg-primary"
       role="region"
       aria-labelledby="hero-title"
     >
       <HeroBackground />
-      <div className="relative z-10 section-container">
-        <div className="max-w-4xl">
-          <Typewriter
-            text="Welcome_"
-            speed={80}
-            delay={100}
-            onComplete={handleTitleComplete}
-            as="h1"
+      <motion.div
+        className="relative z-10 section-container flex flex-col justify-between gap-10 sm:gap-12"
+        style={
+          prefersReducedMotion
+            ? undefined
+            : { opacity: contentOpacity, y: contentY }
+        }
+      >
+        <div className="sm:my-auto">
+          <MaskedReveal>
+            <p className="font-caption text-sm sm:text-base text-primary-foreground">
+              _hello world, I&apos;m Jeremy
+            </p>
+          </MaskedReveal>
+
+          <h1
             id="hero-title"
-            className="font-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl mb-6 sm:mb-8 md:mb-10 leading-tight text-primary-foreground"
-            showCursorAfter
-            skipAnimation={skipTypewriter}
-          />
-
-          <div className="space-y-4 sm:space-y-5">
-            {paragraphs.map((text, i) => {
-              // Each paragraph starts only when the previous one is done
-              const canStart =
-                prefersReducedMotion ||
-                skipTypewriter ||
-                (titleDone && (i === 0 || paragraphsDone > i - 1));
-              const isVisible = canStart;
-
-              return (
-                <div
-                  key={i}
-                  className="font-text text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed text-primary-foreground flex items-start gap-2"
-                  style={{
-                    opacity: isVisible ? 1 : 0,
-                    transition: "opacity 0.15s ease",
-                  }}
-                >
-                  <span className="font-caption opacity-60 shrink-0 leading-relaxed">
-                    &raquo;
-                  </span>
-                  {canStart ? (
-                    <Typewriter
-                      text={text}
-                      speed={20}
-                      delay={i === 0 ? 300 : 200}
-                      onComplete={handleParagraphComplete}
-                      as="span"
-                      showCursorAfter={false}
-                      cursorChar="_"
-                      skipAnimation={skipTypewriter}
-                    />
-                  ) : (
-                    <span>&nbsp;</span>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="flex justify-end mt-8 sm:mt-10 md:mt-12">
-          <Link
-            ref={buttonRef}
-            href="/about"
-            className={cn(
-              "relative font-caption text-sm sm:text-base md:text-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-foreground rounded inline-block group transition-colors duration-500",
-              borderDone
-                ? "bg-primary-foreground"
-                : "bg-transparent hover:bg-primary-foreground",
-            )}
-            aria-label="Learn more about Brajy"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
+            className="font-title text-[clamp(2.25rem,4.5vw,6rem)] leading-[1.08] tracking-tight text-primary-foreground mt-4 sm:mt-6"
           >
-            <motion.span
-              initial={{ opacity: 0 }}
-              animate={
-                allParagraphsDone || prefersReducedMotion
-                  ? { opacity: 1 }
-                  : { opacity: 0 }
-              }
-              transition={{
-                duration: 0.5,
-                ease: easings.smooth,
-                delay: allParagraphsDone && !prefersReducedMotion ? 0.3 : 0,
-              }}
-              className={cn(
-                "relative z-10 flex items-center gap-1.5 px-4 py-2 sm:px-5 sm:py-2.5 transition-colors duration-500",
-                borderDone
-                  ? "text-primary"
-                  : "text-primary-foreground group-hover:text-primary",
-              )}
-            >
-              <AnimatePresence>
-                {isHovered && (
-                  <motion.span
-                    key="chevron"
-                    initial={
-                      prefersReducedMotion ? false : { opacity: 0, width: 0 }
-                    }
-                    animate={{ opacity: 0.6, width: "auto" }}
-                    exit={
-                      prefersReducedMotion
-                        ? { opacity: 0 }
-                        : { opacity: 0, width: 0 }
-                    }
-                    transition={{
-                      duration: prefersReducedMotion ? 0 : 0.25,
-                      ease: easings.smooth,
-                    }}
-                    className="font-caption shrink-0 overflow-hidden"
-                  >
-                    &raquo;
-                  </motion.span>
-                )}
-              </AnimatePresence>
-              learn more about my path
-            </motion.span>
-            {borderPath && (
-              <svg
-                className="absolute inset-0 w-full h-full overflow-visible"
-                aria-hidden="true"
-                viewBox={`0 0 ${w} ${h}`}
-                preserveAspectRatio="none"
+            <MaskedReveal as="span" delay={0.1}>
+              {HEADLINE_LINES[0]}
+            </MaskedReveal>
+            <MaskedReveal as="span" delay={0.2}>
+              {HEADLINE_LINES[1]}
+              <span aria-hidden="true" className="blink-cursor">
+                _
+              </span>
+            </MaskedReveal>
+          </h1>
+
+          <MaskedReveal delay={0.3} className="mt-5 sm:mt-7">
+            <p className="font-caption text-sm sm:text-base md:text-lg text-primary-foreground">
+              Operations &times; Data &times; Code
+            </p>
+          </MaskedReveal>
+
+          <motion.ul
+            className="flex flex-wrap gap-2 sm:gap-3 mt-6 sm:mt-8"
+            aria-label="Profile highlights"
+            initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: easings.smooth, delay: 0.4 }}
+          >
+            {PILLS.map((pill) => (
+              <li
+                key={pill}
+                className="font-caption text-xs sm:text-sm px-3 sm:px-4 py-1 sm:py-1.5 border border-primary-foreground/70 text-primary-foreground rounded-full"
               >
-                <motion.path
-                  d={borderPath}
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  className="text-primary-foreground"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={
-                    allParagraphsDone || prefersReducedMotion
-                      ? { pathLength: 1, opacity: 1 }
-                      : { pathLength: 0, opacity: 0 }
-                  }
-                  transition={{
-                    pathLength: {
-                      duration: 0.8,
-                      ease: easings.smooth,
-                      delay:
-                        allParagraphsDone && !prefersReducedMotion ? 0.3 : 0,
-                    },
-                    opacity: {
-                      duration: 0.01,
-                      delay:
-                        allParagraphsDone && !prefersReducedMotion ? 0.3 : 0,
-                    },
-                  }}
-                  onAnimationComplete={() => {
-                    if (allParagraphsDone) setBorderDone(true);
-                  }}
-                />
-              </svg>
-            )}
-          </Link>
+                {pill}
+              </li>
+            ))}
+          </motion.ul>
         </div>
-      </div>
+
+        <div className="flex justify-end">
+          <HeroCta />
+        </div>
+      </motion.div>
     </section>
   );
 }

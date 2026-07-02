@@ -39,9 +39,10 @@ export default function SectionHeading({
       <>
         <h1
           id={headingId}
-          className="font-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight text-foreground"
+          className="font-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight text-foreground text-balance"
         >
-          {title}_
+          {title}
+          <span aria-hidden="true">_</span>
         </h1>
         <div
           className={cn(
@@ -67,7 +68,8 @@ export default function SectionHeading({
       )}
     >
       <h2 id={headingId} className={cn("font-title", headingClassName)}>
-        {title}_
+        {title}
+        <span aria-hidden="true">_</span>
       </h2>
       {typewriter}
     </div>

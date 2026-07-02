@@ -35,7 +35,7 @@ export default function Projects() {
         <div className="space-y-6 md:space-y-16 pt-4 md:pt-8">
           {projects.map((project, index) => (
             <AnimateOnScroll key={project.id} delay={index * 100}>
-              <ProjectCard project={project} />
+              <ProjectCard project={project} index={index} />
             </AnimateOnScroll>
           ))}
         </div>

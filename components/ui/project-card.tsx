@@ -5,6 +5,8 @@ import AnimateOnScroll from "@/components/ui/animate-on-scroll";
 
 interface ProjectCardProps {
   project: Project;
+  /** Position in the list, rendered as a mono "_01" index above the title. */
+  index?: number;
 }
 
 // Card title: animated wrap-aware underline + hover/focus color, driven by the
@@ -12,7 +14,10 @@ interface ProjectCardProps {
 const TITLE_CLASS =
   "font-text text-lg animated-underline-wrap inline transition-colors duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/card:text-primary group-focus-visible/card:text-primary";
 
-export default function ProjectCard({ project }: ProjectCardProps) {
+export default function ProjectCard({ project, index }: ProjectCardProps) {
+  const cardIndex =
+    index !== undefined ? `_${String(index + 1).padStart(2, "0")}` : undefined;
+
   // Sort captions: black labels longest→shortest, orange tags shortest→longest
   const labels = [
     `_${project.role.toLowerCase()}`,
@@ -30,7 +35,13 @@ export default function ProjectCard({ project }: ProjectCardProps) {
     >
       {/* Project Title - Mobile only, shown at top */}
       <div className="md:hidden">
+        {cardIndex && (
+          <p className="font-caption text-xs text-primary mb-1">{cardIndex}</p>
+        )}
         <span className={TITLE_CLASS}>{project.title}</span>
+        <p className="font-text text-sm leading-relaxed text-muted-foreground mt-2 text-pretty">
+          {project.description}
+        </p>
       </div>
 
       {/* Image - Left side */}
@@ -38,14 +49,16 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       {/* Curtain reveal (A3) wipes the image in on scroll; subtle zoom on hover. */}
       <AnimateOnScroll
         variant="curtain"
-        className="md:col-span-4 relative w-full h-64 sm:h-80 md:h-[440px] lg:h-[520px] overflow-hidden rounded-[8px]"
+        className="md:col-span-4 relative w-full h-64 sm:h-80 md:h-[400px] lg:h-[460px] overflow-hidden rounded-[8px]"
       >
         <div className="relative w-full h-full ease-[cubic-bezier(0.16,1,0.3,1)] motion-safe:transition-transform motion-safe:duration-700 motion-safe:group-hover/card:scale-[1.04] motion-safe:group-focus-visible/card:scale-[1.04]">
           <ProjectImage
             src={project.image}
-            overlayImage={project.overlayImage}
+            mesh={project.imageMesh}
+            meshCaption={project.imageMesh ? "_screenshots coming soon" : undefined}
+            overlayMesh={project.overlayMesh}
             alt=""
-            sizes="(max-width: 768px) 100vw, 80vw"
+            sizes="(max-width: 768px) 100vw, min(80vw, 1080px)"
           />
         </div>
       </AnimateOnScroll>
@@ -69,9 +82,17 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         </div>
       </div>
 
-      {/* Project Title - Desktop only, shown below image */}
-      <div className="hidden md:block md:col-span-2 mt-3 md:mt-4 self-end">
+      {/* Project Title + description - Desktop only, shown below image */}
+      <div className="hidden md:block md:col-span-3 mt-3 md:mt-4 self-end">
+        {cardIndex && (
+          <p className="font-caption text-xs sm:text-sm text-primary mb-1">
+            {cardIndex}
+          </p>
+        )}
         <span className={`${TITLE_CLASS} md:text-xl`}>{project.title}</span>
+        <p className="font-text text-sm md:text-base leading-relaxed text-muted-foreground mt-2 max-w-[60ch] text-pretty">
+          {project.description}
+        </p>
       </div>
     </Link>
   );

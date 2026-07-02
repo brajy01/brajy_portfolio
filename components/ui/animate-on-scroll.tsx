@@ -28,9 +28,18 @@ export default function AnimateOnScroll({
 }: AnimateOnScrollProps) {
   const ref = useRef<HTMLElement>(null);
 
+  // Curtains start fully clipped (clip-path: inset(0 0 100%)), and Chrome
+  // factors CSS clipping into IntersectionObserver: a fully-clipped element
+  // never intersects, so observing it directly deadlocks. For curtains we
+  // observe an unclipped outer wrapper and clip/reveal an inner element.
+  const isCurtain = variant === "curtain" && !stagger;
+
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    const revealTarget = isCurtain
+      ? ((el.firstElementChild ?? el) as HTMLElement)
+      : el;
 
     if (stagger) {
       Array.from(el.children).forEach((child, i) => {
@@ -39,13 +48,13 @@ export default function AnimateOnScroll({
         htmlChild.style.transitionDelay = `${delay + i * stagger}ms`;
       });
     } else if (delay > 0) {
-      el.style.transitionDelay = `${delay}ms`;
+      revealTarget.style.transitionDelay = `${delay}ms`;
     }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          el.classList.add("revealed");
+          revealTarget.classList.add("revealed");
           if (stagger) {
             Array.from(el.children).forEach((child) => {
               (child as HTMLElement).classList.add("revealed");
@@ -65,11 +74,12 @@ export default function AnimateOnScroll({
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, [stagger, delay, threshold, once]);
+  }, [stagger, delay, threshold, once, isCurtain]);
 
   // With stagger the wrapper stays neutral and only its children animate;
-  // otherwise the wrapper itself carries the reveal/curtain animation.
-  const base = stagger ? "" : variant === "curtain" ? "curtain" : "reveal";
+  // otherwise the wrapper itself carries the reveal animation (the curtain
+  // variant carries it on the inner wrapper, see above).
+  const base = stagger || isCurtain ? "" : "reveal";
   const cls = `${base} ${className}`.trim();
 
   if (as === "ul") {
@@ -77,6 +87,14 @@ export default function AnimateOnScroll({
       <ul ref={ref as RefObject<HTMLUListElement>} className={cls}>
         {children}
       </ul>
+    );
+  }
+
+  if (isCurtain) {
+    return (
+      <div ref={ref as RefObject<HTMLDivElement>} className={cls}>
+        <div className="curtain relative w-full h-full">{children}</div>
+      </div>
     );
   }
 
