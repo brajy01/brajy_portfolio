@@ -119,41 +119,11 @@ export default function ContactForm() {
         </div>
       </section>
 
-      {/* Contact Form Section: form left, direct channels right */}
+      {/* Contact Form Section */}
       <section className="pt-0 pb-16 sm:pb-20 md:pt-12 md:pb-24 section-x">
         <div className="section-container">
-          <div className="flex flex-col md:flex-row md:justify-between gap-10 sm:gap-12">
-            <div className="md:w-[280px] lg:w-[320px] shrink-0 order-1 md:order-2">
-              <AnimateOnScroll delay={100}>
-                <div className="md:text-right">
-                  <p className="font-caption text-xs sm:text-sm text-primary mb-2">
-                    _direct
-                  </p>
-                  <ul className="space-y-1.5">
-                    {[
-                      { label: "contact@brajy.com", href: "mailto:contact@brajy.com" },
-                      { label: "whatsapp", href: "https://wa.me/33699148863" },
-                      { label: "linkedin", href: "https://www.linkedin.com/in/jbrajon/" },
-                    ].map((channel) => (
-                      <li key={channel.label}>
-                        <a
-                          href={channel.href}
-                          {...(channel.href.startsWith("http") && {
-                            target: "_blank",
-                            rel: "noopener noreferrer",
-                          })}
-                          className="animated-underline-orange font-caption text-sm sm:text-base text-foreground"
-                        >
-                          {channel.label}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </AnimateOnScroll>
-            </div>
-
-            <AnimateOnScroll className="md:max-w-[65%] w-full order-2 md:order-1">
+          <div className="max-w-2xl mx-auto">
+            <AnimateOnScroll className="w-full">
               <form
             onSubmit={handleSubmit}
             aria-busy={submitStatus === "loading"}

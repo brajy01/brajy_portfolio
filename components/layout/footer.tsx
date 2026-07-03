@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AnimateOnScroll from "@/components/ui/animate-on-scroll";
+import FooterLogotype from "./footer-logotype";
 import { NAV_ITEMS } from "./nav-items";
 
 const socialLinks = [
@@ -120,12 +121,11 @@ export default function Footer() {
                         >
                           <Icon className="h-4 w-4 text-primary" />
                           <span>{link.name}</span>
-                          {link.href.startsWith("http") && (
-                            <ArrowUpRight
-                              aria-hidden="true"
-                              className="arrow-lift h-3.5 w-3.5 text-primary"
-                            />
-                          )}
+                          {/* every social link opens in a new tab */}
+                          <ArrowUpRight
+                            aria-hidden="true"
+                            className="arrow-lift h-3.5 w-3.5 text-primary"
+                          />
                         </Link>
                       </li>
                     );
@@ -135,9 +135,7 @@ export default function Footer() {
 
               {/* Contact Info - Hidden on mobile, shown in 3rd column on desktop */}
               <div className="hidden md:block space-y-2">
-                <p className="font-title text-sm md:text-base text-background">
-                  Brajy
-                </p>
+                <FooterLogotype />
                 <p className="font-caption text-xs md:text-sm text-background/50">
                   Operations &times; Data &times; Code
                 </p>
@@ -162,7 +160,7 @@ export default function Footer() {
             {/* Contact Info & CTA - Centered on mobile, hidden on desktop */}
             <div className="md:hidden text-center space-y-4">
               <div className="space-y-2">
-                <p className="font-title text-sm text-background">Brajy</p>
+                <FooterLogotype className="mx-auto block" />
                 <p className="font-caption text-xs text-background/50">
                   Operations &times; Data &times; Code
                 </p>

@@ -2,15 +2,19 @@ import { useEffect, useRef, useState } from "react";
 
 const SCROLL_DOWN_THRESHOLD = 40; // px of cumulative scroll-down before hiding
 const TOP_ZONE = 200; // always show header when within this distance from top
+const AT_TOP_THRESHOLD = 12; // px below which the page counts as "at top"
 
 export const useHideOnScroll = () => {
   const [isVisible, setIsVisible] = useState(true);
+  const [isAtTop, setIsAtTop] = useState(true);
   const lastScrollY = useRef(0);
   const cumulativeDelta = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
+
+      setIsAtTop(currentScrollY <= AT_TOP_THRESHOLD);
 
       // Always show header near the top of the page
       if (currentScrollY < TOP_ZONE) {
@@ -38,8 +42,11 @@ export const useHideOnScroll = () => {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
+    // Sync immediately: the page may be restored mid-scroll (bfcache, scroll
+    // restoration), where the default isAtTop=true would be wrong.
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  return isVisible;
+  return { isVisible, isAtTop };
 };

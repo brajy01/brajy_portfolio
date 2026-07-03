@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import HeroBackground from "@/components/ui/hero-background";
 
@@ -15,6 +16,14 @@ export default function NotFound() {
       aria-labelledby="notfound-title"
     >
       <HeroBackground />
+      <Image
+        src="/logomark/beige.svg"
+        alt=""
+        aria-hidden="true"
+        width={280}
+        height={280}
+        className="hidden md:block absolute right-[8%] top-1/2 -translate-y-1/2 w-[clamp(180px,22vw,300px)] h-auto opacity-90 pointer-events-none select-none z-0"
+      />
       <div className="relative z-10 section-container">
         <p className="font-caption text-sm sm:text-base text-primary-foreground/80">
           _error: route not found

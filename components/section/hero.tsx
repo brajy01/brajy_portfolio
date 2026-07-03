@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { motion, easings, useScroll, useTransform } from "@/components/ui/motion";
 import { cn } from "@/lib/utils";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
@@ -113,10 +114,11 @@ function HeroCta() {
           filled ? "text-primary" : "text-primary-foreground group-hover:text-primary",
         )}
       >
-        <span aria-hidden="true" className="font-caption opacity-60 arrow-lift shrink-0">
-          &raquo;
-        </span>
         see selected work
+        <ArrowUpRight
+          aria-hidden="true"
+          className="arrow-lift size-4 shrink-0"
+        />
       </motion.span>
       {borderPath && (
         <svg

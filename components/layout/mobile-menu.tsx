@@ -1,7 +1,9 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
+import { motion, AnimatePresence, easings } from "@/components/ui/motion";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { isActivePath } from "@/lib/utils";
 import NavLink from "./nav-link";
 import { NAV_ITEMS } from "./nav-items";
@@ -13,25 +15,8 @@ interface MobileMenuProps {
 
 export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const pathname = usePathname();
-  const [isMounted, setIsMounted] = useState(false);
-  const [isAnimatingIn, setIsAnimatingIn] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
   const menuRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (isOpen) {
-      // Mount first so the enter animation runs from a fresh node; the double
-      // rAF below flips to the visible state on the next frame. Intentional.
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setIsMounted(true);
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          setIsAnimatingIn(true);
-        });
-      });
-    } else if (isMounted) {
-      setIsAnimatingIn(false);
-    }
-  }, [isOpen, isMounted]);
 
   // While open: lock body scroll, close on Escape, trap Tab focus inside the
   // menu, move focus in on open and restore it to the trigger on close.
@@ -78,50 +63,87 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
     };
   }, [isOpen, onClose]);
 
-  const handleTransitionEnd = useCallback(() => {
-    if (!isOpen && !isAnimatingIn) {
-      setIsMounted(false);
-    }
-  }, [isOpen, isAnimatingIn]);
+  // Curtain wipe in, quick fade out; near-instant fades under reduced motion.
+  const panelVariants = prefersReducedMotion
+    ? {
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { duration: 0.01 } },
+        exit: { opacity: 0, transition: { duration: 0.01 } },
+      }
+    : {
+        hidden: { clipPath: "inset(0 0 100% 0)" },
+        visible: {
+          clipPath: "inset(0 0 0% 0)",
+          transition: { duration: 0.6, ease: easings.smooth },
+        },
+        exit: { opacity: 0, transition: { duration: 0.25 } },
+      };
 
-  if (!isMounted) return null;
+  const itemVariants = prefersReducedMotion
+    ? { hidden: { opacity: 1 }, visible: { opacity: 1 } }
+    : {
+        hidden: { y: "110%" },
+        visible: {
+          y: "0%",
+          transition: { duration: 0.5, ease: easings.smooth },
+        },
+      };
 
   return (
-    <>
-      {/* Overlay backdrop */}
-      <div
-        className={`fixed inset-0 bg-foreground/30 z-30 transition-opacity duration-300 ${
-          isAnimatingIn ? "opacity-100" : "opacity-0"
-        }`}
-        onClick={onClose}
-        onTransitionEnd={handleTransitionEnd}
-        aria-hidden="true"
-      />
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          {/* Overlay backdrop */}
+          <motion.div
+            key="backdrop"
+            className="fixed inset-0 bg-foreground/30 z-30 md:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            onClick={onClose}
+            aria-hidden="true"
+          />
 
-      {/* Mobile menu content */}
-      <div
-        ref={menuRef}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Site menu"
-        className={`fixed inset-0 bg-primary z-40 flex flex-col items-center justify-center md:hidden transition-opacity duration-300 ${
-          isAnimatingIn ? "opacity-100" : "opacity-0"
-        }`}
-      >
-        {/* Navigation links */}
-        <nav className="flex flex-col space-y-8 text-center">
-          {NAV_ITEMS.map((link) => (
-            <NavLink
-              key={link.href}
-              href={link.href}
-              label={link.label}
-              isActive={isActivePath(pathname, link.href)}
-              onClose={onClose}
-              className="relative inline-block text-4xl font-title text-background"
-            />
-          ))}
-        </nav>
-      </div>
-    </>
+          {/* Mobile menu content */}
+          <motion.div
+            key="panel"
+            ref={menuRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Site menu"
+            className="fixed inset-0 bg-primary z-40 flex flex-col items-center justify-center md:hidden"
+            variants={panelVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            {/* Navigation links: each slides up out of an overflow mask */}
+            <motion.nav
+              className="flex flex-col space-y-8 text-center"
+              variants={{
+                visible: {
+                  transition: { staggerChildren: 0.07, delayChildren: 0.2 },
+                },
+              }}
+            >
+              {NAV_ITEMS.map((link) => (
+                <span key={link.href} className="block overflow-hidden">
+                  <motion.span className="block" variants={itemVariants}>
+                    <NavLink
+                      href={link.href}
+                      label={link.label}
+                      isActive={isActivePath(pathname, link.href)}
+                      onClose={onClose}
+                      className="relative inline-block text-4xl font-title text-background"
+                    />
+                  </motion.span>
+                </span>
+              ))}
+            </motion.nav>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
   );
 }

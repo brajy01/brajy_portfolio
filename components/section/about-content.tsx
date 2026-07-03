@@ -1,5 +1,6 @@
 "use client";
 
+import { ArrowUpRight } from "lucide-react";
 import AnimateOnScroll from "@/components/ui/animate-on-scroll";
 import MeshPlaceholder from "@/components/ui/mesh-placeholder";
 import BulletList from "@/components/ui/bullet-list";
@@ -309,10 +310,11 @@ export default function AboutContent() {
               rel="noopener noreferrer"
               className="animated-underline-orange font-caption text-sm sm:text-base inline-flex items-center gap-1.5 text-foreground mt-6 sm:mt-8"
             >
-              <span aria-hidden="true" className="text-primary arrow-lift">
-                &raquo;
-              </span>
               download my cv
+              <ArrowUpRight
+                aria-hidden="true"
+                className="arrow-lift size-4 text-primary shrink-0"
+              />
             </a>
           </AnimateOnScroll>
         </div>

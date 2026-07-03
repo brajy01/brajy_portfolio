@@ -1,19 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { cn, isActivePath } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { useHideOnScroll } from "@/hooks/useHideOnScroll";
-import NavLink from "./nav-link";
+import DesktopNav from "./desktop-nav";
+import HeaderLogo from "./header-logo";
 import MobileMenu from "./mobile-menu";
-import { NAV_ITEMS } from "./nav-items";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const pathname = usePathname();
-  const isHeaderVisible = useHideOnScroll();
+  const { isVisible: isHeaderVisible, isAtTop } = useHideOnScroll();
 
   return (
     <>
@@ -26,22 +23,14 @@ export default function Header() {
         <Link
           href="/"
           onClick={() => setIsMenuOpen(false)}
-          className="z-[60] rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-background focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
+          aria-label="Brajy — home"
+          className="flex items-center h-14 z-[60] rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-background focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
         >
-          <Image src="/logomark/white.svg" alt="Brajy" width={56} height={56} />
+          <HeaderLogo collapsed={!isAtTop} />
         </Link>
 
         {/* Desktop navigation */}
-        <nav className="hidden md:flex items-center space-x-6 font-title text-background">
-          {NAV_ITEMS.map((item) => (
-            <NavLink
-              key={item.href}
-              href={item.href}
-              label={item.label}
-              isActive={isActivePath(pathname, item.href)}
-            />
-          ))}
-        </nav>
+        <DesktopNav />
 
         {/* Mobile menu button */}
         <button
