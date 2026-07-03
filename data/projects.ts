@@ -21,7 +21,6 @@ export interface Project {
   // placeholder (honest stand-in until real screenshots are shot).
   image?: string;
   imageMesh?: MeshVariant;
-  overlayMesh?: MeshVariant;
   tags: string[];
   category: string;
   month: string;
@@ -118,7 +117,6 @@ export const projects: Project[] = [
     description:
       "Website and SEO for Dr. Barbara Freitas, a dental therapist on the Isle of Man who had no online presence",
     image: "/projects/barbara-freitas/homepage.jpg",
-    overlayMesh: "full",
     tags: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
     category: "Design",
     month: "february",

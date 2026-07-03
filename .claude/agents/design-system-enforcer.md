@@ -121,11 +121,16 @@ flex flex-col md:flex-row md:justify-between gap-6 sm:gap-8
 
 **Project card grid (cards ONLY):** `grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-8`
 (image `md:col-span-4`; card image heights `h-64 sm:h-80 md:h-[400px] lg:h-[460px]`).
-No mono index number on cards. Below the image the desktop footer spans
-`md:col-span-5` as a two-column row (`flex justify-between items-start gap-8`):
-title left (in a wrapper div so the `<span>` keeps `display:inline` for the
-wrap-underline), description right (`font-text text-sm text-foreground/70
-max-w-[42ch] text-pretty`). Mobile stacks title then description.
+No mono index number, and no orange overlay filter on the card image. Title
+sits below the image on desktop (`md:col-span-3`) and above it on mobile; the
+mono labels (_role/_date/_category) + tech tags live in the right meta column.
+The **project description is NOT static** — it fades in over a bottom gradient
+on the image on hover/focus (`opacity-0 group-hover/card:opacity-100
+group-focus-visible/card:opacity-100 [@media(hover:none)]:opacity-100`,
+`pointer-events-none`, `text-background` on `from-foreground/90` gradient,
+`line-clamp-3`, `motion-safe:transition-opacity`). This is the one sanctioned
+hover-reveal (see the card note in hover-affordances-minimal memory); do not
+add other hover-revealed text.
 
 **Project showcase (walkthrough rows, project-showcase.tsx):** sits on a
 full-width `bg-secondary` (beige) band and stands in for the Approach/

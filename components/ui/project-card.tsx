@@ -12,10 +12,6 @@ interface ProjectCardProps {
 const TITLE_CLASS =
   "font-text text-lg animated-underline-wrap inline transition-colors duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/card:text-primary group-focus-visible/card:text-primary";
 
-// One-line summary under the title: soft foreground, capped measure.
-const DESC_CLASS =
-  "font-text text-sm leading-relaxed text-foreground/70 mt-1.5 max-w-[52ch] text-pretty";
-
 export default function ProjectCard({ project }: ProjectCardProps) {
   // Sort captions: black labels longest→shortest, orange tags shortest→longest
   const labels = [
@@ -35,12 +31,11 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       {/* Project Title - Mobile only, shown at top */}
       <div className="md:hidden">
         <span className={TITLE_CLASS}>{project.title}</span>
-        <p className={DESC_CLASS}>{project.description}</p>
       </div>
 
-      {/* Image - Left side */}
-      {/* Nested border-radius rule: inner = outer - padding → 12px - 16px ≈ clamp to ~4px for visual harmony */}
-      {/* Curtain reveal (A3) wipes the image in on scroll; subtle zoom on hover. */}
+      {/* Image - Left side. Curtain reveal wipes it in on scroll; subtle zoom on
+          hover. The project summary fades in over a bottom gradient on hover /
+          focus, and shows persistently on touch devices (no hover). */}
       <AnimateOnScroll
         variant="curtain"
         className="md:col-span-4 relative w-full h-64 sm:h-80 md:h-[400px] lg:h-[460px] overflow-hidden rounded-[8px]"
@@ -49,11 +44,17 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           <ProjectImage
             src={project.image}
             mesh={project.imageMesh}
-            meshCaption={project.imageMesh ? "_screenshots coming soon" : undefined}
-            overlayMesh={project.overlayMesh}
             alt=""
             sizes="(max-width: 768px) 100vw, min(80vw, 1080px)"
           />
+        </div>
+        {/* Summary reveal: fades in over a bottom gradient on hover/focus;
+            always visible on touch devices (no hover). Decorative overlay, so
+            pointer-events-none keeps the whole card clickable. */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 p-4 sm:p-5 bg-gradient-to-t from-foreground/90 via-foreground/55 to-transparent opacity-0 ease-[cubic-bezier(0.16,1,0.3,1)] motion-safe:transition-opacity motion-safe:duration-500 group-hover/card:opacity-100 group-focus-visible/card:opacity-100 [@media(hover:none)]:opacity-100">
+          <p className="font-text text-sm leading-relaxed text-background line-clamp-3 text-pretty">
+            {project.description}
+          </p>
         </div>
       </AnimateOnScroll>
 
@@ -76,17 +77,9 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         </div>
       </div>
 
-      {/* Desktop only, below the image: title left, description right so the
-          text fills the width and doesn't stack awkwardly under the title. */}
-      <div className="hidden md:block md:col-span-5 mt-3 md:mt-4">
-        <div className="flex justify-between items-start gap-8">
-          <div className="max-w-[55%]">
-            <span className={`${TITLE_CLASS} md:text-xl`}>{project.title}</span>
-          </div>
-          <p className="font-text text-sm leading-relaxed text-foreground/70 max-w-[42ch] text-pretty">
-            {project.description}
-          </p>
-        </div>
+      {/* Project Title - Desktop only, shown below image */}
+      <div className="hidden md:block md:col-span-3 mt-3 md:mt-4 self-end">
+        <span className={`${TITLE_CLASS} md:text-xl`}>{project.title}</span>
       </div>
     </Link>
   );
