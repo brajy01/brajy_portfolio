@@ -18,7 +18,7 @@ export default function ProjectShowcase({
 }: ProjectShowcaseProps) {
   return (
     <section
-      className="py-12 sm:py-16 md:py-24 section-x"
+      className="bg-secondary py-12 sm:py-16 md:py-24 section-x"
       role="region"
       aria-labelledby="showcase-heading"
     >
@@ -38,13 +38,15 @@ export default function ProjectShowcase({
 
             const textBlock = (
               <AnimateOnScroll>
-                <p className="font-caption text-xs sm:text-sm text-primary mb-2">
+                {/* Kicker in secondary-foreground: brand orange on beige fails
+                    contrast. */}
+                <p className="font-caption text-xs sm:text-sm text-secondary-foreground mb-2">
                   {number} <span aria-hidden="true">&raquo;</span> {item.label}
                 </p>
-                <h3 className="font-title text-lg sm:text-xl md:text-2xl mb-3 sm:mb-4 text-foreground">
+                <h3 className="font-title text-lg sm:text-xl md:text-2xl mb-3 sm:mb-4 text-secondary-foreground">
                   {item.title}
                 </h3>
-                <p className="font-text text-sm sm:text-base md:text-lg leading-relaxed text-foreground text-pretty">
+                <p className="font-text text-sm sm:text-base md:text-lg leading-relaxed text-secondary-foreground text-pretty">
                   {item.body}
                 </p>
               </AnimateOnScroll>

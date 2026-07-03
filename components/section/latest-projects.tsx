@@ -3,23 +3,22 @@ import AnimateOnScroll from "@/components/ui/animate-on-scroll";
 import ProjectCard from "@/components/ui/project-card";
 import SectionHeading from "@/components/ui/section-heading";
 
-export default function SelectedWork() {
+export default function LatestProjects() {
   // Show the 3 most recent projects (first 3 from the array)
-  const selectedProjects = projects.slice(0, 3);
-  const count = `_0${projects.length} projects`;
+  const latestProjects = projects.slice(0, 3);
 
   return (
     <section
       className="py-16 md:py-24 section-x"
       role="region"
-      aria-labelledby="selected-work-title"
+      aria-labelledby="latest-projects-title"
     >
       <div className="section-container">
         <AnimateOnScroll>
           <SectionHeading
-            title="Selected Work"
-            rightText={count}
-            headingId="selected-work-title"
+            title="Latest Projects"
+            rightText={`_${new Date().getFullYear()}`}
+            headingId="latest-projects-title"
             className="mb-0 pb-4 md:pb-6"
             headingClassName="text-4xl md:text-5xl"
           />
@@ -27,9 +26,9 @@ export default function SelectedWork() {
 
         {/* Projects Grid */}
         <div className="space-y-8 md:space-y-12 pt-4 md:pt-8">
-          {selectedProjects.map((project, index) => (
+          {latestProjects.map((project, index) => (
             <AnimateOnScroll key={project.id} delay={index * 100}>
-              <ProjectCard project={project} index={index} />
+              <ProjectCard project={project} />
             </AnimateOnScroll>
           ))}
         </div>

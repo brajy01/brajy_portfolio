@@ -80,6 +80,9 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
   // Unknown slugs 404 at the route level (app/projects/[slug]/page.tsx).
   if (!project) return null;
 
+  const showcase = project.showcase ?? [];
+  const hasShowcase = showcase.length > 0;
+
   return (
     <>
       {/* Hero Section - Title and Description */}
@@ -159,28 +162,6 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
         </AnimateOnScroll>
       </section>
 
-      {/* Overview - full-width beige editorial band */}
-      <section
-        className="bg-secondary section-x py-12 sm:py-16 md:py-24"
-        role="region"
-        aria-labelledby="overview-heading"
-      >
-        <div className="section-container">
-          <AnimateOnScroll>
-            {/* Foreground (not primary): orange on the beige band fails contrast */}
-            <p className="font-caption text-xs sm:text-sm text-secondary-foreground mb-3 sm:mb-4">
-              _overview
-            </p>
-            <h2 id="overview-heading" className="sr-only">
-              Overview
-            </h2>
-            <p className="font-text text-lg sm:text-xl md:text-2xl leading-relaxed text-secondary-foreground max-w-4xl text-pretty">
-              {project.overview}
-            </p>
-          </AnimateOnScroll>
-        </div>
-      </section>
-
       {/* Detail Content with Project Details */}
       <section
         className="py-12 sm:py-16 md:py-24 section-x"
@@ -192,17 +173,28 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
           <div className="flex flex-col md:flex-row md:justify-between gap-6 sm:gap-8">
             {/* Content - Left side */}
             <div className="md:max-w-[65%] order-2 md:order-1">
+              <DetailSection title="Overview">
+                <BodyText>{project.overview}</BodyText>
+              </DetailSection>
+
               <DetailSection title="The Problem">
                 <BodyText>{project.problem}</BodyText>
               </DetailSection>
 
-              <DetailSection title="The Approach">
-                <BulletList items={project.approach} />
-              </DetailSection>
+              {/* When a project has a visual walkthrough (below), the showcase
+                  carries the "how" — skip the Approach/Deliverables bullets so
+                  the same story isn't told twice. */}
+              {!hasShowcase && (
+                <>
+                  <DetailSection title="The Approach">
+                    <BulletList items={project.approach} />
+                  </DetailSection>
 
-              <DetailSection title="Deliverables">
-                <BulletList items={project.deliverables} />
-              </DetailSection>
+                  <DetailSection title="Deliverables">
+                    <BulletList items={project.deliverables} />
+                  </DetailSection>
+                </>
+              )}
 
               <DetailSection title="The Impact">
                 <BulletList items={project.impact} />
@@ -289,12 +281,10 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
         </div>
       </section>
 
-      {/* Walkthrough: sticky text + framed screenshots, alternating sides */}
-      {project.showcase && project.showcase.length > 0 && (
-        <ProjectShowcase
-          items={project.showcase}
-          projectName={project.projectName}
-        />
+      {/* Walkthrough: sticky text + framed screenshots, alternating sides.
+          Sits on the beige band and stands in for Approach/Deliverables. */}
+      {hasShowcase && (
+        <ProjectShowcase items={showcase} projectName={project.projectName} />
       )}
 
       {/* Project Images Gallery */}

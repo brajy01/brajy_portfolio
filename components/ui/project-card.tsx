@@ -5,8 +5,6 @@ import AnimateOnScroll from "@/components/ui/animate-on-scroll";
 
 interface ProjectCardProps {
   project: Project;
-  /** Position in the list, rendered as a mono "_01" index above the title. */
-  index?: number;
 }
 
 // Card title: animated wrap-aware underline + hover/focus color, driven by the
@@ -14,10 +12,11 @@ interface ProjectCardProps {
 const TITLE_CLASS =
   "font-text text-lg animated-underline-wrap inline transition-colors duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/card:text-primary group-focus-visible/card:text-primary";
 
-export default function ProjectCard({ project, index }: ProjectCardProps) {
-  const cardIndex =
-    index !== undefined ? `_${String(index + 1).padStart(2, "0")}` : undefined;
+// One-line summary under the title: soft foreground, capped measure.
+const DESC_CLASS =
+  "font-text text-sm leading-relaxed text-foreground/70 mt-1.5 max-w-[52ch] text-pretty";
 
+export default function ProjectCard({ project }: ProjectCardProps) {
   // Sort captions: black labels longest→shortest, orange tags shortest→longest
   const labels = [
     `_${project.role.toLowerCase()}`,
@@ -35,13 +34,8 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
     >
       {/* Project Title - Mobile only, shown at top */}
       <div className="md:hidden">
-        {cardIndex && (
-          <p className="font-caption text-xs text-primary mb-1">{cardIndex}</p>
-        )}
         <span className={TITLE_CLASS}>{project.title}</span>
-        <p className="font-text text-sm leading-relaxed text-muted-foreground mt-2 text-pretty">
-          {project.description}
-        </p>
+        <p className={DESC_CLASS}>{project.description}</p>
       </div>
 
       {/* Image - Left side */}
@@ -84,15 +78,8 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
 
       {/* Project Title + description - Desktop only, shown below image */}
       <div className="hidden md:block md:col-span-3 mt-3 md:mt-4 self-end">
-        {cardIndex && (
-          <p className="font-caption text-xs sm:text-sm text-primary mb-1">
-            {cardIndex}
-          </p>
-        )}
         <span className={`${TITLE_CLASS} md:text-xl`}>{project.title}</span>
-        <p className="font-text text-sm md:text-base leading-relaxed text-muted-foreground mt-2 max-w-[60ch] text-pretty">
-          {project.description}
-        </p>
+        <p className={DESC_CLASS}>{project.description}</p>
       </div>
     </Link>
   );

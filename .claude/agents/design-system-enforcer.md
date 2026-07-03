@@ -120,20 +120,26 @@ flex flex-col md:flex-row md:justify-between gap-6 sm:gap-8
 `grid grid-cols-2 gap-4 md:flex md:flex-col md:space-y-6 md:gap-0 sm:gap-6`
 
 **Project card grid (cards ONLY):** `grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-8`
-(image `md:col-span-4`, title+description cell `md:col-span-3` with a mono
-`_01` index in `text-primary`; card image heights `h-64 sm:h-80 md:h-[400px] lg:h-[460px]`)
+(image `md:col-span-4`, title+description cell `md:col-span-3`; the one-line
+description under the title uses `font-text text-sm text-foreground/70 mt-1.5
+max-w-[52ch]`; card image heights `h-64 sm:h-80 md:h-[400px] lg:h-[460px]`).
+No mono index number on cards.
 
-**Project showcase (walkthrough rows, project-showcase.tsx):**
-`flex flex-col gap-6 sm:gap-8 md:flex-row md:justify-between md:gap-10`, odd
-rows add `md:flex-row-reverse`; text block `md:w-[300px] lg:w-[360px] shrink-0
-md:sticky md:top-24 md:self-start` with mono kicker `_01 » label`; screenshot
+**Project showcase (walkthrough rows, project-showcase.tsx):** sits on a
+full-width `bg-secondary` (beige) band and stands in for the Approach/
+Deliverables sections when present. `flex flex-col gap-6 sm:gap-8 md:flex-row
+md:justify-between md:gap-10`, odd image-rows add `md:flex-row-reverse`; text
+block `md:w-[300px] lg:w-[360px] shrink-0 md:sticky md:top-24 md:self-start`
+with mono kicker `_01 » label`. On the beige band ALL showcase text is
+`text-secondary-foreground` (never orange — it fails contrast). Screenshot
 sits in a `BrowserFrame` (components/ui/browser-frame.tsx: three dots + mono
 URL bar, `aspect-[16/10]`). Rows without an image render the text block alone
 (`max-w-2xl`) — never force an image per section.
 
-**Overview band (project detail):** full-width `bg-secondary` section with a
-`_overview` mono kicker and `text-lg sm:text-xl md:text-2xl` prose in
-`text-secondary-foreground`, `max-w-4xl`.
+**Project detail order:** Hero → full-width hero image → content column
+(Overview inline first, then The Problem; Approach + Deliverables ONLY when the
+project has no showcase; then The Impact, Lessons) + sticky metadata sidebar →
+showcase (beige) when present. There is no standalone beige "overview" band.
 
 ### Images
 
@@ -151,8 +157,9 @@ URL bar, `aspect-[16/10]`). Rows without an image render the text block alone
 **Pills/Tags:**
 `font-caption text-xs px-2 sm:px-3 py-1 border border-primary text-primary rounded-full`
 
-**Pills on orange surfaces (home hero):**
-`font-caption text-xs sm:text-sm px-3 sm:px-4 py-1 sm:py-1.5 border border-primary-foreground/70 text-primary-foreground rounded-full`
+**Pills on orange surfaces (home hero):** filled cream, dark text (outlined
+white on orange fails contrast; orange text on cream is only ~3:1) —
+`font-caption text-xs sm:text-sm px-3 sm:px-4 py-1 sm:py-1.5 bg-primary-foreground text-foreground rounded-full`
 
 **Internal chevron links (profile strip, CTA band, 404):** an always-visible
 `»` span (`aria-hidden`, `.arrow-lift`) + `animated-underline` (on orange) or
@@ -222,7 +229,7 @@ Never add multi-MB image exports for decorative gradients.
 
 ### Documented Scale Exceptions (do not flag)
 
-- Homepage "Selected Work" h2 uses `headingClassName="text-4xl md:text-5xl"`
+- Homepage "Latest Projects" h2 uses `headingClassName="text-4xl md:text-5xl"`
   (section display heading, intentional).
 - About timeline entry h3 uses `text-2xl sm:text-3xl md:text-4xl lg:text-5xl`
   (timeline display scale, intentional).

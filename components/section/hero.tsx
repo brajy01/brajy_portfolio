@@ -219,7 +219,7 @@ export default function Hero() {
             {PILLS.map((pill) => (
               <li
                 key={pill}
-                className="font-caption text-xs sm:text-sm px-3 sm:px-4 py-1 sm:py-1.5 border border-primary-foreground/70 text-primary-foreground rounded-full"
+                className="font-caption text-xs sm:text-sm px-3 sm:px-4 py-1 sm:py-1.5 bg-primary-foreground text-foreground rounded-full"
               >
                 {pill}
               </li>
