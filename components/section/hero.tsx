@@ -217,7 +217,7 @@ export default function Hero() {
         </div>
 
         {/* Group 3: CTA */}
-        <div className="flex justify-end">
+        <div className="flex justify-center sm:justify-end">
           <HeroCta />
         </div>
       </div>
