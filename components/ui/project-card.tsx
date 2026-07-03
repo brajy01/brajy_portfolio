@@ -28,9 +28,13 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       aria-label={project.title}
       className="group/card relative grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-8 items-start border border-border hover:border-foreground/30 rounded-[12px] p-4 md:p-5 cursor-pointer transition-[border-color,transform,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] motion-safe:hover:-translate-y-1 motion-safe:hover:shadow-lg motion-safe:focus-visible:-translate-y-1 motion-safe:focus-visible:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
     >
-      {/* Project Title - Mobile only, shown at top */}
+      {/* Project Title + summary - Mobile only, shown at top (no hover on
+          touch, so the summary is plain text under the title here). */}
       <div className="md:hidden">
         <span className={TITLE_CLASS}>{project.title}</span>
+        <p className="font-text text-sm leading-relaxed text-foreground/70 mt-1.5 text-pretty">
+          {project.description}
+        </p>
       </div>
 
       {/* Image - Left side. Curtain reveal wipes it in on scroll; subtle zoom on
@@ -48,11 +52,13 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             sizes="(max-width: 768px) 100vw, min(80vw, 1080px)"
           />
         </div>
-        {/* Summary reveal: fades in over a bottom gradient on hover/focus;
-            always visible on touch devices (no hover). Decorative overlay, so
+        {/* Summary reveal (desktop only): fades in over a tall brand-orange
+            gradient on hover/focus. Deep red at the base keeps the off-white
+            text legible; fades up through orange. Mobile shows the summary as
+            plain text under the title instead (block above). Decorative, so
             pointer-events-none keeps the whole card clickable. */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 p-4 sm:p-5 bg-gradient-to-t from-foreground/90 via-foreground/55 to-transparent opacity-0 ease-[cubic-bezier(0.16,1,0.3,1)] motion-safe:transition-opacity motion-safe:duration-500 group-hover/card:opacity-100 group-focus-visible/card:opacity-100 [@media(hover:none)]:opacity-100">
-          <p className="font-text text-sm leading-relaxed text-background line-clamp-3 text-pretty">
+        <div className="hidden md:flex items-end pointer-events-none absolute inset-x-0 bottom-0 h-2/3 p-4 sm:p-5 bg-linear-to-t from-[#6e0e00] via-primary/70 to-transparent opacity-0 ease-[cubic-bezier(0.16,1,0.3,1)] motion-safe:transition-opacity motion-safe:duration-500 group-hover/card:opacity-100 group-focus-visible/card:opacity-100">
+          <p className="font-text text-sm md:text-base leading-relaxed text-primary-foreground line-clamp-4 text-pretty">
             {project.description}
           </p>
         </div>

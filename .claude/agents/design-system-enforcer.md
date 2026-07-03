@@ -124,13 +124,16 @@ flex flex-col md:flex-row md:justify-between gap-6 sm:gap-8
 No mono index number, and no orange overlay filter on the card image. Title
 sits below the image on desktop (`md:col-span-3`) and above it on mobile; the
 mono labels (_role/_date/_category) + tech tags live in the right meta column.
-The **project description is NOT static** — it fades in over a bottom gradient
-on the image on hover/focus (`opacity-0 group-hover/card:opacity-100
-group-focus-visible/card:opacity-100 [@media(hover:none)]:opacity-100`,
-`pointer-events-none`, `text-background` on `from-foreground/90` gradient,
-`line-clamp-3`, `motion-safe:transition-opacity`). This is the one sanctioned
-hover-reveal (see the card note in hover-affordances-minimal memory); do not
-add other hover-revealed text.
+The **project description is NOT static on desktop** — it fades in over a tall
+brand-orange gradient on hover/focus (`hidden md:flex items-end`,
+`absolute inset-x-0 bottom-0 h-2/3`, `bg-linear-to-t from-[#6e0e00]
+via-primary/70 to-transparent` — deep brand red at the base keeps the
+`text-primary-foreground` legible — `opacity-0 group-hover/card:opacity-100
+group-focus-visible/card:opacity-100`, `pointer-events-none`, `line-clamp-4`,
+`motion-safe:transition-opacity`). On mobile/touch there is NO gradient: the
+summary is plain text under the title in the `md:hidden` block. This is the one
+sanctioned hover-reveal (see the card note in hover-affordances-minimal
+memory); do not add other hover-revealed text.
 
 **Project showcase (walkthrough rows, project-showcase.tsx):** sits on a
 full-width `bg-secondary` (beige) band and stands in for the Approach/
