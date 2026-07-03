@@ -173,12 +173,11 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
           <div className="flex flex-col md:flex-row md:justify-between gap-6 sm:gap-8">
             {/* Content - Left side */}
             <div className="md:max-w-[65%] order-2 md:order-1">
-              <DetailSection title="Overview">
-                <BodyText>{project.overview}</BodyText>
-              </DetailSection>
-
-              <DetailSection title="The Problem">
-                <BodyText>{project.problem}</BodyText>
+              <DetailSection title="The Challenge">
+                <div className="space-y-4">
+                  <BodyText>{project.overview}</BodyText>
+                  <BodyText>{project.problem}</BodyText>
+                </div>
               </DetailSection>
 
               {/* When a project has a visual walkthrough (below), the showcase

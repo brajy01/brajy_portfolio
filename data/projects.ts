@@ -72,7 +72,7 @@ export const projects: Project[] = [
       "CROPIA is a data tool I built to run the picking operation of a 400+ tonne strawberry farm: tracking harvest volumes and picker productivity across a 50+ person seasonal team, with forecasting to project end-of-season output and feed planting decisions for the following year.",
     heroMesh: "full",
     overview:
-      "I was managing the operation, and the existing tracking (spreadsheets and Notion) could not keep up with the volume of daily harvest and labour data. I built CROPIA, an end-to-end tool to centralise that data, make it queryable, and forecast where the season was heading, so planning stopped relying on manual tallies.",
+      "I was managing the operation, and spreadsheets and Notion could not keep up with the volume of daily harvest and labour data. The goal was to centralise that data, make it queryable, and forecast where the season was heading, so planning stopped relying on manual tallies.",
     technologies: ["Python (Pandas, NumPy)", "SQL", "React"],
     problem:
       "Daily picking produced a lot of data (volumes per picker, per plot, per day, plus labour) spread across disconnected spreadsheets. There was no quick way to see who was productive, how each plot was yielding, or where the season would land.",
@@ -107,7 +107,7 @@ export const projects: Project[] = [
         "Dashboard Development",
       ],
       date: "March 2026 - Present",
-      liveUrl: "https://www.cropia.fr",
+      liveUrl: "https://www.cropia.fr/dashboard",
     },
   },
   {
@@ -124,14 +124,14 @@ export const projects: Project[] = [
     projectName: "Dental Practice Website - Barbara Freitas",
     role: "Web Designer & SEO",
     heroDescription:
-      "Barbara Freitas is a dental therapist who had no website at all. I built her a clean, trustworthy presence that puts the practice on the map, with SEO that reaches the right patients in search, including the Portuguese-speaking and Brazilian community she serves.",
+      "Barbara Freitas is a dental therapist. I took her from no online presence at all to a calm, trustworthy website that the right patients actually find on Google.",
     heroImage: "/projects/barbara-freitas/hero.jpg",
     heroOverlayMesh: "full",
     overview:
-      "Barbara had no website and relied on word of mouth. The goal was a calm, fast site that puts her practice on the map and, above all, gets found by the right patients in search, including the Portuguese-speaking community she serves.",
+      "Barbara relied entirely on word of mouth. The brief was a calm, fast site that earns trust at a glance and, above all, gets found by the right patients in search, including the Portuguese-speaking and Brazilian community she serves.",
     technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
     problem:
-      "With no website, patients had no way to find Barbara, see her work, or get in touch. And without a professional presence, the practice didn't have the credibility people look for when they pick a dentist.",
+      "Patients had no way to find her, see her work, or get in touch. And without a professional online presence, the practice lacked the credibility people look for when choosing a dentist.",
     approach: [
       "I kept the design calm and clean, so the practice feels professional and easy to trust at a glance",
       "I added a one-tap WhatsApp button: it opens a message that's already written, so the patient just hits send",

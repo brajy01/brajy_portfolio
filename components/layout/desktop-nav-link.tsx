@@ -6,43 +6,33 @@ import { motion, easings } from "@/components/ui/motion";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { cn } from "@/lib/utils";
 
-const SCRAMBLE_CHARS = "abcdefghijklmnopqrstuvwxyz<>/*-_";
-const SCRAMBLE_DURATION = 360; // ms
-const SCRAMBLE_TICK = 30; // ms
+const REVEAL_DURATION = 360; // ms
+const REVEAL_TICK = 30; // ms
 
-/* Decoder effect: fires once per `trigger` bump. The characters shuffle
-   (left to right) before settling on `target`; the trailing "_" cursor stays
-   put. Returns the frame to display, or null when settled / not running. */
-function useScrambleFrame(target: string, trigger: number) {
+/* Typewriter reveal: fires once per `trigger` bump. `target` ends with a "_"
+   cursor; its letters type out one at a time (left to right) while the cursor
+   follows the frontier and settles at the end. Returns the frame to display,
+   or null when settled / not running. */
+function useRevealFrame(target: string, trigger: number) {
   const [frame, setFrame] = useState<string | null>(null);
 
   useEffect(() => {
-    if (trigger === 0) return; // no scramble on mount, only on hover/focus
+    if (trigger === 0) return; // no reveal on mount, only on hover/focus
 
+    const letters = target.slice(0, -1); // drop the trailing "_" cursor
     const start = performance.now();
     const run = () => {
-      const progress = (performance.now() - start) / SCRAMBLE_DURATION;
+      const progress = (performance.now() - start) / REVEAL_DURATION;
       if (progress >= 1) {
         window.clearInterval(interval);
         setFrame(null);
         return;
       }
-      setFrame(
-        target
-          .split("")
-          .map((char, i) =>
-            // keep the trailing "_" cursor stable; decode letters in order
-            i === target.length - 1 || progress > (i + 1) / target.length
-              ? char
-              : SCRAMBLE_CHARS[
-                  Math.floor(Math.random() * SCRAMBLE_CHARS.length)
-                ],
-          )
-          .join(""),
-      );
+      const shown = Math.floor(progress * letters.length);
+      setFrame(`${letters.slice(0, shown)}_`); // typed letters + moving cursor
     };
     run();
-    const interval = window.setInterval(run, SCRAMBLE_TICK);
+    const interval = window.setInterval(run, REVEAL_TICK);
     return () => window.clearInterval(interval);
   }, [trigger, target]);
 
@@ -68,16 +58,16 @@ export default function DesktopNavLink({
   onPillRelease,
 }: DesktopNavLinkProps) {
   const prefersReducedMotion = useReducedMotion();
-  const [scrambleTick, setScrambleTick] = useState(0);
+  const [revealTick, setRevealTick] = useState(0);
   const monoLabel = `${label.toLowerCase()}_`;
-  const scrambleFrame = useScrambleFrame(monoLabel, scrambleTick);
-  const shown = hasPill ? (scrambleFrame ?? monoLabel) : label;
+  const revealFrame = useRevealFrame(monoLabel, revealTick);
+  const shown = hasPill ? (revealFrame ?? monoLabel) : label;
 
-  // Scramble only when the pill is *arriving* via hover/focus — not when this
+  // Reveal only when the pill is *arriving* via hover/focus — not when this
   // link is already pilled (e.g. clicking the link the pill is already on).
   const armPill = () => {
     if (!hasPill && !prefersReducedMotion) {
-      setScrambleTick((tick) => tick + 1);
+      setRevealTick((tick) => tick + 1);
     }
     onPillTarget();
   };
