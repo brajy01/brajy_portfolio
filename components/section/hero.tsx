@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { motion, easings, useScroll, useTransform } from "@/components/ui/motion";
+import { motion, easings } from "@/components/ui/motion";
 import { cn } from "@/lib/utils";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import HeroBackground from "@/components/ui/hero-background";
@@ -158,32 +158,16 @@ function HeroCta() {
 export default function Hero() {
   const prefersReducedMotion = useReducedMotion();
 
-  // Content gently fades/slides as the hero scrolls away (no pinning).
-  const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  });
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
-  const contentY = useTransform(scrollYProgress, [0, 0.7], [0, -40]);
-
   return (
     <section
-      ref={sectionRef}
       className="relative overflow-hidden min-h-auto sm:min-h-[calc(100dvh-var(--header-height))] flex section-x py-12 sm:py-16 md:py-20 bg-primary"
       role="region"
       aria-labelledby="hero-title"
     >
       <HeroBackground />
-      <motion.div
-        className="relative z-10 section-container flex flex-col justify-between gap-10 sm:gap-12"
-        style={
-          prefersReducedMotion
-            ? undefined
-            : { opacity: contentOpacity, y: contentY }
-        }
-      >
-        <div className="sm:my-auto">
+      <div className="relative z-10 section-container flex flex-col justify-between gap-10 sm:gap-12">
+        {/* Group 1: kicker + headline */}
+        <div>
           <MaskedReveal>
             <p className="font-caption text-sm sm:text-base text-primary-foreground">
               _hello world, I&apos;m Jeremy
@@ -204,15 +188,18 @@ export default function Hero() {
               </span>
             </MaskedReveal>
           </h1>
+        </div>
 
-          <MaskedReveal delay={0.3} className="mt-5 sm:mt-7">
+        {/* Group 2: tagline + profile pills */}
+        <div>
+          <MaskedReveal delay={0.3} className="text-center">
             <p className="font-caption text-sm sm:text-base md:text-lg text-primary-foreground">
               Operations &times; Data &times; Code
             </p>
           </MaskedReveal>
 
           <motion.ul
-            className="flex flex-wrap gap-2 sm:gap-3 mt-6 sm:mt-8"
+            className="flex flex-wrap justify-center gap-2 sm:gap-3 mt-6 sm:mt-8"
             aria-label="Profile highlights"
             initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -229,10 +216,11 @@ export default function Hero() {
           </motion.ul>
         </div>
 
+        {/* Group 3: CTA */}
         <div className="flex justify-end">
           <HeroCta />
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

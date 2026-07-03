@@ -20,7 +20,7 @@ export default function LatestProjects() {
             rightText={`_${new Date().getFullYear()}`}
             headingId="latest-projects-title"
             className="mb-0 pb-4 md:pb-6"
-            headingClassName="text-4xl md:text-5xl"
+            headingClassName="text-4xl md:text-5xl text-foreground"
           />
         </AnimateOnScroll>
 
