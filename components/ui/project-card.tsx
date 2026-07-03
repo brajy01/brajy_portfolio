@@ -76,10 +76,17 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         </div>
       </div>
 
-      {/* Project Title + description - Desktop only, shown below image */}
-      <div className="hidden md:block md:col-span-3 mt-3 md:mt-4 self-end">
-        <span className={`${TITLE_CLASS} md:text-xl`}>{project.title}</span>
-        <p className={DESC_CLASS}>{project.description}</p>
+      {/* Desktop only, below the image: title left, description right so the
+          text fills the width and doesn't stack awkwardly under the title. */}
+      <div className="hidden md:block md:col-span-5 mt-3 md:mt-4">
+        <div className="flex justify-between items-start gap-8">
+          <div className="max-w-[55%]">
+            <span className={`${TITLE_CLASS} md:text-xl`}>{project.title}</span>
+          </div>
+          <p className="font-text text-sm leading-relaxed text-foreground/70 max-w-[42ch] text-pretty">
+            {project.description}
+          </p>
+        </div>
       </div>
     </Link>
   );

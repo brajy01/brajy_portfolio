@@ -130,7 +130,7 @@ export const projects: Project[] = [
     heroImage: "/projects/barbara-freitas/hero.jpg",
     heroOverlayMesh: "full",
     overview:
-      "Barbara had no website and relied on word of mouth. The goal was a clean, fast site that presents her practice clearly and, above all, gets found by the right patients in search, including the Portuguese-speaking community she serves. I kept the design calm and trustworthy, added a before-and-after gallery so her work speaks for itself, and a one-tap WhatsApp contact so enquiries land directly with her.",
+      "Barbara had no website and relied on word of mouth. The goal was a calm, fast site that puts her practice on the map and, above all, gets found by the right patients in search, including the Portuguese-speaking community she serves.",
     technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
     problem:
       "With no website, patients on the Isle of Man had no way to find Barbara, see her work, or get in touch. And without a professional presence, the practice didn't have the credibility people look for when they pick a dentist.",
@@ -148,7 +148,6 @@ export const projects: Project[] = [
     ],
     impact: [
       "She went from no website at all to a real, findable online presence",
-      "Patients now reach her straight from the site, in a single tap",
       "The SEO reaches the right audience: she has had enquiries from patients, including Brazilian patients, who found the practice through search",
       "The practice finally looks as professional online as Barbara is in person",
     ],
@@ -174,7 +173,7 @@ export const projects: Project[] = [
       {
         label: "seo",
         title: "Found by the right patients",
-        body: "Local SEO plus Portuguese-language optimisation, so the community she serves actually finds her on Google. Enquiries now come in from patients, including Brazilian patients, who found the practice through search.",
+        body: "Local SEO plus Portuguese-language optimisation, so the community she serves actually finds her on Google.",
       },
       {
         label: "contact",

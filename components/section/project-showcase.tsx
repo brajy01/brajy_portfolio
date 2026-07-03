@@ -2,6 +2,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import AnimateOnScroll from "@/components/ui/animate-on-scroll";
 import BrowserFrame from "@/components/ui/browser-frame";
+import Lightbox from "@/components/ui/lightbox";
 import type { ShowcaseItem } from "@/data/projects";
 
 interface ProjectShowcaseProps {
@@ -74,13 +75,18 @@ export default function ProjectShowcase({
                 <AnimateOnScroll variant="curtain" className="flex-1 min-w-0">
                   <figure>
                     <BrowserFrame url={item.url}>
-                      <Image
+                      <Lightbox
                         src={item.image}
                         alt={item.imageAlt ?? `${projectName} - ${item.title}`}
-                        fill
-                        className="object-cover object-top"
-                        sizes="(max-width: 768px) 100vw, min(70vw, 1000px)"
-                      />
+                      >
+                        <Image
+                          src={item.image}
+                          alt=""
+                          fill
+                          className="object-cover object-top"
+                          sizes="(max-width: 768px) 100vw, min(70vw, 1000px)"
+                        />
+                      </Lightbox>
                     </BrowserFrame>
                     <figcaption className="sr-only">{item.title}</figcaption>
                   </figure>

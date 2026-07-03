@@ -120,10 +120,12 @@ flex flex-col md:flex-row md:justify-between gap-6 sm:gap-8
 `grid grid-cols-2 gap-4 md:flex md:flex-col md:space-y-6 md:gap-0 sm:gap-6`
 
 **Project card grid (cards ONLY):** `grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-8`
-(image `md:col-span-4`, title+description cell `md:col-span-3`; the one-line
-description under the title uses `font-text text-sm text-foreground/70 mt-1.5
-max-w-[52ch]`; card image heights `h-64 sm:h-80 md:h-[400px] lg:h-[460px]`).
-No mono index number on cards.
+(image `md:col-span-4`; card image heights `h-64 sm:h-80 md:h-[400px] lg:h-[460px]`).
+No mono index number on cards. Below the image the desktop footer spans
+`md:col-span-5` as a two-column row (`flex justify-between items-start gap-8`):
+title left (in a wrapper div so the `<span>` keeps `display:inline` for the
+wrap-underline), description right (`font-text text-sm text-foreground/70
+max-w-[42ch] text-pretty`). Mobile stacks title then description.
 
 **Project showcase (walkthrough rows, project-showcase.tsx):** sits on a
 full-width `bg-secondary` (beige) band and stands in for the Approach/
@@ -174,6 +176,17 @@ Never add multi-MB image exports for decorative gradients.
 
 **Blinking cursor:** the `_` after display titles uses the shared
 `.blink-cursor` utility (CSS keyframe, disabled under reduced motion).
+
+**Lightbox (components/ui/lightbox.tsx):** real project screenshots (the
+walkthrough images) are click-to-zoom. It wraps the thumbnail in an
+`absolute inset-0` trigger button (so it works inside a `fill`/aspect
+container like `BrowserFrame`) and opens a `role="dialog"` `aria-modal`
+overlay reusing the mobile-menu pattern (mount + double-rAF fade, body scroll
+lock, Escape, focus trap, focus restore; fade skipped under reduced motion).
+"Not downloadable" is best-effort only (no download affordance,
+`onContextMenu` prevented, `draggable={false}`, `select-none`) — public image
+files can still be screenshotted or pulled from the network tab; never claim
+true protection.
 
 **External Links:**
 `font-caption text-sm sm:text-base hover:text-foreground underline transition-colors inline-flex items-center gap-1`
