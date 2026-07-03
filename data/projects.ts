@@ -115,7 +115,7 @@ export const projects: Project[] = [
     title: "Dental Practice Website - Barbara Freitas",
     slug: "barbara-freitas",
     description:
-      "Website and SEO for Dr. Barbara Freitas, a dental therapist on the Isle of Man who had no online presence",
+      "Website and SEO for Dr. Barbara Freitas, a dental therapist who had no online presence",
     image: "/projects/barbara-freitas/homepage.jpg",
     tags: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
     category: "Design",
@@ -124,19 +124,19 @@ export const projects: Project[] = [
     projectName: "Dental Practice Website - Barbara Freitas",
     role: "Web Designer & SEO",
     heroDescription:
-      "Barbara Freitas is a dental therapist on the Isle of Man who had no website at all. I built her a clean, trustworthy presence that puts the practice on the map, with SEO that reaches the right patients in search, including the Portuguese-speaking and Brazilian community she serves.",
+      "Barbara Freitas is a dental therapist who had no website at all. I built her a clean, trustworthy presence that puts the practice on the map, with SEO that reaches the right patients in search, including the Portuguese-speaking and Brazilian community she serves.",
     heroImage: "/projects/barbara-freitas/hero.jpg",
     heroOverlayMesh: "full",
     overview:
       "Barbara had no website and relied on word of mouth. The goal was a calm, fast site that puts her practice on the map and, above all, gets found by the right patients in search, including the Portuguese-speaking community she serves.",
     technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
     problem:
-      "With no website, patients on the Isle of Man had no way to find Barbara, see her work, or get in touch. And without a professional presence, the practice didn't have the credibility people look for when they pick a dentist.",
+      "With no website, patients had no way to find Barbara, see her work, or get in touch. And without a professional presence, the practice didn't have the credibility people look for when they pick a dentist.",
     approach: [
       "I kept the design calm and clean, so the practice feels professional and easy to trust at a glance",
       "I added a one-tap WhatsApp button: it opens a message that's already written, so the patient just hits send",
       "I built a before-and-after gallery of real treatments to let her work speak for itself",
-      "I tuned the SEO, including Portuguese-language optimisation, so the right patients on the island actually find her on Google",
+      "I tuned the SEO, including Portuguese-language optimisation, so the right patients actually find her on Google",
     ],
     deliverables: [
       "A responsive site with the pages she needed: home, services, about and contact",
