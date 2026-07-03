@@ -68,7 +68,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       {/* Right side content */}
       <div className="flex flex-col justify-between h-full">
         {/* Top labels - Right aligned, sorted longest→shortest */}
-        <div className="text-left md:text-right space-y-1 text-foreground font-caption">
+        <div className="text-left md:text-right space-y-1 text-foreground font-caption text-xs sm:text-sm">
           {labels.map((label) => (
             <p key={label}>{label}</p>
           ))}
@@ -77,7 +77,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         {/* Bottom tags - Right aligned, sorted shortest→longest */}
         <div className="text-right space-y-1">
           {sortedTags.map((tag) => (
-            <p key={tag} className="font-caption text-primary">
+            <p key={tag} className="font-caption text-primary text-xs sm:text-sm">
               {tag}
             </p>
           ))}
