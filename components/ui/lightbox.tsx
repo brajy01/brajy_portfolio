@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import { X } from "lucide-react";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
@@ -113,21 +114,26 @@ export default function Lightbox({ src, alt, children }: LightboxProps) {
         {children}
       </button>
 
-      {isMounted && (
-        <div
-          ref={dialogRef}
-          role="dialog"
-          aria-modal="true"
-          aria-label={alt}
-          onClick={close}
-          onContextMenu={preventContext}
-          onTransitionEnd={handleTransitionEnd}
-          className={`fixed inset-0 z-60 flex items-center justify-center bg-foreground/80 p-4 sm:p-8 ${
-            prefersReducedMotion
-              ? ""
-              : "transition-opacity duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
-          } ${isAnimatingIn ? "opacity-100" : "opacity-0"}`}
-        >
+      {/* Portal to <body>: the trigger sits inside the curtain-reveal wrapper,
+          whose clip-path establishes a containing block that would trap and
+          clip a `position: fixed` overlay. Rendering into body escapes it. */}
+      {isMounted &&
+        typeof document !== "undefined" &&
+        createPortal(
+          <div
+            ref={dialogRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label={alt}
+            onClick={close}
+            onContextMenu={preventContext}
+            onTransitionEnd={handleTransitionEnd}
+            className={`fixed inset-0 z-60 flex items-center justify-center bg-foreground/80 p-4 sm:p-8 ${
+              prefersReducedMotion
+                ? ""
+                : "transition-opacity duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
+            } ${isAnimatingIn ? "opacity-100" : "opacity-0"}`}
+          >
           <button
             type="button"
             onClick={close}
@@ -152,8 +158,9 @@ export default function Lightbox({ src, alt, children }: LightboxProps) {
               className="object-contain pointer-events-none"
             />
           </div>
-        </div>
-      )}
+        </div>,
+          document.body,
+        )}
     </>
   );
 }
