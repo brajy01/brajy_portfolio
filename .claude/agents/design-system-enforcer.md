@@ -131,7 +131,9 @@ via-primary/70 to-transparent` — deep brand red at the base keeps the
 `text-primary-foreground` legible — `opacity-0 group-hover/card:opacity-100
 group-focus-visible/card:opacity-100`, `pointer-events-none`, `line-clamp-4`,
 `motion-safe:transition-opacity`). On mobile/touch there is NO gradient: the
-summary is plain text under the title in the `md:hidden` block. This is the one
+summary is plain text under the title in the `md:hidden` block, where the title
+is `text-primary` (orange) by default so it stands out from the summary
+(desktop title stays foreground and turns orange on hover). This is the one
 sanctioned hover-reveal (see the card note in hover-affordances-minimal
 memory); do not add other hover-revealed text.
 

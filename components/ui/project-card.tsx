@@ -29,9 +29,10 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       className="group/card relative grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-8 items-start border border-border hover:border-foreground/30 rounded-[12px] p-4 md:p-5 cursor-pointer transition-[border-color,transform,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] motion-safe:hover:-translate-y-1 motion-safe:hover:shadow-lg motion-safe:focus-visible:-translate-y-1 motion-safe:focus-visible:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
     >
       {/* Project Title + summary - Mobile only, shown at top (no hover on
-          touch, so the summary is plain text under the title here). */}
+          touch, so the summary is plain text under the title here). Title is
+          orange by default on mobile so it stands out from the summary. */}
       <div className="md:hidden">
-        <span className={TITLE_CLASS}>{project.title}</span>
+        <span className={`${TITLE_CLASS} text-primary`}>{project.title}</span>
         <p className="font-text text-sm leading-relaxed text-foreground/70 mt-1.5 text-pretty">
           {project.description}
         </p>
