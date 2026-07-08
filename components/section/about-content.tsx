@@ -30,196 +30,193 @@ interface EducationEntry {
 }
 
 const experiences: ExperienceEntry[] = [
-    {
-      id: 1,
-      position: "Operations Analytics — Independent Project",
-      company: "Brajy (self-directed)",
-      period: "Feb. 2025 - Present",
-      highlights: [
-        "Building an end-to-end analytics and management tool for the 400+ tonne/year fruit production business I previously ran",
-        "Consolidated legacy sources (Excel, Notion, paper) into one structured dataset, cleaning 10 years of inconsistent production records",
-        "Built a daily operational dashboard tracking harvests, sales and projected stock",
-        "Set up KPI tracking for yield, labour productivity and cost/margin by variety",
-        "Developed a harvest forecast model combining theoretical yield curves from plant suppliers with historical field performance",
-      ],
-      skills: [
-        {
-          category: "Data & Analytics",
-          items: [
-            "Python (Pandas, NumPy)",
-            "SQL (PostgreSQL)",
-            "Time Series Forecasting",
-            "KPI Development",
-            "Power BI (in progress)",
-          ],
-        },
-        {
-          category: "Web Development",
-          items: ["React", "Next.js", "TypeScript"],
-        },
-      ],
-    },
-    {
-      id: 2,
-      position: "Sales & Operations Manager",
-      company: "Etablissement Brajon Frères — Cendrieux, France",
-      period: "Jan. 2021 - Jan. 2025",
-      highlights: [
-        "Managed data-driven operations for 50+ international seasonal employees during peak production (400+ tonnes strawberries/year)",
-        "Developed comprehensive tracking systems using Google Sheets and Notion for real-time inventory management and KPI dashboards",
-        "Reduced manual administrative work through automation tools (AppSheet, Notion) for scheduling, workforce tracking and stock monitoring",
-        "Conducted yield analysis, cost modelling, and pricing strategies with major retailers (Système U, Grand Frais)",
-        "Realised that operational problems require better data systems, which sparked the transition to Business Intelligence",
-      ],
-      skills: [
-        {
-          category: "Data & Analytics",
-          items: [
-            "Excel (Advanced)",
-            "Data Visualisation",
-            "KPI Development",
-            "Exploratory Data Analysis",
-          ],
-        },
-        {
-          category: "Business & Operations",
-          items: [
-            "Data-Driven Operations",
-            "Cost Modeling",
-            "Supply Chain Analytics",
-            "Process Automation",
-            "Performance Metrics",
-          ],
-        },
-      ],
-    },
-    {
-      id: 3,
-      position: "Technical Recruiter",
-      company: "Maltem Consulting Group — Brussels, Belgium",
-      period: "Dec. 2019 - Dec. 2020",
-      highlights: [
-        "Managed full recruitment lifecycle for technical profiles (data, development roles) across banking, insurance and public institutions",
-        "Conducted technical screening and competency assessments for IT positions",
-        "Coordinated international recruitment interviews in English and Portuguese",
-        "Developed deep understanding of tech skills requirements and what companies actually look for in data/dev roles",
-        "Built expertise in identifying talent gaps and technical competencies",
-      ],
-      skills: [
-        {
-          category: "Business & Operations",
-          items: [
-            "Stakeholder Management",
-            "Problem Framing",
-            "International Business",
-          ],
-        },
-        {
-          category: "Languages & Communication",
-          items: [
-            "English (C1)",
-            "Portuguese (C1)",
-            "Multilingual Business Communication",
-          ],
-        },
-      ],
-    },
-    {
-      id: 4,
-      position: "English Language Instructor",
-      company: "Uptime — Uberlândia, Brazil",
-      period: "Apr. 2019 - Oct. 2019",
-      highlights: [
-        "Delivered customised training programmes using data-driven teaching methodology and performance tracking",
-        "Applied cross-cultural communication strategies in international immersion environment (Brazil)",
-        "Developed Portuguese language proficiency and deep understanding of Brazilian business culture",
-        "Built foundation for multilingual professional positioning (FR/EN/PT/ES)",
-      ],
-      skills: [
-        {
-          category: "Languages & Communication",
-          items: [
-            "French (Native)",
-            "Spanish (B2)",
-            "Cross-Cultural Management",
-            "Presentation",
-          ],
-        },
-      ],
-    },
-  ];
+  {
+    id: 1,
+    position: "Operations Analytics — Independent Project",
+    company: "Brajy (self-directed)",
+    period: "Feb. 2025 - Present",
+    highlights: [
+      "Building an end-to-end analytics and management tool for the fruit production business I previously ran",
+      "Consolidated legacy sources (Excel, Notion, paper) into one structured dataset, cleaning 10 years of inconsistent production records",
+      "Built a daily operational dashboard tracking harvests, sales and projected stock",
+      "Set up KPI tracking for yield and labour productivity",
+      "Developed a harvest forecast model combining theoretical yield curves from plant suppliers with historical field performance",
+    ],
+    skills: [
+      {
+        category: "Data & Analytics",
+        items: [
+          "Python (Pandas, NumPy)",
+          "SQL (PostgreSQL)",
+          "Time Series Forecasting",
+          "KPI Development",
+          "Power BI (in progress)",
+        ],
+      },
+      {
+        category: "Web Development",
+        items: ["React", "Next.js", "TypeScript"],
+      },
+    ],
+  },
+  {
+    id: 2,
+    position: "Sales & Operations Manager",
+    company: "Etablissement Brajon Frères — Cendrieux, France",
+    period: "Jan. 2021 - Jan. 2025",
+    highlights: [
+      "Managed operations and a 50-person international seasonal team through peak production (400+ tonnes strawberries, 40+ tonnes raspberries a year)",
+      "Set up shared tracking in Google Sheets and Notion, updated twice daily, so the whole team worked from the same live stock and harvest figures instead of paper",
+      "Automated scheduling, workforce tracking and stock monitoring with connected Google tools (AppSheet)",
+      "Negotiated daily prices and volumes with retail buyers (Système U, Grand Frais)",
+      "Saw operational problems come down to better data systems, which sparked my move into data and BI",
+    ],
+    skills: [
+      {
+        category: "Data & Analytics",
+        items: [
+          "Excel (Advanced)",
+          "Data Visualisation",
+          "KPI Development",
+          "Exploratory Data Analysis",
+        ],
+      },
+      {
+        category: "Business & Operations",
+        items: [
+          "Data-Driven Operations",
+          "Cost Modeling",
+          "Supply Chain Analytics",
+          "Process Automation",
+          "Performance Metrics",
+        ],
+      },
+    ],
+  },
+  {
+    id: 3,
+    position: "Technical Recruiter",
+    company: "Maltem Consulting Group — Brussels, Belgium",
+    period: "Dec. 2019 - Dec. 2020",
+    highlights: [
+      "Ran full-cycle recruitment for technical profiles (data and dev) across banking, insurance and public sectors in Brussels",
+      "Screened candidates on soft skills and whether they could explain their technical work simply enough for a client to follow",
+      "Ran international interviews in English and Portuguese",
+      "Came in with no technical background, so I started learning Python on my own to understand the roles I was hiring for",
+    ],
+    skills: [
+      {
+        category: "Business & Operations",
+        items: [
+          "Stakeholder Management",
+          "Problem Framing",
+          "International Business",
+        ],
+      },
+      {
+        category: "Languages & Communication",
+        items: [
+          "English (C1)",
+          "Portuguese (C1)",
+          "Multilingual Business Communication",
+        ],
+      },
+    ],
+  },
+  {
+    id: 4,
+    position: "English Language Instructor",
+    company: "Uptime — Uberlândia, Brazil",
+    period: "Apr. 2019 - Oct. 2019",
+    highlights: [
+      "Taught English to adult learners, adapting to each student's level and goals",
+      "Six months living and working in Brazil, becoming fluent in Portuguese",
+    ],
+    skills: [
+      {
+        category: "Languages & Communication",
+        items: [
+          "French (Native)",
+          "Spanish (B2)",
+          "Cross-Cultural Management",
+          "Presentation",
+        ],
+      },
+    ],
+  },
+];
 
 const education: EducationEntry[] = [
-    {
-      id: 1,
-      program: "Microsoft Certification - Power BI Data Analyst Associate",
-      institution: "Microsoft",
-      period: "Started June 2026",
-      highlights: [
-        "Data preparation and modelling, DAX and Power Query",
-        "Report and dashboard design",
-      ],
-      skills: ["Power BI", "DAX", "Power Query", "Data Modelling"],
-    },
-    {
-      id: 2,
-      program: "Data Science & Machine Learning Path",
-      institution: "Kaggle Learn",
-      period: "2025",
-      highlights: [
-        "Python & Pandas for data manipulation, cleaning and analysis",
-        "SQL from basic queries to advanced optimisation (BigQuery)",
-        "Data visualisation for clear, impactful charts and plots",
-        "Machine learning: supervised models, feature engineering, handling missing data and leakage",
-      ],
-      skills: [
-        "Python (Pandas, NumPy)",
-        "SQL",
-        "Data Visualisation",
-        "Machine Learning",
-      ],
-    },
-    {
-      id: 3,
-      program: "Full-Stack JavaScript — Web Development Bootcamp",
-      institution: "O'CLOCK School",
-      period: "2024",
-      highlights: [
-        "Frontend: JavaScript (ES6+), React, Tailwind CSS",
-        "Backend: Node.js, Express.js, PostgreSQL, REST APIs",
-        "Git, Agile methodology, CI/CD basics and unit testing",
-        "Full-stack applications with team collaboration and code reviews",
-      ],
-      skills: [
-        "JavaScript (ES6+)",
-        "React",
-        "Tailwind CSS",
-        "Node.js",
-        "Express.js",
-        "PostgreSQL",
-        "REST APIs",
-        "Git",
-      ],
-    },
-    {
-      id: 4,
-      program:
-        "Bachelor's Degree — Applied Foreign Languages for International Trade",
-      institution: "Université de Limoges",
-      period: "2012 - 2015",
-      highlights: [
-        "International trade: import/export operations, trade regulations, negotiation",
-        "Business & economics: marketing, management, international economics",
-        "Languages, intercultural communication and professional translation",
-      ],
-      skills: [
-        "International Trade",
-        "Negotiation",
-        "Cross-Cultural Communication",
-        "Translation",
-      ],
-    },
-  ];
+  {
+    id: 1,
+    program: "Microsoft Certification - Power BI Data Analyst Associate",
+    institution: "Microsoft",
+    period: "Started June 2026",
+    highlights: [
+      "Data preparation and modelling, DAX and Power Query",
+      "Report and dashboard design",
+    ],
+    skills: ["Power BI", "DAX", "Power Query", "Data Modelling"],
+  },
+  {
+    id: 2,
+    program: "Data Science & Machine Learning Path",
+    institution: "Kaggle Learn",
+    period: "2025",
+    highlights: [
+      "Python & Pandas for data manipulation, cleaning and analysis",
+      "SQL from basic queries to advanced optimisation (BigQuery)",
+      "Data visualisation for clear, impactful charts and plots",
+      "Machine learning: supervised models, feature engineering, handling missing data and leakage",
+    ],
+    skills: [
+      "Python (Pandas, NumPy)",
+      "SQL",
+      "Data Visualisation",
+      "Machine Learning",
+    ],
+  },
+  {
+    id: 3,
+    program: "Full-Stack JavaScript — Web Development Bootcamp",
+    institution: "O'CLOCK School",
+    period: "2024",
+    highlights: [
+      "Frontend: JavaScript (ES6+), React, Tailwind CSS",
+      "Backend: Node.js, Express.js, PostgreSQL, REST APIs",
+      "Git, Agile methodology, CI/CD basics and unit testing",
+      "Full-stack applications with team collaboration and code reviews",
+    ],
+    skills: [
+      "JavaScript (ES6+)",
+      "React",
+      "Tailwind CSS",
+      "Node.js",
+      "Express.js",
+      "PostgreSQL",
+      "REST APIs",
+      "Git",
+    ],
+  },
+  {
+    id: 4,
+    program:
+      "Bachelor's Degree — Applied Foreign Languages for International Trade",
+    institution: "Université de Limoges",
+    period: "2012 - 2015",
+    highlights: [
+      "International trade: import/export operations, trade regulations, negotiation",
+      "Business & economics: marketing, management, international economics",
+      "Languages, intercultural communication and professional translation",
+    ],
+    skills: [
+      "International Trade",
+      "Negotiation",
+      "Cross-Cultural Communication",
+      "Translation",
+    ],
+  },
+];
 
 /** One entry in the experience/education timeline: title, caption, highlights and skill groups. */
 function TimelineEntry({
@@ -282,28 +279,41 @@ export default function AboutContent() {
   return (
     <>
       {/* Hero Section */}
-      <section className="py-20 md:py-28 section-x">
+      <section className="min-h-auto sm:min-h-[calc(100dvh-var(--header-height))] flex flex-col justify-start sm:justify-center section-x py-12 sm:py-16 md:py-20">
         <div className="section-container">
           <AnimateOnScroll>
             <SectionHeading
               title="About Me"
-              subtitle="From operations to building what matters"
+              subtitle="From running the operation to building the systems behind it"
               rightText="_hello world"
             />
           </AnimateOnScroll>
 
           <AnimateOnScroll delay={100}>
             <p className="font-text text-base sm:text-lg md:text-xl leading-relaxed text-foreground max-w-4xl text-pretty">
-              I transform operational data into actionable business insights.
-              With 4+ years managing large-scale operations and 50+ person
-              teams, I discovered that data systems solve what processes alone
-              cannot. Now combining deep business acumen with Python, SQL, and
-              analytics to drive smarter decisions. Multilingual (FR/EN/PT/ES)
-              with international experience bridging EU and emerging markets.
+              For four years I was part of the team running my family&apos;s 400+
+              tonne fruit business, managing a 50-person seasonal crew through
+              peak season.
             </p>
           </AnimateOnScroll>
 
           <AnimateOnScroll delay={150}>
+            <p className="font-text text-base sm:text-lg md:text-xl leading-relaxed text-foreground max-w-4xl text-pretty mt-6 sm:mt-8">
+              The same problem kept coming up: data scattered across tools that
+              didn&apos;t talk to each other. So I learned Python, SQL and Power
+              BI, and built a full analytics tool for that same business.
+            </p>
+          </AnimateOnScroll>
+
+          <AnimateOnScroll delay={200}>
+            <p className="font-text text-base sm:text-lg md:text-xl leading-relaxed text-foreground max-w-4xl text-pretty mt-6 sm:mt-8">
+              Having run operations for years and learned to build, I make the
+              tools operations actually needs, and speak the language of the
+              people who use them.
+            </p>
+          </AnimateOnScroll>
+
+          <AnimateOnScroll delay={250}>
             <a
               href="/cv/jeremy-brajon-cv.pdf"
               target="_blank"
