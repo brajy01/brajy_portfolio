@@ -98,12 +98,12 @@ function HeroCta() {
   return (
     <Link
       ref={buttonRef}
-      href="/projects"
+      href="/about"
       className={cn(
         "relative font-caption text-sm sm:text-base md:text-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-foreground rounded inline-block group transition-colors duration-500",
         filled ? "bg-primary-foreground" : "bg-transparent hover:bg-primary-foreground",
       )}
-      aria-label="See selected work"
+      aria-label="Discover my path"
     >
       <motion.span
         initial={prefersReducedMotion ? false : { opacity: 0 }}
@@ -114,7 +114,7 @@ function HeroCta() {
           filled ? "text-primary" : "text-primary-foreground group-hover:text-primary",
         )}
       >
-        see selected work
+        discover my path
         <ArrowUpRight
           aria-hidden="true"
           className="arrow-lift size-4 shrink-0"
