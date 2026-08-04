@@ -60,16 +60,16 @@ export const projects: Project[] = [
     title: "CROPIA - Harvest Operations Dashboard",
     slug: "harvest-operations-dashboard",
     description:
-      "A data tool to run the picking operation of a 400+ tonne strawberry farm, tracking harvest volumes and picker productivity with end-of-season forecasting",
+      "A data tool to run the picking operation of a 440-tonne strawberry and raspberry farm, tracking harvest volumes and picker productivity with end-of-season forecasting",
     imageMesh: "orange",
     tags: ["Python", "SQL", "React", "Forecasting"],
     category: "Development",
     month: "march",
     year: 2026,
     projectName: "CROPIA - Harvest Operations Dashboard",
-    role: "Data Analyst & Full-Stack Developer",
+    role: "Business Analysis & Solution Design",
     heroDescription:
-      "CROPIA is a data tool I built to run the picking operation of a 400+ tonne strawberry farm: tracking harvest volumes and picker productivity across a 50+ person seasonal team, with forecasting to project end-of-season output and feed planting decisions for the following year.",
+      "CROPIA is a data tool I built to run the picking operation of a 440-tonne strawberry and raspberry farm: tracking harvest volumes and picker productivity across a 50+ person seasonal team, with forecasting to project end-of-season output and feed planting decisions for the following year.",
     heroMesh: "full",
     overview:
       "I was managing the operation, and spreadsheets and Notion could not keep up with the volume of daily harvest and labour data. The goal was to centralise that data, make it queryable, and forecast where the season was heading, so planning stopped relying on manual tallies.",
@@ -107,7 +107,7 @@ export const projects: Project[] = [
         "Dashboard Development",
       ],
       date: "March 2026 - Present",
-      liveUrl: "https://www.cropia.fr/dashboard",
+      liveUrl: "https://www.cropia.fr",
     },
   },
   {

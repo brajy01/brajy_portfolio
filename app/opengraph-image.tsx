@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { BrandMark } from "@/components/brand-mark";
 
 // Branded link-preview image (WhatsApp, LinkedIn, iMessage, X, …).
-export const alt = "Brajy · Jeremy Brajon · Operations × Data × Code";
+export const alt = "Brajy · Jeremy Brajon · Operations × Data × Systems";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -32,7 +32,7 @@ export default function Image() {
             Jeremy Brajon
           </div>
           <div style={{ fontSize: 42, color: CREAM, opacity: 0.92, marginTop: 16 }}>
-            Operations × Data × Code
+            Operations × Data × Systems
           </div>
           <div style={{ width: 132, height: 6, background: CREAM, marginTop: 30 }} />
         </div>

@@ -104,16 +104,15 @@ export default function ContactForm() {
           <AnimateOnScroll>
             <SectionHeading
               title="Get In Touch"
-              subtitle="Available for work opportunities"
+              subtitle="Currently looking for Operations & Business Analyst opportunities in the Isle of Man"
               rightText="_let's talk"
             />
           </AnimateOnScroll>
 
           <AnimateOnScroll delay={100}>
             <p className="font-text text-base sm:text-lg md:text-xl leading-relaxed text-foreground max-w-3xl text-pretty">
-              Have a project in mind or want to discuss data analytics, business
-              intelligence, or web development? I&apos;d love to hear from you.
-              Get in touch and let&apos;s explore how we can work together.
+              Whether you&apos;d like to discuss a role, Cropia, or a project
+              you have in mind, I&apos;d love to hear from you.
             </p>
           </AnimateOnScroll>
         </div>

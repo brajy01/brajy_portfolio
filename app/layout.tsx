@@ -28,7 +28,7 @@ const DESCRIPTION =
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Brajy | Operations × Data × Code",
+    default: "Brajy | Operations × Data × Systems",
     template: "%s | Brajy",
   },
   description: DESCRIPTION,
@@ -50,14 +50,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "Brajy",
-    title: "Brajy | Operations × Data × Code",
+    title: "Brajy | Operations × Data × Systems",
     description: DESCRIPTION,
     url: SITE_URL,
     locale: "en",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Brajy | Operations × Data × Code",
+    title: "Brajy | Operations × Data × Systems",
     description: DESCRIPTION,
   },
   robots: {

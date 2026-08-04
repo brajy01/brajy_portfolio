@@ -13,7 +13,12 @@ const HEADLINE_LINES = [
   "Now I build the tools I used to need",
 ];
 
-const PILLS = ["full-stack dev", "data analyst", "4 languages", "4+ years in ops"];
+const PILLS = [
+  "operations & business analyst",
+  "process improvement",
+  "SQL & Python",
+  "4 languages",
+];
 
 // Counter-clockwise rounded-rect path from the bottom-right corner, drives the
 // button's animated border draw.
@@ -194,7 +199,7 @@ export default function Hero() {
         <div>
           <MaskedReveal delay={0.3} className="text-center">
             <p className="font-caption text-sm sm:text-base md:text-lg text-primary-foreground">
-              Operations &times; Data &times; Code
+              Operations &times; Data &times; Systems
             </p>
           </MaskedReveal>
 

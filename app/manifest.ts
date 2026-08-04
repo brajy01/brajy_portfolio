@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "Brajy · Jeremy Brajon",
     short_name: "Brajy",
     description:
-      "Jeremy Brajon, operations & data analyst. Operations × Data × Code.",
+      "Jeremy Brajon, operations & data analyst. Operations × Data × Systems.",
     start_url: "/",
     display: "standalone",
     background_color: "#F9F9F9",

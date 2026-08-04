@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import AboutContent from "@/components/section/about-content";
 
 const DESCRIPTION =
-  "From four years running a 400+ tonne operation to building the data systems behind it: Jeremy Brajon's path, experience and education.";
+  "From four years running a 440-tonne operation to building the data systems behind it: Jeremy Brajon's path, experience and education.";
 
 export const metadata: Metadata = {
   title: "About",

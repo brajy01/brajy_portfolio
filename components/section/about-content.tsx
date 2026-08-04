@@ -32,13 +32,13 @@ interface EducationEntry {
 const experiences: ExperienceEntry[] = [
   {
     id: 1,
-    position: "Operations Analytics — Independent Project",
-    company: "Brajy (self-directed)",
+    position: "Self-Employed",
+    company: "Brajy (Registered Business) — France / Isle of Man",
     period: "Feb. 2025 - Present",
     highlights: [
-      "Building an end-to-end analytics and management tool for the fruit production business I previously ran",
+      "Designed, built and deployed Cropia, an end-to-end harvest management and analytics tool, used daily to support harvest planning, stock tracking and planting decisions at Etablissement Brajon Frères",
       "Consolidated legacy sources (Excel, Notion, paper) into one structured dataset, cleaning 10 years of inconsistent production records",
-      "Built a daily operational dashboard tracking harvests, sales and projected stock",
+      "Built the daily operational dashboard used to track harvests, sales and projected stock across around 60 plots and 20 varieties",
       "Set up KPI tracking for yield and labour productivity",
       "Developed a harvest forecast model combining theoretical yield curves from plant suppliers with historical field performance",
     ],
@@ -50,7 +50,6 @@ const experiences: ExperienceEntry[] = [
           "SQL (PostgreSQL)",
           "Time Series Forecasting",
           "KPI Development",
-          "Power BI (in progress)",
         ],
       },
       {
@@ -65,9 +64,8 @@ const experiences: ExperienceEntry[] = [
     company: "Etablissement Brajon Frères — Cendrieux, France",
     period: "Jan. 2021 - Jan. 2025",
     highlights: [
-      "Managed operations and a 50-person international seasonal team through peak production (400+ tonnes strawberries, 40+ tonnes raspberries a year)",
+      "Managed operations and a 50-person international seasonal team through peak production (440 tonnes a year: 400t strawberries, 40t raspberries)",
       "Set up shared tracking in Google Sheets and Notion, updated twice daily, so the whole team worked from the same live stock and harvest figures instead of paper",
-      "Automated scheduling, workforce tracking and stock monitoring with connected Google tools (AppSheet)",
       "Negotiated daily prices and volumes with retail buyers (Système U, Grand Frais)",
       "Saw operational problems come down to better data systems, which sparked my move into data and BI",
     ],
@@ -85,8 +83,6 @@ const experiences: ExperienceEntry[] = [
         category: "Business & Operations",
         items: [
           "Data-Driven Operations",
-          "Cost Modeling",
-          "Supply Chain Analytics",
           "Process Automation",
           "Performance Metrics",
         ],
@@ -144,12 +140,32 @@ const experiences: ExperienceEntry[] = [
       },
     ],
   },
+  {
+    id: 5,
+    position: "Living & Working Abroad",
+    company: "Puerto Rico & United Kingdom",
+    period: "2016 - 2019",
+    highlights: [
+      "Import/Export Intern at José Santiago, Puerto Rico (4 months): international trade operations",
+      "Au pair in the United Kingdom (1 year), reaching full English fluency",
+    ],
+    skills: [
+      {
+        category: "Languages & Communication",
+        items: [
+          "English Immersion",
+          "Spanish Immersion",
+          "International Trade",
+        ],
+      },
+    ],
+  },
 ];
 
 const education: EducationEntry[] = [
   {
     id: 1,
-    program: "Microsoft Certification - Power BI Data Analyst Associate",
+    program: "Microsoft Certification: Power BI Data Analyst Associate (PL-300)",
     institution: "Microsoft",
     period: "Started June 2026",
     highlights: [
@@ -203,7 +219,7 @@ const education: EducationEntry[] = [
     program:
       "Bachelor's Degree — Applied Foreign Languages for International Trade",
     institution: "Université de Limoges",
-    period: "2012 - 2015",
+    period: "2012 - 2016",
     highlights: [
       "International trade: import/export operations, trade regulations, negotiation",
       "Business & economics: marketing, management, international economics",
@@ -291,17 +307,17 @@ export default function AboutContent() {
 
           <AnimateOnScroll delay={100}>
             <p className="font-text text-base sm:text-lg md:text-xl leading-relaxed text-foreground max-w-4xl text-pretty">
-              For four years I was part of the team running my family&apos;s 400+
-              tonne fruit business, managing a 50-person seasonal crew through
-              peak season.
+              I spent four years running the daily operations of a
+              440-tonne/year fruit production business, managing a 50-person
+              seasonal crew through peak season.
             </p>
           </AnimateOnScroll>
 
           <AnimateOnScroll delay={150}>
             <p className="font-text text-base sm:text-lg md:text-xl leading-relaxed text-foreground max-w-4xl text-pretty mt-6 sm:mt-8">
               The same problem kept coming up: data scattered across tools that
-              didn&apos;t talk to each other. So I learned Python, SQL and Power
-              BI, and built a full analytics tool for that same business.
+              didn&apos;t talk to each other. So I learned Python and SQL, and
+              built a full analytics tool for that same business.
             </p>
           </AnimateOnScroll>
 

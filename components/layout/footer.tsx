@@ -137,7 +137,7 @@ export default function Footer() {
               <div className="hidden md:block space-y-2">
                 <FooterLogotype />
                 <p className="font-caption text-xs md:text-sm text-background/50">
-                  Operations &times; Data &times; Code
+                  Operations &times; Data &times; Systems
                 </p>
                 <Link
                   href="mailto:contact@brajy.com"
@@ -151,7 +151,7 @@ export default function Footer() {
                     className="border-background/30 text-background hover:bg-primary hover:border-primary hover:text-primary-foreground"
                     asChild
                   >
-                    <Link href="/contact">Let&apos;s work together</Link>
+                    <Link href="/contact">Contact me</Link>
                   </Button>
                 </div>
               </div>
@@ -162,7 +162,7 @@ export default function Footer() {
               <div className="space-y-2">
                 <FooterLogotype className="mx-auto block" />
                 <p className="font-caption text-xs text-background/50">
-                  Operations &times; Data &times; Code
+                  Operations &times; Data &times; Systems
                 </p>
                 <Link
                   href="mailto:contact@brajy.com"
@@ -179,7 +179,7 @@ export default function Footer() {
                   className="border-background/30 text-background hover:bg-primary hover:border-primary hover:text-primary-foreground"
                   asChild
                 >
-                  <Link href="/contact">Let&apos;s work together</Link>
+                  <Link href="/contact">Contact me</Link>
                 </Button>
               </div>
             </div>
