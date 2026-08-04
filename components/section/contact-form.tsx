@@ -104,15 +104,18 @@ export default function ContactForm() {
           <AnimateOnScroll>
             <SectionHeading
               title="Get In Touch"
-              subtitle="Currently looking for Operations & Business Analyst opportunities in the Isle of Man"
+              subtitle="Currently looking for Operations & Business Analyst roles in the Isle of Man"
               rightText="_let's talk"
             />
           </AnimateOnScroll>
 
           <AnimateOnScroll delay={100}>
             <p className="font-text text-base sm:text-lg md:text-xl leading-relaxed text-foreground max-w-3xl text-pretty">
-              Whether you&apos;d like to discuss a role, Cropia, or a project
-              you have in mind, I&apos;d love to hear from you.
+              I&apos;m looking for my next role, ideally something that sits
+              between operations and data: understanding how a business
+              actually works, then building or improving the systems it runs
+              on. If you&apos;d like to discuss a role, talk about Cropia, or
+              ask about any of my projects, get in touch.
             </p>
           </AnimateOnScroll>
         </div>

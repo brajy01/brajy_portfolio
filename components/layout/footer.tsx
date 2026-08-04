@@ -151,7 +151,7 @@ export default function Footer() {
                     className="border-background/30 text-background hover:bg-primary hover:border-primary hover:text-primary-foreground"
                     asChild
                   >
-                    <Link href="/contact">Contact me</Link>
+                    <Link href="/contact">Get in touch</Link>
                   </Button>
                 </div>
               </div>
@@ -179,7 +179,7 @@ export default function Footer() {
                   className="border-background/30 text-background hover:bg-primary hover:border-primary hover:text-primary-foreground"
                   asChild
                 >
-                  <Link href="/contact">Contact me</Link>
+                  <Link href="/contact">Get in touch</Link>
                 </Button>
               </div>
             </div>

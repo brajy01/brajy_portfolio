@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import ContactForm from "@/components/section/contact-form";
 
 const DESCRIPTION =
-  "Get in touch with Jeremy Brajon, currently looking for Operations & Business Analyst opportunities in the Isle of Man.";
+  "Get in touch with Jeremy Brajon, currently looking for Operations & Business Analyst roles in the Isle of Man.";
 
 export const metadata: Metadata = {
   title: "Contact",
