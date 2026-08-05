@@ -21,13 +21,10 @@ export interface StoryBlock {
 
 // A titled section of the case-study narrative. When a project has `story`,
 // the detail page renders these sections instead of the standard
-// Challenge/Approach/Deliverables/Impact template. `key: true` marks the
-// sections a skimming reader should not miss — they are highlighted in the
-// sidebar contents nav.
+// Challenge/Approach/Deliverables/Impact template.
 export interface StorySection {
-  id: string; // anchor slug for the sidebar contents nav
+  id: string; // stable anchor slug, also used as the React key
   heading: string;
-  key?: boolean;
   blocks: StoryBlock[];
 }
 
@@ -62,6 +59,9 @@ export interface Project {
   lessonsLearned: string;
   // Long-form case study; replaces the standard narrative template when set.
   story?: StorySection[];
+  // Case-study sections rendered after the showcase band, so a long story
+  // can breathe: text, visual walkthrough, then the closing text.
+  storyOutro?: StorySection[];
   showcase?: ShowcaseItem[];
   projectImages: string[];
   projectOverlayMeshes?: MeshVariant[];
@@ -70,7 +70,6 @@ export interface Project {
     industry: string;
     work: string[];
     date: string;
-    status?: string;
     githubUrl?: string;
     liveUrl?: string;
   };
@@ -162,33 +161,37 @@ export const projects: Project[] = [
           },
         ],
       },
+    ],
+    // The five design decisions carry the visual walkthrough: each step gets
+    // its screenshot slot (add `image` when the anonymised captures exist).
+    showcase: [
       {
-        id: "design-decisions",
-        heading: "Design decisions",
-        key: true,
-        blocks: [
-          {
-            lead: "I made the new interface look like the old spreadsheet.",
-            text: "Deliberately. The Google Sheets was not elegant, but it was understood. My earlier attempts at a different layout were worse, and the moment I designed the screens around the sheet the team already knew, adoption stopped being a question. Familiarity was worth more here than a better-looking interface.",
-          },
-          {
-            lead: "Cascading filters instead of one long list.",
-            text: "Selecting a plot used to mean scrolling a very long list: every variety, and inside each variety every plot growing it. Now you pick a fruit, strawberry or raspberry, which narrows to its varieties, which narrows to its plantings. The final list is a few lines. It is the single most repeated action in the tool, so it was the first thing to fix.",
-          },
-          {
-            lead: "Price history where the decision is made.",
-            text: "When you create a sale and select a client, the price history for that client and product appears below the form as a curve. No second tab, no last week's sheet. The information arrives at the moment the price is being decided.",
-          },
-          {
-            lead: "Stock as a daily loop.",
-            text: "Picking minus sales gives a theoretical closing stock. It is checked against the cold room in the evening and carried into the next morning, where it sets how much needs to be picked. That loop is the operation, so the tool is built around it rather than around reporting.",
-          },
-          {
-            lead: "Forecasting at plot level.",
-            text: "Forecasting by variety would hide what matters, because two plots of the same variety do not yield the same and neither do the two ends of one plot. The forecast combines supplier yield curves with each plot's own history, and rolls up to variety or to the whole farm when a wider view is needed.",
-          },
-        ],
+        label: "the interface",
+        title: "I made the new interface look like the old spreadsheet",
+        body: "Deliberately. The Google Sheets was not elegant, but it was understood. My earlier attempts at a different layout were worse, and the moment I designed the screens around the sheet the team already knew, adoption stopped being a question. Familiarity was worth more here than a better-looking interface.",
       },
+      {
+        label: "cascading filters",
+        title: "Cascading filters instead of one long list",
+        body: "Selecting a plot used to mean scrolling a very long list: every variety, and inside each variety every plot growing it. Now you pick a fruit, strawberry or raspberry, which narrows to its varieties, which narrows to its plantings. The final list is a few lines. It is the single most repeated action in the tool, so it was the first thing to fix.",
+      },
+      {
+        label: "price history",
+        title: "Price history where the decision is made",
+        body: "When you create a sale and select a client, the price history for that client and product appears below the form as a curve. No second tab, no last week's sheet. The information arrives at the moment the price is being decided.",
+      },
+      {
+        label: "stock",
+        title: "Stock as a daily loop",
+        body: "Picking minus sales gives a theoretical closing stock. It is checked against the cold room in the evening and carried into the next morning, where it sets how much needs to be picked. That loop is the operation, so the tool is built around it rather than around reporting.",
+      },
+      {
+        label: "forecasting",
+        title: "Forecasting at plot level",
+        body: "Forecasting by variety would hide what matters, because two plots of the same variety do not yield the same and neither do the two ends of one plot. The forecast combines supplier yield curves with each plot's own history, and rolls up to variety or to the whole farm when a wider view is needed.",
+      },
+    ],
+    storyOutro: [
       {
         id: "built-and-not",
         heading: "What I built, and what I did not",
@@ -210,7 +213,6 @@ export const projects: Project[] = [
       {
         id: "what-i-got-wrong",
         heading: "What I got wrong",
-        key: true,
         blocks: [
           {
             text: "Two things, both pointed out by someone else. My uncle works in IT and I asked him to look at what I had built.",
@@ -255,17 +257,10 @@ export const projects: Project[] = [
     // placeholder and the gallery stays empty until they exist.
     projectImages: [],
     projectDetails: {
-      client: "Etablissement Brajon Frères (self-initiated)",
+      client: "Etablissement Brajon Frères",
       industry: "Agriculture / Food production",
-      work: [
-        "Requirements Gathering",
-        "Process Mapping",
-        "Data Modelling",
-        "Forecasting",
-        "Dashboard Development",
-      ],
+      work: ["Process Mapping", "Data Modelling", "Dashboard Development"],
       date: "February 2025 - Present",
-      status: "In production, first full harvest season",
       liveUrl: "https://www.cropia.fr",
     },
   },

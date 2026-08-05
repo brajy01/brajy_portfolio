@@ -1,14 +1,13 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { projects } from "@/data/projects";
+import { projects, type StorySection } from "@/data/projects";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import AnimateOnScroll from "@/components/ui/animate-on-scroll";
 import BulletList from "@/components/ui/bullet-list";
 import ProjectImage from "@/components/ui/project-image";
 import ProjectShowcase from "@/components/section/project-showcase";
-import { cn } from "@/lib/utils";
 
 interface ProjectDetailProps {
   slug: string;
@@ -38,6 +37,32 @@ function BodyText({ children }: { children: ReactNode }) {
     <p className="font-text text-sm sm:text-base md:text-lg leading-relaxed text-foreground text-pretty">
       {children}
     </p>
+  );
+}
+
+/* Titled sections of a long-form case study, with optional bold lead-ins. */
+function StorySections({ sections }: { sections: StorySection[] }) {
+  return (
+    <>
+      {sections.map((section) => (
+        <div key={section.id} id={section.id} className="scroll-mt-24">
+          <DetailSection title={section.heading}>
+            <div className="space-y-4">
+              {section.blocks.map((block, blockIdx) => (
+                <BodyText key={blockIdx}>
+                  {block.lead && (
+                    <>
+                      <strong className="font-semibold">{block.lead}</strong>{" "}
+                    </>
+                  )}
+                  {block.text}
+                </BodyText>
+              ))}
+            </div>
+          </DetailSection>
+        </div>
+      ))}
+    </>
   );
 }
 
@@ -85,6 +110,30 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
   const hasShowcase = showcase.length > 0;
   const story = project.story ?? [];
   const hasStory = story.length > 0;
+  const storyOutro = project.storyOutro ?? [];
+  const hasStoryOutro = storyOutro.length > 0;
+
+  // GitHub / live-site links close the case study: after the outro when one
+  // exists, otherwise at the end of the main detail column.
+  const linkBlocks = (
+    <>
+      {project.projectDetails.githubUrl && (
+        <ExternalLinkBlock
+          label="_github"
+          href={project.projectDetails.githubUrl}
+          text="See project's repository"
+        />
+      )}
+      {project.projectDetails.liveUrl && (
+        <ExternalLinkBlock
+          label="_live site"
+          href={project.projectDetails.liveUrl}
+          text="Visit the website"
+          className="mt-4"
+        />
+      )}
+    </>
+  );
 
   return (
     <>
@@ -179,30 +228,7 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
               {/* Long-form case study: the story sections replace the
                   standard Challenge/Approach/Deliverables/Impact template. */}
               {hasStory ? (
-                story.map((section) => (
-                  <div
-                    key={section.id}
-                    id={section.id}
-                    className="scroll-mt-24"
-                  >
-                    <DetailSection title={section.heading}>
-                      <div className="space-y-4">
-                        {section.blocks.map((block, blockIdx) => (
-                          <BodyText key={blockIdx}>
-                            {block.lead && (
-                              <>
-                                <strong className="font-semibold">
-                                  {block.lead}
-                                </strong>{" "}
-                              </>
-                            )}
-                            {block.text}
-                          </BodyText>
-                        ))}
-                      </div>
-                    </DetailSection>
-                  </div>
-                ))
+                <StorySections sections={story} />
               ) : (
                 <>
                   <DetailSection title="The Challenge">
@@ -237,24 +263,7 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
                 </>
               )}
 
-              {/* GitHub Section */}
-              {project.projectDetails.githubUrl && (
-                <ExternalLinkBlock
-                  label="_github"
-                  href={project.projectDetails.githubUrl}
-                  text="See project's repository"
-                />
-              )}
-
-              {/* Live Site Section */}
-              {project.projectDetails.liveUrl && (
-                <ExternalLinkBlock
-                  label="_live site"
-                  href={project.projectDetails.liveUrl}
-                  text="Visit the website"
-                  className="mt-4"
-                />
-              )}
+              {!hasStoryOutro && linkBlocks}
             </div>
 
             {/* Project Details - Right side (sticky on desktop) */}
@@ -308,47 +317,6 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
                     </p>
                   </div>
 
-                  {/* Status */}
-                  {project.projectDetails.status && (
-                    <div className="md:text-right">
-                      <p className="font-caption text-xs sm:text-sm text-primary mb-1">
-                        _status
-                      </p>
-                      <p className="font-caption text-sm sm:text-base text-foreground">
-                        {project.projectDetails.status}
-                      </p>
-                    </div>
-                  )}
-
-                  {/* Contents nav for long-form case studies. Key sections
-                      (the ones a skimming reader should hit) are orange. */}
-                  {hasStory && (
-                    <nav
-                      aria-label="Case study contents"
-                      className="col-span-2 md:col-span-1 md:text-right"
-                    >
-                      <p className="font-caption text-xs sm:text-sm text-primary mb-2">
-                        _contents
-                      </p>
-                      <ul className="space-y-1">
-                        {story.map((section) => (
-                          <li key={section.id}>
-                            <a
-                              href={`#${section.id}`}
-                              className={cn(
-                                "font-caption text-xs sm:text-sm animated-underline-orange",
-                                section.key
-                                  ? "text-primary"
-                                  : "text-foreground",
-                              )}
-                            >
-                              {section.heading.toLowerCase()}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </nav>
-                  )}
                 </div>
               </AnimateOnScroll>
             </div>
@@ -360,6 +328,22 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
           Sits on the beige band and stands in for Approach/Deliverables. */}
       {hasShowcase && (
         <ProjectShowcase items={showcase} projectName={project.projectName} />
+      )}
+
+      {/* Closing chapters of a long-form case study, after the visual band. */}
+      {hasStoryOutro && (
+        <section
+          className="py-12 sm:py-16 md:py-24 section-x"
+          role="region"
+          aria-label="Case study, continued"
+        >
+          <div className="section-container">
+            <div className="md:max-w-[65%]">
+              <StorySections sections={storyOutro} />
+              {linkBlocks}
+            </div>
+          </div>
+        </section>
       )}
 
       {/* Project Images Gallery */}
