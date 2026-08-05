@@ -12,6 +12,25 @@ export interface ShowcaseItem {
   url?: string; // mono URL in the browser-frame bar
 }
 
+// One paragraph of a long-form case study. `lead` renders as a bold inline
+// opener ("Built:", "The users.", or a one-line design decision).
+export interface StoryBlock {
+  lead?: string;
+  text: string;
+}
+
+// A titled section of the case-study narrative. When a project has `story`,
+// the detail page renders these sections instead of the standard
+// Challenge/Approach/Deliverables/Impact template. `key: true` marks the
+// sections a skimming reader should not miss — they are highlighted in the
+// sidebar contents nav.
+export interface StorySection {
+  id: string; // anchor slug for the sidebar contents nav
+  heading: string;
+  key?: boolean;
+  blocks: StoryBlock[];
+}
+
 export interface Project {
   id: string;
   title: string;
@@ -41,6 +60,8 @@ export interface Project {
   deliverables: string[];
   impact: string[];
   lessonsLearned: string;
+  // Long-form case study; replaces the standard narrative template when set.
+  story?: StorySection[];
   showcase?: ShowcaseItem[];
   projectImages: string[];
   projectOverlayMeshes?: MeshVariant[];
@@ -49,6 +70,7 @@ export interface Project {
     industry: string;
     work: string[];
     date: string;
+    status?: string;
     githubUrl?: string;
     liveUrl?: string;
   };
@@ -64,16 +86,16 @@ export const projects: Project[] = [
     imageMesh: "orange",
     tags: ["Python", "SQL", "React", "Forecasting"],
     category: "Development",
-    month: "march",
-    year: 2026,
+    month: "february",
+    year: 2025,
     projectName: "CROPIA - Harvest Operations Dashboard",
     role: "Business Analysis & Solution Design",
     heroDescription:
-      "CROPIA is a data tool I built to run the picking operation of a 440-tonne strawberry and raspberry farm: tracking harvest volumes and picker productivity across a 50+ person seasonal team, with forecasting to project end-of-season output and feed planting decisions for the following year.",
+      "Cropia runs the daily picking operation of a 440-tonne strawberry and raspberry farm: around 60 plots, 20 varieties, and a product that has to be sold the day it is picked. I designed and built it for the business I had spent four years working in. It is now used every day by four people across four different jobs.",
     heroMesh: "full",
     overview:
       "I was managing the operation, and spreadsheets and Notion could not keep up with the volume of daily harvest and labour data. The goal was to centralise that data, make it queryable, and forecast where the season was heading, so planning stopped relying on manual tallies.",
-    technologies: ["Python (Pandas, NumPy)", "SQL", "React"],
+    technologies: ["Python (Pandas, NumPy)", "SQL", "React", "Forecasting"],
     problem:
       "Daily picking produced a lot of data (volumes per picker, per plot, per day, plus labour) spread across disconnected spreadsheets. There was no quick way to see who was productive, how each plot was yielding, or where the season would land.",
     approach: [
@@ -94,19 +116,156 @@ export const projects: Project[] = [
     ],
     lessonsLearned:
       "Building this is what convinced me that operational problems are often data problems. It moved me from running operations to wanting to build the systems behind them, which is the direction I am taking now.",
+    story: [
+      {
+        id: "the-business",
+        heading: "The business",
+        blocks: [
+          {
+            text: "A fruit farm makes one decision every morning: how much to pick today. Pick too much and the fruit is unsold and gone within two days. Pick too little and you cannot supply the buyer negotiating price and volume at six in the morning.",
+          },
+          {
+            text: "That decision depends on three things: what is already in the cold store, what is committed to sell today, and what each plot is likely to give. Around 60 plots, 20 varieties, 440 tonnes a year, 50+ seasonal pickers at peak. Yield varies from plot to plot, and even between the top and the bottom of the same plot, depending on soil, planting density and the age of the plants.",
+          },
+        ],
+      },
+      {
+        id: "what-was-happening",
+        heading: "What was actually happening",
+        blocks: [
+          {
+            text: "Two systems that did not talk to each other. Picking was entered into a program written in Pascal twenty years ago. Everything else lived in a Google Sheets I had set up four years earlier, which the team used every day.",
+          },
+          {
+            text: "In practice that meant a physical loop. To check the day's figures you drove to the cold store, printed the picking sheets, came back to the house, opened the spreadsheet and checked the two matched. My father did it. I did it. Every day, and again at midday to check sales.",
+          },
+          {
+            text: "The second friction was smaller and constant. To price a sale, the salesperson opened the current week's sheet, then opened last week's in a second tab, to see what that client had paid and where prices were going.",
+          },
+        ],
+      },
+      {
+        id: "constraints",
+        heading: "Constraints",
+        blocks: [
+          {
+            lead: "The users.",
+            text: "Four people who are not comfortable with software and who had been using the same spreadsheet daily for four years. Anything that asked them to relearn how they work would not get used, whatever it did.",
+          },
+          {
+            lead: "One developer.",
+            text: "Me. No team, no design phase, no budget.",
+          },
+          {
+            lead: "The history.",
+            text: "Ten years of production records, all extracted from the same Pascal program but in two different shapes, before and after an update I had asked the original developer for. Neither shape was clean. Before any of it could support a forecast, it had to be reconciled into one consistent history.",
+          },
+        ],
+      },
+      {
+        id: "design-decisions",
+        heading: "Design decisions",
+        key: true,
+        blocks: [
+          {
+            lead: "I made the new interface look like the old spreadsheet.",
+            text: "Deliberately. The Google Sheets was not elegant, but it was understood. My earlier attempts at a different layout were worse, and the moment I designed the screens around the sheet the team already knew, adoption stopped being a question. Familiarity was worth more here than a better-looking interface.",
+          },
+          {
+            lead: "Cascading filters instead of one long list.",
+            text: "Selecting a plot used to mean scrolling a very long list: every variety, and inside each variety every plot growing it. Now you pick a fruit, strawberry or raspberry, which narrows to its varieties, which narrows to its plantings. The final list is a few lines. It is the single most repeated action in the tool, so it was the first thing to fix.",
+          },
+          {
+            lead: "Price history where the decision is made.",
+            text: "When you create a sale and select a client, the price history for that client and product appears below the form as a curve. No second tab, no last week's sheet. The information arrives at the moment the price is being decided.",
+          },
+          {
+            lead: "Stock as a daily loop.",
+            text: "Picking minus sales gives a theoretical closing stock. It is checked against the cold room in the evening and carried into the next morning, where it sets how much needs to be picked. That loop is the operation, so the tool is built around it rather than around reporting.",
+          },
+          {
+            lead: "Forecasting at plot level.",
+            text: "Forecasting by variety would hide what matters, because two plots of the same variety do not yield the same and neither do the two ends of one plot. The forecast combines supplier yield curves with each plot's own history, and rolls up to variety or to the whole farm when a wider view is needed.",
+          },
+        ],
+      },
+      {
+        id: "built-and-not",
+        heading: "What I built, and what I did not",
+        blocks: [
+          {
+            lead: "Built:",
+            text: "picking, planting, sales, invoicing, stock, and plot-level forecasting.",
+          },
+          {
+            lead: "Left out:",
+            text: "plant protection records, and per-plot tracking of what each employee did. Plant protection would not have been difficult, which is precisely why I had to be deliberate about it. The tool needed to do the core of the business properly, and be trusted doing it, before it did anything else. When I moved abroad we agreed to drop it rather than build it remotely.",
+          },
+          {
+            lead: "Taken further than the immediate need:",
+            text: "team invitations and permissions, and the beginnings of a multi-entity structure that would let a cooperative manage several farms. That part is not finished. I built it because the problem is not specific to one farm, and I did not want the data model to rule that out later.",
+          },
+        ],
+      },
+      {
+        id: "what-i-got-wrong",
+        heading: "What I got wrong",
+        key: true,
+        blocks: [
+          {
+            text: "Two things, both pointed out by someone else. My uncle works in IT and I asked him to look at what I had built.",
+          },
+          {
+            text: "I had modelled access as broad roles: salesperson, crop manager, picker, data entry. That maps to how the farm is organised, which is why it felt right. It is also wrong, because a role describes a person and what you actually need to control is an action. As soon as one person wears two hats, or another farm organises itself differently, roles break. Access is now set per item, with read, write and edit separated, and the same granularity applied to the admin section.",
+          },
+          {
+            text: "I had also built the navigation hierarchy around data entry, fruit down to variety down to plot, and then found I could not query in the other direction. Weight by variety, weight by plot, and the cascade got in the way. A hierarchy optimised for entering data is not a hierarchy for analysing it, and the tool needed both. Filters now work in both directions.",
+          },
+          {
+            text: "Both are implemented and in production.",
+          },
+        ],
+      },
+      {
+        id: "where-it-stands",
+        heading: "Where it stands",
+        blocks: [
+          {
+            text: "Cropia is used daily by four people covering four jobs: the farm manager, the salesperson, the crop manager and invoicing, plus a separate entry account in the cold store. The Pascal program has been retired.",
+          },
+          {
+            text: "It is in its first full harvest season, and it has run for two months without a change. The yield data is starting to feed planting decisions for next season: which plots and varieties performed, and what gets replanted.",
+          },
+        ],
+      },
+      {
+        id: "differently",
+        heading: "What I would do differently",
+        blocks: [
+          {
+            text: "Both corrections above are things I would now design in from the start: permissions modelled as actions rather than roles, and an analysis hierarchy sitting alongside the entry hierarchy. Neither is a hard idea. I just did not see them until the tool was in real use and someone from outside asked the right question.",
+          },
+          {
+            text: "The wider lesson is the one that moved me out of operations. Most of the problems I had spent four years solving by hand were data problems. Once the data was in one place and could be queried, the operational decisions got easier on their own.",
+          },
+        ],
+      },
+    ],
     // No real screenshots yet: the detail hero shows an honest mesh
     // placeholder and the gallery stays empty until they exist.
     projectImages: [],
     projectDetails: {
-      client: "Self-initiated (Ets Brajon)",
+      client: "Etablissement Brajon Frères (self-initiated)",
       industry: "Agriculture / Food production",
       work: [
-        "Data Pipeline",
+        "Requirements Gathering",
+        "Process Mapping",
         "Data Modelling",
         "Forecasting",
         "Dashboard Development",
       ],
-      date: "March 2026 - Present",
+      date: "February 2025 - Present",
+      status: "In production, first full harvest season",
       liveUrl: "https://www.cropia.fr",
     },
   },

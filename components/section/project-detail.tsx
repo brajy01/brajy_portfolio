@@ -8,6 +8,7 @@ import AnimateOnScroll from "@/components/ui/animate-on-scroll";
 import BulletList from "@/components/ui/bullet-list";
 import ProjectImage from "@/components/ui/project-image";
 import ProjectShowcase from "@/components/section/project-showcase";
+import { cn } from "@/lib/utils";
 
 interface ProjectDetailProps {
   slug: string;
@@ -82,6 +83,8 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
 
   const showcase = project.showcase ?? [];
   const hasShowcase = showcase.length > 0;
+  const story = project.story ?? [];
+  const hasStory = story.length > 0;
 
   return (
     <>
@@ -173,35 +176,66 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
           <div className="flex flex-col md:flex-row md:justify-between gap-6 sm:gap-8">
             {/* Content - Left side */}
             <div className="md:max-w-[65%] order-2 md:order-1">
-              <DetailSection title="The Challenge">
-                <div className="space-y-4">
-                  <BodyText>{project.overview}</BodyText>
-                  <BodyText>{project.problem}</BodyText>
-                </div>
-              </DetailSection>
-
-              {/* When a project has a visual walkthrough (below), the showcase
-                  carries the "how" — skip the Approach/Deliverables bullets so
-                  the same story isn't told twice. */}
-              {!hasShowcase && (
+              {/* Long-form case study: the story sections replace the
+                  standard Challenge/Approach/Deliverables/Impact template. */}
+              {hasStory ? (
+                story.map((section) => (
+                  <div
+                    key={section.id}
+                    id={section.id}
+                    className="scroll-mt-24"
+                  >
+                    <DetailSection title={section.heading}>
+                      <div className="space-y-4">
+                        {section.blocks.map((block, blockIdx) => (
+                          <BodyText key={blockIdx}>
+                            {block.lead && (
+                              <>
+                                <strong className="font-semibold">
+                                  {block.lead}
+                                </strong>{" "}
+                              </>
+                            )}
+                            {block.text}
+                          </BodyText>
+                        ))}
+                      </div>
+                    </DetailSection>
+                  </div>
+                ))
+              ) : (
                 <>
-                  <DetailSection title="The Approach">
-                    <BulletList items={project.approach} />
+                  <DetailSection title="The Challenge">
+                    <div className="space-y-4">
+                      <BodyText>{project.overview}</BodyText>
+                      <BodyText>{project.problem}</BodyText>
+                    </div>
                   </DetailSection>
 
-                  <DetailSection title="Deliverables">
-                    <BulletList items={project.deliverables} />
+                  {/* When a project has a visual walkthrough (below), the
+                      showcase carries the "how" — skip the Approach/
+                      Deliverables bullets so the same story isn't told twice. */}
+                  {!hasShowcase && (
+                    <>
+                      <DetailSection title="The Approach">
+                        <BulletList items={project.approach} />
+                      </DetailSection>
+
+                      <DetailSection title="Deliverables">
+                        <BulletList items={project.deliverables} />
+                      </DetailSection>
+                    </>
+                  )}
+
+                  <DetailSection title="The Impact">
+                    <BulletList items={project.impact} />
+                  </DetailSection>
+
+                  <DetailSection title="Lessons Learned">
+                    <BodyText>{project.lessonsLearned}</BodyText>
                   </DetailSection>
                 </>
               )}
-
-              <DetailSection title="The Impact">
-                <BulletList items={project.impact} />
-              </DetailSection>
-
-              <DetailSection title="Lessons Learned">
-                <BodyText>{project.lessonsLearned}</BodyText>
-              </DetailSection>
 
               {/* GitHub Section */}
               {project.projectDetails.githubUrl && (
@@ -273,6 +307,48 @@ export default function ProjectDetail({ slug }: ProjectDetailProps) {
                       {project.projectDetails.date}
                     </p>
                   </div>
+
+                  {/* Status */}
+                  {project.projectDetails.status && (
+                    <div className="md:text-right">
+                      <p className="font-caption text-xs sm:text-sm text-primary mb-1">
+                        _status
+                      </p>
+                      <p className="font-caption text-sm sm:text-base text-foreground">
+                        {project.projectDetails.status}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Contents nav for long-form case studies. Key sections
+                      (the ones a skimming reader should hit) are orange. */}
+                  {hasStory && (
+                    <nav
+                      aria-label="Case study contents"
+                      className="col-span-2 md:col-span-1 md:text-right"
+                    >
+                      <p className="font-caption text-xs sm:text-sm text-primary mb-2">
+                        _contents
+                      </p>
+                      <ul className="space-y-1">
+                        {story.map((section) => (
+                          <li key={section.id}>
+                            <a
+                              href={`#${section.id}`}
+                              className={cn(
+                                "font-caption text-xs sm:text-sm animated-underline-orange",
+                                section.key
+                                  ? "text-primary"
+                                  : "text-foreground",
+                              )}
+                            >
+                              {section.heading.toLowerCase()}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </nav>
+                  )}
                 </div>
               </AnimateOnScroll>
             </div>
