@@ -79,6 +79,32 @@ export const viewport: Viewport = {
   colorScheme: "light",
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${SITE_URL}/#person`,
+      name: "Jeremy Brajon",
+      alternateName: "Brajy",
+      url: SITE_URL,
+      jobTitle: "Operations & Data Analyst",
+      knowsLanguage: ["fr", "en", "pt", "es"],
+      sameAs: [
+        "https://www.linkedin.com/in/jbrajon/",
+        "https://github.com/brajy01",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      name: "Brajy",
+      url: SITE_URL,
+      author: { "@id": `${SITE_URL}/#person` },
+    },
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -87,6 +113,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${ppMori.variable} ${geistMono.variable}`}>
       <body className="antialiased pt-(--header-height)">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded focus:bg-foreground focus:px-4 focus:py-2 focus:font-caption focus:text-sm focus:text-background"
