@@ -256,7 +256,9 @@ function TimelineEntry({
 
       {/* Title + Caption */}
       <div>
-        <h3 className="font-title text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight">
+        {/* Sized below the section h2 (text-4xl md:text-5xl) so the entries
+            never outrank the section that contains them. */}
+        <h3 className="font-title text-2xl sm:text-3xl md:text-4xl leading-tight">
           {title}
         </h3>
         <p className="font-caption text-xs sm:text-sm md:text-lg text-primary mt-1 mb-6 sm:mb-8">
@@ -266,7 +268,7 @@ function TimelineEntry({
 
       {/* Content grid: highlights left, skills right */}
       <div className="flex flex-col md:flex-row md:justify-between gap-6 sm:gap-8">
-        <div className="md:max-w-[65%] md:pl-12 lg:pl-16">
+        <div className="reading-col md:pl-12 lg:pl-16">
           <BulletList items={highlights} />
         </div>
 
@@ -355,7 +357,7 @@ export default function AboutContent() {
 
       {/* Experience Section */}
       <section
-        className="py-12 sm:py-16 md:py-20 section-x"
+        className="section-y section-x"
         role="region"
         aria-labelledby="experience-title"
       >
@@ -366,7 +368,7 @@ export default function AboutContent() {
               rightText="_path"
               headingId="experience-title"
               className="mb-8 sm:mb-10 md:mb-12"
-              headingClassName="text-3xl md:text-4xl"
+              headingClassName="text-primary"
             />
           </AnimateOnScroll>
 
@@ -387,7 +389,7 @@ export default function AboutContent() {
 
       {/* Education Section */}
       <section
-        className="py-12 sm:py-16 md:py-20 section-x"
+        className="section-y section-x"
         role="region"
         aria-labelledby="education-title"
       >
@@ -398,7 +400,7 @@ export default function AboutContent() {
               rightText="_learning"
               headingId="education-title"
               className="mb-8 sm:mb-10 md:mb-12"
-              headingClassName="text-3xl md:text-4xl"
+              headingClassName="text-primary"
             />
           </AnimateOnScroll>
 

@@ -131,7 +131,7 @@ export default function Lightbox({ src, alt, children }: LightboxProps) {
             className={`fixed inset-0 z-60 flex items-center justify-center bg-foreground/80 p-4 sm:p-8 ${
               prefersReducedMotion
                 ? ""
-                : "transition-opacity duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                : "transition-opacity duration-300 ease-smooth"
             } ${isAnimatingIn ? "opacity-100" : "opacity-0"}`}
           >
           <button

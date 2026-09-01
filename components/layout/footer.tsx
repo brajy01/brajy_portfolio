@@ -51,7 +51,7 @@ function FooterLink({ href, label }: { href: string; label: string }) {
     <li>
       <Link
         href={href}
-        className="font-caption text-sm md:text-base text-background animated-underline-orange focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary rounded inline-flex items-center gap-1.5 h-6"
+        className="font-caption text-sm md:text-base text-background animated-underline-orange focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary rounded inline-flex items-center gap-1.5 h-6"
       >
         <span className="text-primary">&raquo;</span>
         {label}
@@ -117,7 +117,7 @@ export default function Footer() {
                           aria-label={link.label}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="font-caption text-sm md:text-base text-background animated-underline-orange focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary rounded inline-flex items-center gap-2 h-6"
+                          className="font-caption text-sm md:text-base text-background animated-underline-orange focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary rounded inline-flex items-center gap-2 h-6"
                         >
                           <Icon className="h-4 w-4 text-primary" />
                           <span>{link.name}</span>
@@ -133,19 +133,21 @@ export default function Footer() {
                 </ul>
               </nav>
 
-              {/* Contact Info - Hidden on mobile, shown in 3rd column on desktop */}
-              <div className="hidden md:block space-y-2">
-                <FooterLogotype />
+              {/* Contact info & CTA: one responsive block — full width and
+                  centered under the nav columns on mobile, third column on
+                  desktop. */}
+              <div className="col-span-2 md:col-span-1 text-center md:text-left space-y-2">
+                <FooterLogotype className="mx-auto md:mx-0 block" />
                 <p className="font-caption text-xs md:text-sm text-background/50">
                   Operations &times; Data &times; Systems
                 </p>
                 <Link
                   href="mailto:contact@brajy.com"
-                  className="font-caption text-sm md:text-base animated-underline-orange focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary rounded inline-block text-background"
+                  className="font-caption text-sm md:text-base animated-underline-orange focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary rounded inline-block text-background"
                 >
                   contact@brajy.com
                 </Link>
-                <div className="pt-4">
+                <div className="pt-2 md:pt-4">
                   <Button
                     variant="outline"
                     className="border-background/30 text-background hover:bg-primary hover:border-primary hover:text-primary-foreground"
@@ -154,33 +156,6 @@ export default function Footer() {
                     <Link href="/contact">Get in touch</Link>
                   </Button>
                 </div>
-              </div>
-            </div>
-
-            {/* Contact Info & CTA - Centered on mobile, hidden on desktop */}
-            <div className="md:hidden text-center space-y-4">
-              <div className="space-y-2">
-                <FooterLogotype className="mx-auto block" />
-                <p className="font-caption text-xs text-background/50">
-                  Operations &times; Data &times; Systems
-                </p>
-                <Link
-                  href="mailto:contact@brajy.com"
-                  className="font-caption text-sm animated-underline-orange focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary rounded inline-block text-background"
-                >
-                  contact@brajy.com
-                </Link>
-              </div>
-
-              {/* CTA */}
-              <div className="pt-2">
-                <Button
-                  variant="outline"
-                  className="border-background/30 text-background hover:bg-primary hover:border-primary hover:text-primary-foreground"
-                  asChild
-                >
-                  <Link href="/contact">Get in touch</Link>
-                </Button>
               </div>
             </div>
           </div>

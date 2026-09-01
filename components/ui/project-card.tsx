@@ -5,14 +5,21 @@ import AnimateOnScroll from "@/components/ui/animate-on-scroll";
 
 interface ProjectCardProps {
   project: Project;
+  /** Matches the page's outline: h2 under a page h1 (/projects), h3 under a
+      section h2 (home's Latest Projects). Purely semantic — both render as
+      the same inline title spans. */
+  headingLevel?: "h2" | "h3";
 }
 
 // Card title: animated wrap-aware underline + hover/focus color, driven by the
 // parent `group/card`. Shared by the mobile and desktop title spans.
 const TITLE_CLASS =
-  "font-text text-lg animated-underline-wrap inline transition-colors duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/card:text-primary group-focus-visible/card:text-primary";
+  "font-text text-lg animated-underline-wrap inline transition-colors duration-300 ease-smooth group-hover/card:text-primary group-focus-visible/card:text-primary";
 
-export default function ProjectCard({ project }: ProjectCardProps) {
+export default function ProjectCard({
+  project,
+  headingLevel: Heading = "h3",
+}: ProjectCardProps) {
   // Sort captions: black labels longest→shortest, orange tags shortest→longest
   const labels = [
     `_${project.role.toLowerCase()}`,
@@ -26,13 +33,15 @@ export default function ProjectCard({ project }: ProjectCardProps) {
     <Link
       href={`/projects/${project.slug}`}
       aria-label={project.title}
-      className="group/card relative grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-8 items-start border border-border hover:border-foreground/30 rounded-[12px] p-4 md:p-5 cursor-pointer transition-[border-color,transform,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] motion-safe:hover:-translate-y-1 motion-safe:hover:shadow-lg motion-safe:focus-visible:-translate-y-1 motion-safe:focus-visible:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+      className="group/card relative grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-8 items-start border border-border hover:border-foreground/30 rounded-sm p-4 md:p-5 cursor-pointer transition-[border-color,transform,box-shadow] duration-500 ease-smooth motion-safe:hover:-translate-y-1 motion-safe:hover:shadow-lg motion-safe:focus-visible:-translate-y-1 motion-safe:focus-visible:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
     >
       {/* Project Title + summary - Mobile only, shown at top (no hover on
           touch, so the summary is plain text under the title here). Title is
           orange by default on mobile so it stands out from the summary. */}
       <div className="md:hidden">
-        <span className={`${TITLE_CLASS} text-primary`}>{project.title}</span>
+        <Heading className="inline">
+          <span className={`${TITLE_CLASS} text-primary`}>{project.title}</span>
+        </Heading>
         <p className="font-text text-sm leading-relaxed text-foreground/70 mt-1.5 text-pretty">
           {project.description}
         </p>
@@ -43,9 +52,9 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           focus, and shows persistently on touch devices (no hover). */}
       <AnimateOnScroll
         variant="curtain"
-        className="md:col-span-4 relative w-full h-64 sm:h-80 md:h-[400px] lg:h-[460px] overflow-hidden rounded-[8px]"
+        className="md:col-span-4 relative w-full h-64 sm:h-80 md:h-[400px] lg:h-[460px] overflow-hidden rounded-xs"
       >
-        <div className="relative w-full h-full ease-[cubic-bezier(0.16,1,0.3,1)] motion-safe:transition-transform motion-safe:duration-700 motion-safe:group-hover/card:scale-[1.04] motion-safe:group-focus-visible/card:scale-[1.04]">
+        <div className="relative w-full h-full ease-smooth motion-safe:transition-transform motion-safe:duration-700 motion-safe:group-hover/card:scale-[1.04] motion-safe:group-focus-visible/card:scale-[1.04]">
           <ProjectImage
             src={project.image}
             mesh={project.imageMesh}
@@ -58,7 +67,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             text legible; fades up through orange. Mobile shows the summary as
             plain text under the title instead (block above). Decorative, so
             pointer-events-none keeps the whole card clickable. */}
-        <div className="hidden md:flex items-end pointer-events-none absolute inset-x-0 bottom-0 h-2/3 p-4 sm:p-5 bg-linear-to-t from-[#6e0e00] via-primary/70 to-transparent opacity-0 ease-[cubic-bezier(0.16,1,0.3,1)] motion-safe:transition-opacity motion-safe:duration-500 group-hover/card:opacity-100 group-focus-visible/card:opacity-100">
+        <div className="hidden md:flex items-end pointer-events-none absolute inset-x-0 bottom-0 h-2/3 p-4 sm:p-5 bg-linear-to-t from-mesh-maroon via-primary/70 to-transparent opacity-0 ease-smooth motion-safe:transition-opacity motion-safe:duration-500 group-hover/card:opacity-100 group-focus-visible/card:opacity-100">
           <p className="font-text text-sm md:text-base leading-relaxed text-primary-foreground line-clamp-4 text-pretty">
             {project.description}
           </p>
@@ -86,7 +95,9 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
       {/* Project Title - Desktop only, shown below image */}
       <div className="hidden md:block md:col-span-3 mt-3 md:mt-4 self-end">
-        <span className={`${TITLE_CLASS} md:text-xl`}>{project.title}</span>
+        <Heading className="inline">
+          <span className={`${TITLE_CLASS} md:text-xl`}>{project.title}</span>
+        </Heading>
       </div>
     </Link>
   );

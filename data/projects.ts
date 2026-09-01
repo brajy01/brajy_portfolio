@@ -10,22 +10,33 @@ export interface ShowcaseItem {
   image?: string;
   imageAlt?: string;
   url?: string; // mono URL in the browser-frame bar
+  // Id of the chapter this step follows. This is the only placement control:
+  // the grouped layouts collect every step into one band at the first anchor,
+  // the interleaved layout emits one band per anchor between the chapters.
+  after?: string;
 }
 
-// One paragraph of a long-form case study. `lead` renders as a bold inline
-// opener ("Built:", "The users.", or a one-line design decision).
-export interface StoryBlock {
-  lead?: string;
-  text: string;
-}
+// One block of a case-study chapter. `lead` renders as a bold inline opener
+// ("Built:", "The users.", or a one-line design decision). `kind` is optional
+// on text blocks so the common case stays a plain { text } literal.
+export type ChapterBlock =
+  | { kind?: "text"; lead?: string; text: string }
+  | { kind: "list"; items: string[] };
 
-// A titled section of the case-study narrative. When a project has `story`,
-// the detail page renders these sections instead of the standard
-// Challenge/Approach/Deliverables/Impact template.
-export interface StorySection {
+// A titled chapter of the case study. Every project is a flat, ordered list of
+// these: there is no second narrative model and no section that only some
+// projects get. A thin project is simply a short list.
+export interface Chapter {
   id: string; // stable anchor slug, also used as the React key
   heading: string;
-  blocks: StoryBlock[];
+  blocks: ChapterBlock[];
+}
+
+// A headline figure for the "at a glance" block. Only for numbers that are
+// genuinely measured: a project without them renders no block at all.
+export interface Metric {
+  value: string;
+  label: string;
 }
 
 export interface Project {
@@ -48,21 +59,12 @@ export interface Project {
   heroImage?: string;
   heroMesh?: MeshVariant;
   heroOverlayMesh?: MeshVariant;
-  overview: string;
   technologies: string[];
-  // Portfolio narrative. Answers: What was the problem? How did you solve it?
-  // What did you deliver? What impact? (So what?)
-  problem: string;
-  approach: string[];
-  deliverables: string[];
-  impact: string[];
-  lessonsLearned: string;
-  // Long-form case study; replaces the standard narrative template when set.
-  story?: StorySection[];
-  // Case-study sections rendered after the showcase band, so a long story
-  // can breathe: text, visual walkthrough, then the closing text.
-  storyOutro?: StorySection[];
+  // The case study itself: one ordered list of chapters, with the walkthrough
+  // steps placed relative to them via ShowcaseItem.after.
+  chapters: Chapter[];
   showcase?: ShowcaseItem[];
+  metrics?: Metric[];
   projectImages: string[];
   projectOverlayMeshes?: MeshVariant[];
   projectDetails: {
@@ -92,30 +94,15 @@ export const projects: Project[] = [
     heroDescription:
       "Cropia runs the daily picking operation of a 440-tonne strawberry and raspberry farm: around 60 plots, 20 varieties, and a product that has to be sold the day it is picked. I designed and built it for the business I had spent four years working in. It is now used every day by four people across four different jobs.",
     heroMesh: "full",
-    overview:
-      "I was managing the operation, and spreadsheets and Notion could not keep up with the volume of daily harvest and labour data. The goal was to centralise that data, make it queryable, and forecast where the season was heading, so planning stopped relying on manual tallies.",
     technologies: ["Python (Pandas, NumPy)", "SQL", "React", "Forecasting"],
-    problem:
-      "Daily picking produced a lot of data (volumes per picker, per plot, per day, plus labour) spread across disconnected spreadsheets. There was no quick way to see who was productive, how each plot was yielding, or where the season would land.",
-    approach: [
-      "Built a Python pipeline (Pandas, NumPy) to ingest and clean daily harvest and labour records",
-      "Modelled and stored the data in SQL so it could be queried instead of re-entered",
-      "Built a React interface to visualise picker productivity and per-plot yields across the season",
-      "Added forecasting to project end-of-season volumes from in-season picking data",
+    // Figures that come straight from the operation, not from analytics.
+    metrics: [
+      { value: "440 t", label: "_per year" },
+      { value: "~60", label: "_plots" },
+      { value: "20", label: "_varieties" },
+      { value: "4", label: "_daily users" },
     ],
-    deliverables: [
-      "A central data model for harvest, labour and yield data",
-      "Dashboards tracking picker productivity and per-plot yield across the season",
-      "Forecasts of end-of-season volume",
-    ],
-    impact: [
-      "Replaced manual spreadsheet tracking with a single queryable system",
-      "Gives in-season visibility into picker productivity and per-plot yields that was not available before",
-      "In its first season, the yield data is starting to inform planting decisions for the next year: identifying which plots and varieties performed well to guide what gets replanted",
-    ],
-    lessonsLearned:
-      "Building this is what convinced me that operational problems are often data problems. It moved me from running operations to wanting to build the systems behind them, which is the direction I am taking now.",
-    story: [
+    chapters: [
       {
         id: "the-business",
         heading: "The business",
@@ -161,37 +148,6 @@ export const projects: Project[] = [
           },
         ],
       },
-    ],
-    // The five design decisions carry the visual walkthrough: each step gets
-    // its screenshot slot (add `image` when the anonymised captures exist).
-    showcase: [
-      {
-        label: "the interface",
-        title: "I made the new interface look like the old spreadsheet",
-        body: "Deliberately. The Google Sheets was not elegant, but it was understood. My earlier attempts at a different layout were worse, and the moment I designed the screens around the sheet the team already knew, adoption stopped being a question. Familiarity was worth more here than a better-looking interface.",
-      },
-      {
-        label: "cascading filters",
-        title: "Cascading filters instead of one long list",
-        body: "Selecting a plot used to mean scrolling a very long list: every variety, and inside each variety every plot growing it. Now you pick a fruit, strawberry or raspberry, which narrows to its varieties, which narrows to its plantings. The final list is a few lines. It is the single most repeated action in the tool, so it was the first thing to fix.",
-      },
-      {
-        label: "price history",
-        title: "Price history where the decision is made",
-        body: "When you create a sale and select a client, the price history for that client and product appears below the form as a curve. No second tab, no last week's sheet. The information arrives at the moment the price is being decided.",
-      },
-      {
-        label: "stock",
-        title: "Stock as a daily loop",
-        body: "Picking minus sales gives a theoretical closing stock. It is checked against the cold room in the evening and carried into the next morning, where it sets how much needs to be picked. That loop is the operation, so the tool is built around it rather than around reporting.",
-      },
-      {
-        label: "forecasting",
-        title: "Forecasting at plot level",
-        body: "Forecasting by variety would hide what matters, because two plots of the same variety do not yield the same and neither do the two ends of one plot. The forecast combines supplier yield curves with each plot's own history, and rolls up to variety or to the whole farm when a wider view is needed.",
-      },
-    ],
-    storyOutro: [
       {
         id: "built-and-not",
         heading: "What I built, and what I did not",
@@ -253,6 +209,41 @@ export const projects: Project[] = [
         ],
       },
     ],
+    // The five design decisions carry the visual walkthrough, sitting together
+    // after the constraints chapter (add `image` when the anonymised captures
+    // exist).
+    showcase: [
+      {
+        label: "the interface",
+        title: "I made the new interface look like the old spreadsheet",
+        body: "Deliberately. The Google Sheets was not elegant, but it was understood. My earlier attempts at a different layout were worse, and the moment I designed the screens around the sheet the team already knew, adoption stopped being a question. Familiarity was worth more here than a better-looking interface.",
+        after: "constraints",
+      },
+      {
+        label: "cascading filters",
+        title: "Cascading filters instead of one long list",
+        body: "Selecting a plot used to mean scrolling a very long list: every variety, and inside each variety every plot growing it. Now you pick a fruit, strawberry or raspberry, which narrows to its varieties, which narrows to its plantings. The final list is a few lines. It is the single most repeated action in the tool, so it was the first thing to fix.",
+        after: "constraints",
+      },
+      {
+        label: "price history",
+        title: "Price history where the decision is made",
+        body: "When you create a sale and select a client, the price history for that client and product appears below the form as a curve. No second tab, no last week's sheet. The information arrives at the moment the price is being decided.",
+        after: "constraints",
+      },
+      {
+        label: "stock",
+        title: "Stock as a daily loop",
+        body: "Picking minus sales gives a theoretical closing stock. It is checked against the cold room in the evening and carried into the next morning, where it sets how much needs to be picked. That loop is the operation, so the tool is built around it rather than around reporting.",
+        after: "constraints",
+      },
+      {
+        label: "forecasting",
+        title: "Forecasting at plot level",
+        body: "Forecasting by variety would hide what matters, because two plots of the same variety do not yield the same and neither do the two ends of one plot. The forecast combines supplier yield curves with each plot's own history, and rolls up to variety or to the whole farm when a wider view is needed.",
+        after: "constraints",
+      },
+    ],
     // No real screenshots yet: the detail hero shows an honest mesh
     // placeholder and the gallery stays empty until they exist.
     projectImages: [],
@@ -281,30 +272,46 @@ export const projects: Project[] = [
       "Barbara Freitas is a dental therapist. I took her from no online presence at all to a calm, trustworthy website that the right patients actually find on Google.",
     heroImage: "/projects/barbara-freitas/hero.jpg",
     heroOverlayMesh: "full",
-    overview:
-      "Barbara relied entirely on word of mouth. The brief was a calm, fast site that earns trust at a glance and, above all, gets found by the right patients in search, including the Portuguese-speaking and Brazilian community she serves.",
     technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
-    problem:
-      "Patients had no way to find her, see her work, or get in touch. And without a professional online presence, the practice lacked the credibility people look for when choosing a dentist.",
-    approach: [
-      "I kept the design calm and clean, so the practice feels professional and easy to trust at a glance",
-      "I added a one-tap WhatsApp button: it opens a message that's already written, so the patient just hits send",
-      "I built a before-and-after gallery of real treatments to let her work speak for itself",
-      "I tuned the SEO, including Portuguese-language optimisation, so the right patients actually find her on Google",
+    // No metrics: the practice has no measured traffic or conversion data, so
+    // the "at a glance" block is omitted rather than filled with guesses.
+    chapters: [
+      {
+        id: "the-challenge",
+        heading: "The Challenge",
+        blocks: [
+          {
+            text: "Barbara relied entirely on word of mouth. The brief was a calm, fast site that earns trust at a glance and, above all, gets found by the right patients in search, including the Portuguese-speaking and Brazilian community she serves.",
+          },
+          {
+            text: "Patients had no way to find her, see her work, or get in touch. And without a professional online presence, the practice lacked the credibility people look for when choosing a dentist.",
+          },
+        ],
+      },
+      {
+        id: "the-impact",
+        heading: "The Impact",
+        blocks: [
+          {
+            kind: "list",
+            items: [
+              "She went from no website at all to a real, findable online presence",
+              "The SEO reaches the right audience: she has had enquiries from patients, including Brazilian patients, who found the practice through search",
+              "The practice finally looks as professional online as Barbara is in person",
+            ],
+          },
+        ],
+      },
+      {
+        id: "lessons-learned",
+        heading: "Lessons Learned",
+        blocks: [
+          {
+            text: "Building it in React gives me full control over performance and structure, and the room to extend the site as the practice grows. The bigger lesson, though, was how much trust drives every choice in healthcare: if a detail doesn't make a patient feel safe, it doesn't belong.",
+          },
+        ],
+      },
     ],
-    deliverables: [
-      "A responsive site with the pages she needed: home, services, about and contact",
-      "A before-and-after gallery of real dental treatments",
-      "A one-tap WhatsApp contact with a ready-to-send message",
-      "Local and Portuguese-language SEO so the right patients find the practice in search",
-    ],
-    impact: [
-      "She went from no website at all to a real, findable online presence",
-      "The SEO reaches the right audience: she has had enquiries from patients, including Brazilian patients, who found the practice through search",
-      "The practice finally looks as professional online as Barbara is in person",
-    ],
-    lessonsLearned:
-      "Building it in React gives me full control over performance and structure, and the room to extend the site as the practice grows. The bigger lesson, though, was how much trust drives every choice in healthcare: if a detail doesn't make a patient feel safe, it doesn't belong.",
     showcase: [
       {
         label: "homepage",
@@ -313,6 +320,7 @@ export const projects: Project[] = [
         image: "/projects/barbara-freitas/homepage.jpg",
         imageAlt: "Barbara Freitas homepage: portrait, intro and booking call to action",
         url: "barbarafreitas.com",
+        after: "the-challenge",
       },
       {
         label: "clinical cases",
@@ -321,11 +329,13 @@ export const projects: Project[] = [
         image: "/projects/barbara-freitas/clinical-cases.jpg",
         imageAlt: "Clinical cases gallery with before-and-after treatment photos",
         url: "barbarafreitas.com",
+        after: "the-challenge",
       },
       {
         label: "seo",
         title: "Found by the right patients",
         body: "Local SEO plus Portuguese-language optimisation, so the community she serves actually finds her on Google.",
+        after: "the-impact",
       },
       {
         label: "contact",
@@ -334,6 +344,7 @@ export const projects: Project[] = [
         image: "/projects/barbara-freitas/contact.jpg",
         imageAlt: "Contact page with portrait and enquiry form",
         url: "barbarafreitas.com",
+        after: "the-impact",
       },
     ],
     projectImages: [],

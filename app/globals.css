@@ -9,14 +9,23 @@
   --primary-foreground: rgb(249 249 249);
   --secondary: rgb(226 224 211);
   --secondary-foreground: rgb(20 20 20);
-  --muted: rgb(226 224 211);
   --muted-foreground: rgb(96 96 96);
   --accent: rgb(226 224 211);
   --accent-foreground: rgb(20 20 20);
   --destructive: rgb(227 36 0);
   --border: rgb(226 224 211);
-  --input: rgb(226 224 211);
   --ring: rgb(237 83 21);
+
+  /* Brand mesh tints, as channel triplets so each blob picks its own alpha.
+     Values are design-locked. --mesh-red and --mesh-beige intentionally mirror
+     --destructive and --secondary: decorative twins, so the mesh never leans
+     on a semantic token. */
+  --mesh-peach: 255 198 146;
+  --mesh-apricot: 255 170 120;
+  --mesh-vermilion: 255 64 19;
+  --mesh-maroon: 110 14 0;
+  --mesh-red: 227 36 0;
+  --mesh-beige: 226 224 211;
 
   /* Font families come from next/font/local (app/layout.tsx): the vars
      already carry the size-adjusted fallback, extra stacks are a safety net. */
@@ -33,14 +42,17 @@
      hero sections (home + project detail). */
   --header-height: 88px;
 
-  --shadow-2xs: 0 1px 3px 0px rgb(0 0 0 / 0.05);
-  --shadow-xs: 0 1px 3px 0px rgb(0 0 0 / 0.05);
+  /* Only the steps the site actually uses; the generator's 2xs/xs/xl/2xl
+     steps were dead weight (two duplicates, a non-monotonic 2xl). */
   --shadow-sm: 0 1px 3px 0px rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --shadow: 0 1px 3px 0px rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --shadow-md: 0 1px 3px 0px rgb(0 0 0 / 0.1), 0 2px 4px -1px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 1px 3px 0px rgb(0 0 0 / 0.1), 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 1px 3px 0px rgb(0 0 0 / 0.1), 0 8px 10px -1px rgb(0 0 0 / 0.1);
-  --shadow-2xl: 0 1px 3px 0px rgb(0 0 0 / 0.25);
+
+  /* House easing (expo-out): the single curve behind every transition on the
+     site. easings.smooth in components/ui/motion.tsx is the same curve for
+     Framer Motion, which cannot read CSS variables — keep the two in sync. */
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
 
   --tracking-normal: 0.025em;
 }
@@ -52,28 +64,30 @@
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
   --color-border: var(--border);
-  --color-input: var(--input);
   --color-ring: var(--ring);
 
+  --color-mesh-peach: rgb(var(--mesh-peach));
+  --color-mesh-apricot: rgb(var(--mesh-apricot));
+  --color-mesh-vermilion: rgb(var(--mesh-vermilion));
+  --color-mesh-maroon: rgb(var(--mesh-maroon));
+  --color-mesh-red: rgb(var(--mesh-red));
+  --color-mesh-beige: rgb(var(--mesh-beige));
+
+  --radius-xs: calc(var(--radius) - 8px);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
 
-  --shadow-2xs: var(--shadow-2xs);
-  --shadow-xs: var(--shadow-xs);
   --shadow-sm: var(--shadow-sm);
   --shadow: var(--shadow);
   --shadow-md: var(--shadow-md);
   --shadow-lg: var(--shadow-lg);
-  --shadow-xl: var(--shadow-xl);
-  --shadow-2xl: var(--shadow-2xl);
+
+  --ease-smooth: var(--ease-smooth);
 
   --tracking-normal: var(--tracking-normal);
 }
@@ -141,14 +155,27 @@ body {
     @apply max-w-[1400px] mx-auto w-full;
   }
 
+  /* Shared vertical rhythm for page sections. Full-viewport heroes and the
+     rare asymmetric section keep their own padding. */
+  .section-y {
+    @apply py-12 sm:py-16 md:py-24;
+  }
+
+  /* Editorial reading column: caps body copy against a full-width section so
+     the measure stays comfortable next to a sidebar or empty margin. */
+  .reading-col {
+    @apply md:max-w-[65%];
+  }
+
   /* Bulleted detail item: used in project detail + about experience lists */
   .detail-list-item {
     @apply font-text text-sm sm:text-base md:text-lg leading-relaxed text-foreground flex gap-3 text-pretty;
   }
 
-  /* Outlined tag/skill pill */
+  /* Outlined tag/skill pill. Static on purpose: the pills are labels, not
+     controls, so they carry no hover state that would promise a click. */
   .tag-pill {
-    @apply font-caption text-xs px-2 sm:px-3 py-1 border border-primary text-primary rounded-full transition-colors duration-200 hover:bg-primary hover:text-primary-foreground cursor-default;
+    @apply font-caption text-xs px-2 sm:px-3 py-1 border border-primary text-primary rounded-full cursor-default;
   }
 
   /* Scroll-reveal animation */
@@ -156,8 +183,8 @@ body {
     opacity: 0;
     transform: translateY(20px);
     transition:
-      opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-      transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      opacity 0.6s var(--ease-smooth),
+      transform 0.6s var(--ease-smooth);
   }
 
   .reveal.revealed {
@@ -168,7 +195,7 @@ body {
   /* Curtain reveal: clip-path wipe from top, for images entering view */
   .curtain {
     clip-path: inset(0 0 100% 0);
-    transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: clip-path 0.8s var(--ease-smooth);
   }
 
   .curtain.revealed {
@@ -177,7 +204,7 @@ body {
 
   /* Scroll hint: gentle opacity wave on the project hero chevrons */
   .scroll-hint {
-    animation: scroll-hint-wave 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+    animation: scroll-hint-wave 2s var(--ease-smooth) infinite;
   }
 
   /* Blinking terminal cursor: the "_" after display titles. Shared keyframe so
@@ -188,7 +215,7 @@ body {
 
   /* Directional arrow that lifts up-and-right when its link/button is hovered (A4) */
   .arrow-lift {
-    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.25s var(--ease-smooth);
   }
 
   a:hover .arrow-lift,
@@ -211,7 +238,7 @@ body {
     height: 1.5px;
     background: currentColor;
     clip-path: inset(0 100% 0 0);
-    transition: clip-path 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: clip-path 0.3s var(--ease-smooth);
   }
 
   .animated-underline:hover::after {
@@ -231,7 +258,7 @@ body {
     background-size: 0% 1.5px;
     -webkit-box-decoration-break: clone;
     box-decoration-break: clone;
-    transition: background-size 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: background-size 0.3s var(--ease-smooth);
   }
 
   [class*="group/card"]:hover .animated-underline-wrap,
@@ -254,7 +281,7 @@ body {
     height: 1.5px;
     background: var(--primary);
     clip-path: inset(0 100% 0 0);
-    transition: clip-path 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: clip-path 0.3s var(--ease-smooth);
   }
 
   .animated-underline-orange:hover::after {
@@ -263,7 +290,7 @@ body {
 
   /* Page entrance fade */
   .page-enter {
-    animation: page-enter 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: page-enter 0.5s var(--ease-smooth) forwards;
   }
 
   /* Hero background fade: masks the gradient + grain to transparent at the
@@ -301,33 +328,33 @@ body {
     background-image:
       radial-gradient(
         circle at var(--b5x) var(--b5y),
-        rgb(255 198 146 / 0.85) 0%,
-        rgb(255 198 146 / 0) 30%
+        rgb(var(--mesh-peach) / 0.85) 0%,
+        rgb(var(--mesh-peach) / 0) 30%
       ),
       radial-gradient(
         circle at var(--b0x) var(--b0y),
-        rgb(255 170 120 / 1) 0%,
-        rgb(255 170 120 / 0) 38%
+        rgb(var(--mesh-apricot) / 1) 0%,
+        rgb(var(--mesh-apricot) / 0) 38%
       ),
       radial-gradient(
         circle at var(--b1x) var(--b1y),
-        rgb(255 64 19 / 1) 0%,
-        rgb(255 64 19 / 0) 40%
+        rgb(var(--mesh-vermilion) / 1) 0%,
+        rgb(var(--mesh-vermilion) / 0) 40%
       ),
       radial-gradient(
         circle at var(--b2x) var(--b2y),
-        rgb(110 14 0 / 1) 0%,
-        rgb(110 14 0 / 0) 42%
+        rgb(var(--mesh-maroon) / 1) 0%,
+        rgb(var(--mesh-maroon) / 0) 42%
       ),
       radial-gradient(
         circle at var(--b3x) var(--b3y),
-        rgb(227 36 0 / 1) 0%,
-        rgb(227 36 0 / 0) 40%
+        rgb(var(--mesh-red) / 1) 0%,
+        rgb(var(--mesh-red) / 0) 40%
       ),
       radial-gradient(
         circle at var(--b4x) var(--b4y),
-        rgb(226 224 211 / 0.75) 0%,
-        rgb(226 224 211 / 0) 32%
+        rgb(var(--mesh-beige) / 0.75) 0%,
+        rgb(var(--mesh-beige) / 0) 32%
       );
     will-change: background-image;
   }
@@ -340,23 +367,23 @@ body {
     background-image:
       radial-gradient(
         circle at 20% 25%,
-        rgb(226 224 211 / 0.95) 0%,
-        rgb(226 224 211 / 0) 45%
+        rgb(var(--mesh-beige) / 0.95) 0%,
+        rgb(var(--mesh-beige) / 0) 45%
       ),
       radial-gradient(
         circle at 80% 20%,
-        rgb(255 198 146 / 0.9) 0%,
-        rgb(255 198 146 / 0) 40%
+        rgb(var(--mesh-peach) / 0.9) 0%,
+        rgb(var(--mesh-peach) / 0) 40%
       ),
       radial-gradient(
         circle at 70% 80%,
-        rgb(255 170 120 / 0.9) 0%,
-        rgb(255 170 120 / 0) 45%
+        rgb(var(--mesh-apricot) / 0.9) 0%,
+        rgb(var(--mesh-apricot) / 0) 45%
       ),
       radial-gradient(
         circle at 25% 85%,
-        rgb(255 64 19 / 0.8) 0%,
-        rgb(255 64 19 / 0) 40%
+        rgb(var(--mesh-vermilion) / 0.8) 0%,
+        rgb(var(--mesh-vermilion) / 0) 40%
       );
   }
 
@@ -365,38 +392,38 @@ body {
     background-image:
       radial-gradient(
         circle at 75% 30%,
-        rgb(255 198 146 / 0.85) 0%,
-        rgb(255 198 146 / 0) 35%
+        rgb(var(--mesh-peach) / 0.85) 0%,
+        rgb(var(--mesh-peach) / 0) 35%
       ),
       radial-gradient(
         circle at 15% 20%,
-        rgb(255 170 120 / 1) 0%,
-        rgb(255 170 120 / 0) 40%
+        rgb(var(--mesh-apricot) / 1) 0%,
+        rgb(var(--mesh-apricot) / 0) 40%
       ),
       radial-gradient(
         circle at 85% 75%,
-        rgb(110 14 0 / 1) 0%,
-        rgb(110 14 0 / 0) 45%
+        rgb(var(--mesh-maroon) / 1) 0%,
+        rgb(var(--mesh-maroon) / 0) 45%
       ),
       radial-gradient(
         circle at 25% 80%,
-        rgb(227 36 0 / 1) 0%,
-        rgb(227 36 0 / 0) 42%
+        rgb(var(--mesh-red) / 1) 0%,
+        rgb(var(--mesh-red) / 0) 42%
       ),
       radial-gradient(
         circle at 55% 50%,
-        rgb(226 224 211 / 0.6) 0%,
-        rgb(226 224 211 / 0) 32%
+        rgb(var(--mesh-beige) / 0.6) 0%,
+        rgb(var(--mesh-beige) / 0) 32%
       );
   }
 
   .mesh-nb {
-    background-color: rgb(20 20 20);
+    background-color: var(--foreground);
     background-image:
       radial-gradient(
         circle at 20% 25%,
-        rgb(226 224 211 / 0.9) 0%,
-        rgb(226 224 211 / 0) 45%
+        rgb(var(--mesh-beige) / 0.9) 0%,
+        rgb(var(--mesh-beige) / 0) 45%
       ),
       radial-gradient(
         circle at 80% 30%,

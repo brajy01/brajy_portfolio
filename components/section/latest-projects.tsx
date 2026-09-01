@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { projects } from "@/data/projects";
 import AnimateOnScroll from "@/components/ui/animate-on-scroll";
 import ProjectCard from "@/components/ui/project-card";
@@ -9,7 +11,7 @@ export default function LatestProjects() {
 
   return (
     <section
-      className="py-16 md:py-24 section-x"
+      className="section-y section-x"
       role="region"
       aria-labelledby="latest-projects-title"
     >
@@ -20,7 +22,6 @@ export default function LatestProjects() {
             rightText={`_${new Date().getFullYear()}`}
             headingId="latest-projects-title"
             className="mb-0 pb-4 md:pb-6"
-            headingClassName="text-4xl md:text-5xl text-foreground"
           />
         </AnimateOnScroll>
 
@@ -32,6 +33,23 @@ export default function LatestProjects() {
             </AnimateOnScroll>
           ))}
         </div>
+
+        {/* Way into the full catalogue, so the section doesn't end at the
+            footer. */}
+        <AnimateOnScroll>
+          <div className="pt-8 md:pt-12">
+            <Link
+              href="/projects"
+              className="animated-underline-orange font-caption text-sm sm:text-base inline-flex items-center gap-1.5 text-foreground"
+            >
+              all projects
+              <ArrowUpRight
+                aria-hidden="true"
+                className="arrow-lift size-4 text-primary shrink-0"
+              />
+            </Link>
+          </div>
+        </AnimateOnScroll>
       </div>
     </section>
   );
