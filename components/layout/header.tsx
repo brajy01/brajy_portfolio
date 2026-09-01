@@ -16,7 +16,9 @@ export default function Header() {
     <>
       <header
         className={cn(
-          "fixed top-0 left-0 right-0 bg-primary flex items-center justify-between section-x py-4 z-50 transition-transform duration-300",
+          // h-(--header-height) rather than vertical padding: the token is the
+          // single source of truth for every layout offset that clears the bar.
+          "fixed top-0 left-0 right-0 bg-primary flex items-center justify-between section-x h-(--header-height) z-50 transition-transform duration-300",
           isHeaderVisible ? "translate-y-0" : "-translate-y-full",
         )}
       >

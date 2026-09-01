@@ -17,7 +17,7 @@ export default function BrowserFrame({
   return (
     <div
       className={cn(
-        "overflow-hidden rounded-[12px] border border-border bg-background shadow-md",
+        "overflow-hidden rounded-sm border border-border bg-background shadow-md",
         className,
       )}
     >

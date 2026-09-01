@@ -7,8 +7,10 @@ import { Button } from "@/components/ui/button";
 import AnimateOnScroll from "@/components/ui/animate-on-scroll";
 import SectionHeading from "@/components/ui/section-heading";
 
+// border-foreground/20 instead of border-border: the beige border is near
+// invisible on cream, and a form field must read as a field.
 const fieldClass =
-  "w-full font-text text-base border border-border rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-foreground bg-transparent placeholder-muted-foreground transition-all duration-200";
+  "w-full font-text text-base border border-foreground/20 rounded px-4 py-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-primary text-foreground bg-transparent placeholder-muted-foreground transition-all duration-200";
 
 function FormField({
   label,
@@ -99,11 +101,11 @@ export default function ContactForm() {
   return (
     <>
       {/* Hero Section */}
-      <section className="py-20 md:py-28 section-x">
+      <section className="section-y section-x">
         <div className="section-container">
           <AnimateOnScroll>
             <SectionHeading
-              title="Get In Touch"
+              title="Get in touch"
               subtitle="Currently looking for Operations & Business Analyst roles in the Isle of Man"
               rightText="_let's talk"
             />
@@ -176,8 +178,11 @@ export default function ContactForm() {
 
             {/* Submit Button */}
             <div className="flex justify-center pt-2">
+              {/* Sized up to carry its weight as the form's single action. */}
               <Button
                 variant="outline"
+                size="lg"
+                className="h-11 px-8 text-base"
                 type="submit"
                 disabled={submitStatus === "loading"}
               >

@@ -10,7 +10,8 @@ interface SectionHeadingProps {
   headingId?: string;
   /** Overrides the divider row's spacing (margins/padding). */
   className?: string;
-  /** Overrides the sub-section h2 sizing. */
+  /** Extends/overrides the sub-section h2 defaults (size + foreground colour
+      below); pass e.g. `text-primary` to recolour without losing the scale. */
   headingClassName?: string;
 }
 
@@ -67,7 +68,13 @@ export default function SectionHeading({
         className,
       )}
     >
-      <h2 id={headingId} className={cn("font-title", headingClassName)}>
+      <h2
+        id={headingId}
+        className={cn(
+          "font-title text-4xl md:text-5xl text-foreground",
+          headingClassName,
+        )}
+      >
         {title}
         <span aria-hidden="true">_</span>
       </h2>

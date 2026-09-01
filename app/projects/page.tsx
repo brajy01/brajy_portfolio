@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 
 export default function Projects() {
   return (
-    <section className="py-20 md:py-28 section-x">
+    <section className="section-y section-x">
       <div className="section-container">
         <AnimateOnScroll>
           <SectionHeading
@@ -31,11 +31,12 @@ export default function Projects() {
           />
         </AnimateOnScroll>
 
-        {/* Projects Grid */}
-        <div className="space-y-6 md:space-y-16 pt-4 md:pt-8">
+        {/* Projects Grid — same rhythm as the home list */}
+        <div className="space-y-8 md:space-y-12 pt-4 md:pt-8">
           {projects.map((project, index) => (
             <AnimateOnScroll key={project.id} delay={index * 100}>
-              <ProjectCard project={project} />
+              {/* h2: the cards sit directly under the page h1 here */}
+              <ProjectCard project={project} headingLevel="h2" />
             </AnimateOnScroll>
           ))}
         </div>
